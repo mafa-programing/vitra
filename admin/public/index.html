@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1"><title>Vitra Admin — Dry Fruits & More</title>
+<link rel="icon" href="data:,">
 <script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
@@ -12,11 +13,6 @@
   .toggle{display:none!important;}
   .stage{padding:26px 18px 48px!important;min-height:100vh!important;}
 </style>
-<script>
-  // open straight into the desktop admin view
-  (function(){var n=0;var t=setInterval(function(){var b=document.querySelectorAll('.tgi');n++;
-    if(b&&b[1]){b[1].click();clearInterval(t);} if(n>60)clearInterval(t);},100);})();
-</script>
 </head>
 <template id="__bundler_thumbnail" data-bg-color="#ece3d6">
 <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
@@ -518,7 +514,7 @@ textarea.input{height:84px;padding:12px 14px;resize:none}
 </x-dc>
 <script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#b97a2e&quot;,&quot;options&quot;:[&quot;#b97a2e&quot;,&quot;#6e7a3a&quot;,&quot;#5a4632&quot;,&quot;#b5613e&quot;,&quot;#7c5566&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;warm&quot;,&quot;cool&quot;],&quot;default&quot;:&quot;warm&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
 class Component extends DCLogic {
-  state = { mode:'customer', cust:'home', admin:'overview', tab:0, cart:{p1:1,p5:2,p9:1}, wish:{p3:true,p8:true}, pid:'p1', pack:1, gal:0, spec:'desc', co:0, coAddr:0, coPay:'upi', ord:null, view:'grid', filterOpen:false, sort:'Popularity', activeCat:'All', ratingMin:0, colorSel:0, drawer:null, adProdTab:'All', adProdSel:null, adOrderTab:'All', adOrderSel:null, adCustSel:null, setSection:'store', prefs:{orderUpdates:true,promotions:true,priceDrops:false,restock:true,newsletter:false} };
+  state = { mode:'admin', cust:'home', admin:'overview', tab:0, cart:{p1:1,p5:2,p9:1}, wish:{p3:true,p8:true}, pid:'p1', pack:1, gal:0, spec:'desc', co:0, coAddr:0, coPay:'upi', ord:null, view:'grid', filterOpen:false, sort:'Popularity', activeCat:'All', ratingMin:0, colorSel:0, drawer:null, adProdTab:'All', adProdSel:null, adOrderTab:'All', adOrderSel:null, adCustSel:null, setSection:'store', prefs:{orderUpdates:true,promotions:true,priceDrops:false,restock:true,newsletter:false} };
 
   PRODUCTS = [
     {id:'p1',name:'California Almonds, Premium',cat:'Almonds',tone:'#e7c9a0',p:549,mrp:699,r:4.8,rev:1240,badge:'Bestseller',free:true},

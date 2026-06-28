@@ -28,7 +28,8 @@ html = replaceOnce(html, '<meta name="viewport" content="width=device-width, ini
   '<meta name="viewport" content="width=device-width, initial-scale=1"><title>Vitra Admin — Dry Fruits & More</title>', 'viewport');
 html = removeBetween(html, '<meta name="ext-resource-dependency"', '<script src="./support.js"></script>', 'fetch-patch');
 
-const HEAD = `<script src="./vendor/react.production.min.js"></script>
+const HEAD = `<link rel="icon" href="data:,">
+<script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 <style id="admin-shell">
@@ -36,16 +37,14 @@ const HEAD = `<script src="./vendor/react.production.min.js"></script>
   /* single-purpose admin site: hide the app/admin toggle */
   .toggle{display:none!important;}
   .stage{padding:26px 18px 48px!important;min-height:100vh!important;}
-</style>
-<script>
-  // open straight into the desktop admin view
-  (function(){var n=0;var t=setInterval(function(){var b=document.querySelectorAll('.tgi');n++;
-    if(b&&b[1]){b[1].click();clearInterval(t);} if(n>60)clearInterval(t);},100);})();
-</script>`;
+</style>`;
 html = replaceOnce(html, '<script src="./support.js"></script>', HEAD, 'support.js->admin');
 
 html = removeBetween(html, '<link rel="preconnect" href="https://fonts.googleapis.com">', '<style>', 'google-fonts');
 html = replaceOnce(html, '<helmet data-dc-atomics><style>', '<helmet data-dc-atomics><link rel="stylesheet" href="./fonts/fonts.css"><style>', 'fonts-link');
+
+// open straight into the admin desktop view (reliable: set the initial state, not a timed click)
+html = replaceOnce(html, "mode:'customer', cust:'home'", "mode:'admin', cust:'home'", 'default-admin-mode');
 
 writeFileSync(OUT, html, 'utf8');
 console.log('build-admin: wrote', OUT, '(' + html.length + ' bytes)');

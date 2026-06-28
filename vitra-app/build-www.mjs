@@ -40,7 +40,8 @@ html = removeBetween(
 );
 
 // 3) vendor React/ReactDOM locally (loaded BEFORE support.js so it skips the unpkg CDN), then inject native full-bleed overrides
-const NATIVE_HEAD = `<script src="./vendor/react.production.min.js"></script>
+const NATIVE_HEAD = `<link rel="icon" href="data:,">
+<script src="./vendor/react.production.min.js"></script>
 <script src="./vendor/react-dom.production.min.js"></script>
 <script src="./support.js"></script>
 <style id="native-shell">
