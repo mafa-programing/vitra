@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style data-omelette-print-defaults>
+@media print {
+  @page { margin: 0.5in; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid; }
+  figure, table, pre, blockquote, img, svg, tr, [class~="card" i] { break-inside: avoid; }
+  img, svg { max-width: 100%; }
+  p { orphans: 3; widows: 3; }
+}
+</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box}
+.stage{--ink:#23201b;--ac:#b97a2e;min-height:100vh;width:100%;margin:0;font-family:'Manrope',system-ui,sans-serif;color:var(--ink);background:radial-gradient(120% 80% at 15% 0%,#fbf6ee 0%,#f3ece1 45%,#ece3d6 100%);display:flex;flex-direction:column;align-items:center;gap:22px;padding:30px 16px 60px;overflow-x:auto}
+.stage.cool{background:radial-gradient(120% 80% at 15% 0%,#f4f6fb 0%,#eaeef6 45%,#e3e8f2 100%)}
+.nomo *{animation-duration:.001s!important;transition-duration:.05s!important}
+.serif{font-family:'Marcellus',serif;font-weight:400;letter-spacing:.2px}
+.muted{color:#9a9082}.tiny{font-size:10px}.upcase{text-transform:uppercase;letter-spacing:.12em}
+/* mode toggle */
+.toggle{display:flex;gap:4px;padding:5px;border-radius:40px;background:rgba(255,255,255,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 8px 30px rgba(90,70,40,.12),inset 0 0 0 1px rgba(255,255,255,.6);position:sticky;top:6px;z-index:60}
+.tgi{display:flex;align-items:center;gap:8px;padding:10px 22px;border-radius:40px;border:0;background:transparent;color:#8a7f70;font:600 13px 'Manrope';cursor:pointer;transition:.35s cubic-bezier(.2,.8,.2,1)}
+.tgi.on{background:var(--ink);color:#fff;box-shadow:0 6px 20px rgba(35,32,27,.28)}
+.tgdot{width:7px;height:7px;border-radius:50%;background:var(--ac)}
+/* PHONE */
+.phwrap{animation:asc .5s cubic-bezier(.2,.8,.2,1)}
+.phone{position:relative;width:392px;height:840px;border-radius:48px;background:#fff;box-shadow:0 50px 120px -30px rgba(70,52,30,.45),0 0 0 11px #1a1714,0 0 0 13px #2c2722;overflow:hidden}
+.pnotch{position:absolute;top:13px;left:50%;transform:translateX(-50%);width:118px;height:30px;background:#11100e;border-radius:18px;z-index:50}
+.statusbar{position:absolute;top:0;left:0;right:0;height:52px;display:flex;align-items:center;justify-content:space-between;padding:18px 30px 0;font:700 14px 'Manrope';z-index:40;color:var(--ink)}
+.sbicn{display:flex;align-items:center;gap:6px}
+.sbbar{width:4px;border-radius:2px;background:var(--ink)}
+.phView{position:absolute;top:0;left:0;right:0;bottom:0;overflow-y:auto;overflow-x:hidden;padding:58px 0 104px;scrollbar-width:none}
+.phView::-webkit-scrollbar{display:none}
+.scr{animation:aup .5s cubic-bezier(.2,.8,.2,1)}
+.pad{padding:0 18px}
+/* bottom nav */
+.botnav{position:absolute;left:14px;right:14px;bottom:14px;height:68px;border-radius:26px;background:rgba(255,255,255,.7);backdrop-filter:blur(26px) saturate(1.4);-webkit-backdrop-filter:blur(26px) saturate(1.4);box-shadow:0 18px 40px -10px rgba(60,44,24,.3),inset 0 0 0 1px rgba(255,255,255,.7);display:flex;z-index:45}
+.navpill{position:absolute;top:9px;left:9px;width:calc(25% - 4.5px);height:50px;border-radius:18px;background:var(--ink);transform:translateX(calc(var(--i,0)*100%));transition:transform .45s cubic-bezier(.3,1.3,.4,1);box-shadow:0 8px 20px rgba(35,32,27,.3)}
+.navi{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:0;background:transparent;color:#9a8f7f;font:600 10px 'Manrope';cursor:pointer;position:relative;z-index:2;transition:.3s}
+.navi.on{color:#fff}
+.navcount{position:absolute;top:8px;right:24px;min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--ac);color:#fff;font:700 9px 'Manrope';display:flex;align-items:center;justify-content:center;z-index:6}
+/* cards / glass */
+.glass{background:rgba(255,255,255,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.card{background:#fff;border-radius:22px;box-shadow:0 14px 36px -18px rgba(80,58,30,.28),inset 0 0 0 1px rgba(140,120,90,.07)}
+/* header */
+.phhead{display:flex;align-items:center;justify-content:space-between;padding:6px 18px 12px}
+.loc{display:flex;flex-direction:column;gap:1px}
+.loclbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#a89c8a}
+.locval{display:flex;align-items:center;gap:5px;font:700 14px 'Manrope'}
+.iconbtn{width:42px;height:42px;border-radius:14px;border:0;background:rgba(255,255,255,.7);box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);position:relative;transition:.25s}
+.iconbtn:active{transform:scale(.92)}
+.dot{position:absolute;top:9px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 2px #fff;animation:dotp 1.8s infinite}
+/* search */
+.searchbar{display:flex;align-items:center;gap:11px;height:52px;border-radius:18px;padding:0 16px;background:#fff;box-shadow:0 10px 26px -14px rgba(80,58,30,.25),inset 0 0 0 1px rgba(140,120,90,.1);color:#9a8f7f;font:500 14px 'Manrope';cursor:text;transition:.3s}
+.searchbar:active{transform:scale(.99)}
+.micbtn{margin-left:auto;width:34px;height:34px;border-radius:11px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+/* banners */
+.bcar{display:flex;gap:13px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 18px 6px;scrollbar-width:none}
+.bcar::-webkit-scrollbar{display:none}
+.banner{flex:none;width:300px;scroll-snap-align:center;border-radius:24px;padding:22px;color:#fff;position:relative;overflow:hidden;box-shadow:0 22px 44px -20px rgba(60,40,16,.5)}
+.bantag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+.bantitle{font-family:'Marcellus',serif;font-size:25px;line-height:1.08;margin:7px 0 4px;white-space:pre-line}
+.bansub{font-size:12px;opacity:.85;margin-bottom:14px}
+.banbtn{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.92);color:#23201b;font:700 12px 'Manrope';padding:9px 16px;border-radius:30px}
+.banorb{position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:rgba(255,255,255,.18);filter:blur(2px)}
+.bdots{display:flex;gap:6px;justify-content:center;margin-top:10px}
+.bdot{width:6px;height:6px;border-radius:3px;background:#c9bda9;transition:.3s}
+.bdot.on{width:18px;background:var(--ink)}
+/* section */
+.sect{margin-top:24px}
+.shead{display:flex;align-items:flex-end;justify-content:space-between;padding:0 18px 12px}
+.stitle{font-family:'Marcellus',serif;font-size:20px;line-height:1}
+.ssub{font-size:11px;color:#a89c8a;margin-top:3px}
+.slink{font:700 12px 'Manrope';color:var(--ac);background:none;border:0;cursor:pointer;display:flex;align-items:center;gap:4px}
+/* chips */
+.chiprow{display:flex;gap:9px;overflow-x:auto;padding:2px 18px 4px;scrollbar-width:none}
+.chiprow::-webkit-scrollbar{display:none}
+.chip{flex:none;display:flex;align-items:center;gap:7px;padding:9px 15px;border-radius:30px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);font:600 12px 'Manrope';color:#6b6256;cursor:pointer;transition:.25s}
+.chip.on{background:var(--ink);color:#fff;box-shadow:none}
+.chipdot{width:18px;height:18px;border-radius:7px}
+/* product row + card */
+.prow{display:flex;gap:13px;overflow-x:auto;padding:4px 18px 8px;scrollbar-width:none;scroll-snap-type:x proximity}
+.prow::-webkit-scrollbar{display:none}
+.pcard{flex:none;width:166px;background:#fff;border-radius:20px;padding:9px;box-shadow:0 16px 34px -20px rgba(80,58,30,.32),inset 0 0 0 1px rgba(140,120,90,.08);position:relative;cursor:pointer;scroll-snap-align:start;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 26px 50px -22px rgba(80,58,30,.45)}
+.pcard:active{transform:scale(.98)}
+.pcard.grid{width:auto}
+.pcard.row{width:166px}
+.pcard.wide{width:240px}
+.pimg{position:relative;height:138px;border-radius:14px;overflow:hidden;display:flex;align-items:flex-end;padding:9px}
+.pcard.wide .pimg{height:120px}
+.phlab{font:600 10px 'Manrope';letter-spacing:.08em;text-transform:uppercase;color:rgba(40,30,16,.55);background:rgba(255,255,255,.6);padding:3px 8px;border-radius:20px;backdrop-filter:blur(4px)}
+.wbtn{position:absolute;top:8px;right:8px;width:30px;height:30px;border-radius:11px;border:0;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;color:#c5b9a7;cursor:pointer;z-index:3;transition:.25s}
+.wbtn:active{transform:scale(.8)}
+.wbtn.on{color:#d8553f}
+.pbadge{position:absolute;top:8px;left:8px;background:var(--ink);color:#fff;font:700 9px 'Manrope';letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:8px;z-index:3}
+.pinfo{padding:11px 5px 4px}
+.pname{font:600 13px 'Manrope';line-height:1.25;height:33px;overflow:hidden}
+.rate{gap:3px;font:700 11px 'Manrope';color:#3c3528}.rate svg{color:#e0a93a}
+.prow2{margin-top:7px}
+.price{font:800 15px 'Manrope';color:var(--ink)}
+.mrp{font-size:11px;color:#b3a895;text-decoration:line-through}
+.disc{font:700 10px 'Manrope';color:#3f8a52}
+.freeb{margin-top:7px;font:600 10px 'Manrope';color:#3f8a52}
+.freedot{width:5px;height:5px;border-radius:50%;background:#3f8a52}
+.qadd{position:absolute;bottom:11px;right:11px;width:32px;height:32px;border-radius:11px;border:0;background:var(--ink);color:#fff;font:600 18px 'Manrope';line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 18px rgba(35,32,27,.3);transition:.25s}
+.qadd:active{transform:scale(.85) rotate(90deg)}
+/* category grid */
+.catgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;padding:4px 18px}
+.cat{display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;border:0;background:none}
+.catimg{width:100%;aspect-ratio:1;border-radius:18px;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1),0 10px 22px -14px rgba(80,58,30,.3);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.cat:active .catimg{transform:scale(.9)}
+.catname{font:600 11px 'Manrope';color:#5b5246}
+/* flash */
+.flash{margin:6px 18px 0;border-radius:22px;padding:15px 16px;background:linear-gradient(115deg,#2c2722,#3c352b);color:#fff;display:flex;align-items:center;justify-content:space-between;box-shadow:0 20px 40px -22px rgba(40,28,12,.6)}
+.flashL{display:flex;flex-direction:column;gap:3px}
+.timer{display:flex;gap:5px;align-items:center}
+.tbox{background:rgba(255,255,255,.16);border-radius:8px;padding:5px 7px;font:800 13px 'Manrope';min-width:30px;text-align:center}
+.tsep{font-weight:800;opacity:.6}
+/* promo strip */
+.promostrip{margin:0;padding:11px 18px;display:flex;align-items:center;justify-content:center;gap:10px;background:var(--ink);color:#fff;font:600 12px 'Manrope';overflow:hidden}
+.promostrip .mq{display:flex;gap:34px;white-space:nowrap;animation:mar 16s linear infinite}
+/* grid 2col products */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:13px;padding:4px 18px}
+/* floating cart */
+.fcart{position:absolute;left:18px;right:18px;bottom:92px;height:54px;border-radius:18px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 18px;box-shadow:0 18px 40px -14px rgba(35,32,27,.6);z-index:44;animation:aup .4s}
+.fcbtn{height:40px;padding:0 18px;border-radius:13px;background:#fff;color:var(--ink);font:700 13px 'Manrope';border:0;display:flex;align-items:center;gap:7px;cursor:pointer}
+/* sponsored */
+.sponsor{margin:6px 18px 0;border-radius:22px;overflow:hidden;position:relative;height:150px;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:18px;box-shadow:0 22px 44px -22px rgba(60,40,16,.5)}
+.adlabel{position:absolute;top:11px;left:11px;font:700 9px 'Manrope';letter-spacing:.1em;text-transform:uppercase;background:rgba(0,0,0,.28);padding:4px 9px;border-radius:20px;backdrop-filter:blur(4px)}
+/* account */
+.profcard{margin:0 18px;border-radius:24px;padding:20px;background:linear-gradient(135deg,#2e2922,#46402f);color:#fff;position:relative;overflow:hidden;box-shadow:0 24px 50px -24px rgba(40,28,12,.6)}
+.avatar{width:58px;height:58px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-family:'Marcellus',serif;font-size:24px;background:rgba(255,255,255,.16);color:#fff}
+.tier{font:700 10px 'Manrope';letter-spacing:.1em;text-transform:uppercase;color:#e9c987;background:rgba(233,201,135,.16);padding:4px 10px;border-radius:20px}
+.pstat{flex:1;text-align:center}
+.pstatv{font:800 19px 'Manrope'}
+.pstatk{font-size:10px;opacity:.7;margin-top:2px}
+.mlist{margin:14px 18px 0;border-radius:22px;background:#fff;overflow:hidden;box-shadow:0 14px 36px -20px rgba(80,58,30,.28),inset 0 0 0 1px rgba(140,120,90,.07)}
+.mrow{display:flex;align-items:center;gap:14px;padding:15px 17px;cursor:pointer;border-bottom:1px solid rgba(140,120,90,.1);transition:.2s}
+.mrow:active{background:#faf6ef}
+.micon{width:40px;height:40px;border-radius:13px;background:#f5efe4;display:flex;align-items:center;justify-content:center;color:var(--ink);flex:none}
+.mlabel{font:600 14px 'Manrope'}
+.msub{font-size:11px;color:#a89c8a;margin-top:1px}
+.chev{margin-left:auto;color:#cabfac}
+.logout{margin:14px 18px 0;width:calc(100% - 36px);height:50px;border-radius:16px;border:1px solid rgba(200,80,60,.3);background:rgba(216,85,63,.06);color:#c0432f;font:700 13px 'Manrope';cursor:pointer}
+/* section title big */
+.scrhead{padding:6px 18px 4px}
+.scrtitle{font-family:'Marcellus',serif;font-size:27px;line-height:1.05}
+.scrsub{font-size:12px;color:#a89c8a;margin-top:4px}
+/* ===== DESKTOP ADMIN ===== */
+.deckwrap{animation:asc .5s cubic-bezier(.2,.8,.2,1);width:100%;max-width:1240px}
+.deck{position:relative;border-radius:20px;overflow:hidden;background:#f7f3ec;box-shadow:0 50px 120px -40px rgba(70,52,30,.5),inset 0 0 0 1px rgba(140,120,90,.12);height:780px;display:flex;flex-direction:column}
+.deckbar{height:42px;background:rgba(255,255,255,.7);backdrop-filter:blur(14px);display:flex;align-items:center;gap:8px;padding:0 16px;border-bottom:1px solid rgba(140,120,90,.1);flex:none}
+.tl{width:12px;height:12px;border-radius:50%}
+.urlbar{margin-left:14px;height:24px;flex:1;max-width:320px;border-radius:8px;background:#efe9df;font:500 11px 'Manrope';color:#9a8f7f;display:flex;align-items:center;padding:0 12px;gap:7px}
+.adbody{flex:1;display:flex;overflow:hidden}
+.adside{width:230px;flex:none;background:#fff;border-right:1px solid rgba(140,120,90,.1);display:flex;flex-direction:column;padding:18px 14px}
+.adlogo{display:flex;align-items:center;gap:11px;padding:6px 8px 18px}
+.adlogomk{width:38px;height:38px;border-radius:12px;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Marcellus',serif;font-size:20px}
+.adnavlbl{font:700 10px 'Manrope';letter-spacing:.12em;text-transform:uppercase;color:#b3a895;padding:14px 10px 7px}
+.adni{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:13px;border:0;background:none;width:100%;color:#6b6256;font:600 13px 'Manrope';cursor:pointer;transition:.2s;text-align:left;margin-bottom:2px}
+.adni:hover{background:#f7f3ec}
+.adni.on{background:var(--ink);color:#fff;box-shadow:0 10px 24px -10px rgba(35,32,27,.5)}
+.adnbadge{margin-left:auto;background:var(--ac);color:#fff;font:700 10px 'Manrope';padding:2px 7px;border-radius:20px}
+.adni.on .adnbadge{background:rgba(255,255,255,.25)}
+.aduser{margin-top:auto;display:flex;align-items:center;gap:11px;padding:11px;border-radius:14px;background:#f7f3ec}
+.adav{width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,#46402f,#2e2922);color:#fff;display:flex;align-items:center;justify-content:center;font:700 13px 'Manrope'}
+.admain{flex:1;overflow-y:auto;padding:24px 28px}
+.adtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.adh1{font-family:'Marcellus',serif;font-size:28px;line-height:1}
+.adh1sub{font-size:12px;color:#a89c8a;margin-top:5px}
+.adsearch{height:40px;width:260px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);display:flex;align-items:center;gap:9px;padding:0 14px;color:#a89c8a;font:500 12px 'Manrope'}
+.adbtn{height:40px;padding:0 18px;border-radius:12px;background:var(--ink);color:#fff;border:0;font:700 12px 'Manrope';cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 10px 24px -12px rgba(35,32,27,.5);transition:.2s}
+.adbtn:active{transform:scale(.97)}
+.adbtn.ghost{background:#fff;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(140,120,90,.16)}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:18px}
+.statcard{background:#fff;border-radius:18px;padding:18px;box-shadow:0 14px 34px -20px rgba(80,58,30,.26),inset 0 0 0 1px rgba(140,120,90,.07);position:relative;overflow:hidden;animation:aup .5s}
+.stk{font:600 12px 'Manrope';color:#a89c8a;display:flex;align-items:center;gap:8px}
+.stv{font:800 28px 'Manrope';margin:9px 0 6px;letter-spacing:-.02em}
+.stdelta{font:700 11px 'Manrope';display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:20px}
+.stdelta.up{color:#2f8a52;background:rgba(47,138,82,.1)}
+.stdelta.down{color:#c0432f;background:rgba(192,67,47,.1)}
+.stspark{position:absolute;right:14px;bottom:14px;display:flex;align-items:flex-end;gap:3px;height:34px}
+.spk{width:5px;border-radius:3px;background:rgba(185,122,46,.4)}
+.adcols{display:grid;grid-template-columns:1.55fr 1fr;gap:16px;margin-bottom:16px}
+.panel{background:#fff;border-radius:18px;padding:20px;box-shadow:0 14px 34px -20px rgba(80,58,30,.26),inset 0 0 0 1px rgba(140,120,90,.07)}
+.panelhd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.panelt{font:700 15px 'Manrope'}
+.chart{height:190px;display:flex;align-items:flex-end;gap:10px;padding-top:10px}
+.barcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px}
+.barfill{width:100%;max-width:26px;border-radius:7px 7px 4px 4px;background:linear-gradient(180deg,var(--ac),#d9b483);transition:height .8s cubic-bezier(.2,.8,.2,1);box-shadow:0 6px 14px -6px rgba(185,122,46,.5)}
+.barlbl{font:600 10px 'Manrope';color:#b3a895}
+.bestrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(140,120,90,.09)}
+.bestimg{width:42px;height:42px;border-radius:12px;flex:none}
+.bestn{font:600 13px 'Manrope'}.bestmeta{font-size:11px;color:#a89c8a;margin-top:2px}
+.bestrev{margin-left:auto;text-align:right}
+.bestrevv{font:800 14px 'Manrope'}
+.atable{width:100%;border-collapse:collapse}
+.atable th{text-align:left;font:700 10px 'Manrope';letter-spacing:.08em;text-transform:uppercase;color:#b3a895;padding:0 12px 12px}
+.atable td{padding:12px;border-top:1px solid rgba(140,120,90,.09);font:500 13px 'Manrope';vertical-align:middle}
+.atr{transition:.2s}.atr:hover{background:#faf6ef}
+.oid{font:700 12px 'Manrope';color:var(--ink)}
+.st{font:700 11px 'Manrope';padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.st.paid{color:#2f8a52;background:rgba(47,138,82,.1)}
+.st.pending{color:#c08a2e;background:rgba(192,138,46,.12)}
+.st.shipped{color:#3461b0;background:rgba(52,97,176,.1)}
+.st.refund{color:#c0432f;background:rgba(192,67,47,.1)}
+.st.cancel{color:#8a7f70;background:rgba(138,127,112,.12)}
+.stipdot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.lowrow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(140,120,90,.09)}
+.lowbar{height:6px;border-radius:4px;background:#efe9df;overflow:hidden;margin-top:6px}
+.lowfill{height:100%;border-radius:4px;background:linear-gradient(90deg,#d8553f,#e0a93a)}
+.quickrow{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.quick{background:#fff;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:10px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1);transition:.2s}
+.quick:hover{transform:translateY(-3px);box-shadow:0 16px 32px -18px rgba(80,58,30,.4)}
+.quickic{width:40px;height:40px;border-radius:12px;background:#f5efe4;display:flex;align-items:center;justify-content:center;color:var(--ink)}
+/* shared anim */
+@keyframes aup{from{transform:translateY(16px)}to{transform:none}}
+@keyframes ain{from{opacity:0}to{opacity:1}}
+@keyframes asc{from{transform:scale(.95)}to{transform:none}}
+@keyframes pop{0%{transform:scale(1)}50%{transform:scale(.9)}100%{transform:scale(1)}}
+@keyframes shim{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes mar{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes dotp{0%,100%{opacity:.35;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
+.d1{animation-delay:.05s}.d2{animation-delay:.1s}.d3{animation-delay:.16s}.d4{animation-delay:.22s}.d5{animation-delay:.3s}.d6{animation-delay:.4s}
+.skel{background:linear-gradient(90deg,#efe9df 25%,#f7f3ec 50%,#efe9df 75%);background-size:200% 100%;animation:shim 1.4s infinite;border-radius:10px}
+/* ===== shared mobile chrome ===== */
+.topbar{display:flex;align-items:center;gap:12px;padding:4px 18px 12px}
+.backbtn{width:40px;height:40px;border-radius:13px;border:0;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);display:flex;align-items:center;justify-content:center;color:var(--ink);cursor:pointer;flex:none;transition:.2s}
+.backbtn:active{transform:scale(.9)}
+.topttl{font-family:'Marcellus',serif;font-size:20px}
+.sectlabel{font:700 11px 'Manrope';letter-spacing:.1em;text-transform:uppercase;color:#b3a895;padding:6px 18px 9px}
+/* ===== shop / search ===== */
+.shopsearch{margin:0 18px;display:flex;align-items:center;gap:10px;height:48px;border-radius:16px;padding:0 14px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12)}
+.shopsearch input{flex:1;border:0;outline:0;background:none;font:500 14px 'Manrope';color:var(--ink)}
+.poprow{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px}
+.tagchip{padding:8px 14px;border-radius:30px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);font:600 12px 'Manrope';color:#6b6256;cursor:pointer;transition:.2s}
+.tagchip:active{transform:scale(.95)}
+.recrow{display:flex;align-items:center;gap:12px;padding:11px 18px;cursor:pointer}
+.recic{width:34px;height:34px;border-radius:11px;background:#f5efe4;display:flex;align-items:center;justify-content:center;color:#8a7f70;flex:none}
+.filterbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:9px;padding:10px 18px;background:rgba(247,243,236,.85);backdrop-filter:blur(14px);margin-top:4px}
+.fbtn{display:flex;align-items:center;gap:7px;height:38px;padding:0 14px;border-radius:12px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.14);font:600 12px 'Manrope';color:var(--ink);cursor:pointer;transition:.2s}
+.fbtn:active{transform:scale(.96)}
+.fbtn.on{background:var(--ink);color:#fff;box-shadow:none}
+.fcount{min-width:16px;height:16px;padding:0 4px;border-radius:8px;background:var(--ac);color:#fff;font:700 9px 'Manrope';display:flex;align-items:center;justify-content:center}
+.viewtog{margin-left:auto;display:flex;background:#fff;border-radius:11px;padding:3px;box-shadow:inset 0 0 0 1px rgba(140,120,90,.14)}
+.vtb{width:32px;height:30px;border-radius:8px;border:0;background:none;color:#a89c8a;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.vtb.on{background:var(--ink);color:#fff}
+.listcard{display:flex;gap:13px;background:#fff;border-radius:18px;padding:10px;box-shadow:0 12px 30px -20px rgba(80,58,30,.28),inset 0 0 0 1px rgba(140,120,90,.07);cursor:pointer;position:relative;transition:.25s}
+.listcard:active{transform:scale(.99)}
+.listimg{width:96px;height:96px;border-radius:14px;flex:none}
+.listinfo{flex:1;min-width:0;display:flex;flex-direction:column}
+/* bottom sheet */
+.sheetwrap{position:absolute;inset:0;z-index:70;background:rgba(35,28,16,.32);backdrop-filter:blur(3px);display:flex;flex-direction:column;justify-content:flex-end;animation:ain .25s}
+.sheet{background:#faf7f1;border-radius:30px 30px 0 0;max-height:84%;overflow-y:auto;padding:8px 20px 24px;box-shadow:0 -20px 50px rgba(40,28,12,.3);animation:slideup .4s cubic-bezier(.2,.9,.3,1);scrollbar-width:none}
+.sheet::-webkit-scrollbar{display:none}
+.ghandle{width:42px;height:5px;border-radius:3px;background:#d8cdb9;margin:6px auto 14px}
+.sheethd{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.sheett{font-family:'Marcellus',serif;font-size:21px}
+.clrlink{font:700 12px 'Manrope';color:var(--ac);background:none;border:0;cursor:pointer}
+.fgroup{padding:16px 0;border-bottom:1px solid rgba(140,120,90,.12)}
+.fglabel{font:700 13px 'Manrope';margin-bottom:12px}
+.rng{height:5px;border-radius:3px;background:#e6ddcc;position:relative;margin:18px 6px 8px}
+.rngfill{position:absolute;height:100%;border-radius:3px;background:var(--ink)}
+.rngnob{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.2),inset 0 0 0 2px var(--ink);transform:translate(-50%,-50%)}
+.swrow{display:flex;flex-wrap:wrap;gap:9px}
+.swatch{width:34px;height:34px;border-radius:11px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);transition:.2s;position:relative}
+.swatch.on{box-shadow:0 0 0 2px var(--ink),inset 0 0 0 2px #fff}
+.starpick{display:flex;gap:7px}
+.spk2{width:38px;height:36px;border-radius:11px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.14);display:flex;align-items:center;justify-content:center;gap:3px;font:700 12px 'Manrope';color:#6b6256;cursor:pointer}
+.spk2.on{background:var(--ink);color:#fff}
+.applybtn{width:100%;height:52px;border-radius:16px;border:0;background:var(--ink);color:#fff;font:700 14px 'Manrope';cursor:pointer;margin-top:18px;box-shadow:0 14px 30px -12px rgba(35,32,27,.5);transition:.2s}
+.applybtn:active{transform:scale(.98)}
+.sortopt{display:flex;align-items:center;justify-content:space-between;padding:14px 4px;border-bottom:1px solid rgba(140,120,90,.1);cursor:pointer;font:600 14px 'Manrope'}
+.sortrad{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 2px #d0c4b0}
+.sortopt.on .sortrad{box-shadow:inset 0 0 0 6px var(--ink)}
+@keyframes slideup{from{transform:translateY(100%)}to{transform:translateY(0)}}
+/* ===== product detail ===== */
+.pdmain{position:relative;height:340px;display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.pdbg{position:absolute;inset:0}
+.pdfloat{position:absolute;top:12px;right:14px;display:flex;flex-direction:column;gap:9px}
+.pdthumbs{display:flex;gap:9px;justify-content:center;padding:14px 0 4px}
+.pdthumb{width:50px;height:50px;border-radius:13px;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05);transition:.2s}
+.pdthumb.on{box-shadow:0 0 0 2px var(--ink)}
+.zoomtag{position:absolute;bottom:14px;left:14px;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.8);backdrop-filter:blur(6px);padding:6px 11px;border-radius:20px;font:600 11px 'Manrope';color:#6b6256}
+.pdbrand{font:700 11px 'Manrope';letter-spacing:.1em;text-transform:uppercase;color:var(--ac)}
+.pdtitle{font-family:'Marcellus',serif;font-size:26px;line-height:1.1;margin:6px 0}
+.pdrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pdrating{display:flex;align-items:center;gap:5px;background:#33a14d;color:#fff;font:700 12px 'Manrope';padding:3px 9px;border-radius:8px}
+.pdrating svg{color:#fff}
+.pdprice{font:800 26px 'Manrope';letter-spacing:-.02em}
+.pdmrp{font-size:15px;color:#b3a895;text-decoration:line-through}
+.pdoff{font:700 13px 'Manrope';color:#3f8a52}
+.taxnote{font-size:11px;color:#a89c8a}
+.deliverybox{display:flex;align-items:center;gap:12px;margin:16px 0;padding:14px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1)}
+.delic{width:42px;height:42px;border-radius:13px;background:#eef3e8;color:#3f8a52;display:flex;align-items:center;justify-content:center;flex:none}
+.couponcard{display:flex;align-items:center;gap:12px;padding:13px;border-radius:14px;border:1px dashed rgba(185,122,46,.5);background:rgba(185,122,46,.06);margin:0 0 4px}
+.couptag{margin-left:auto;font:700 12px 'Manrope';color:var(--ac);border:0;background:none;cursor:pointer}
+.vlabel{font:700 13px 'Manrope';margin:18px 0 11px;display:flex;align-items:center;justify-content:between}
+.packrow{display:flex;gap:10px;flex-wrap:wrap}
+.packchip{padding:11px 16px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.16);cursor:pointer;text-align:center;transition:.2s;min-width:78px}
+.packchip.on{background:var(--ink);color:#fff;box-shadow:none}
+.packw{font:700 14px 'Manrope'}
+.packp{font-size:11px;opacity:.7;margin-top:2px}
+.pdacc{border-top:1px solid rgba(140,120,90,.12)}
+.acchead{display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;font:700 14px 'Manrope'}
+.accbody{overflow:hidden;max-height:0;transition:max-height .4s cubic-bezier(.2,.8,.2,1);font-size:13px;color:#6b6256;line-height:1.7}
+.pdacc.open .accbody{max-height:600px;padding-bottom:16px}
+.accchev{transition:transform .35s}
+.pdacc.open .accchev{transform:rotate(180deg)}
+.specrow{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid rgba(140,120,90,.08);font-size:13px}
+.speck{color:#a89c8a}.specv{font-weight:600;color:var(--ink)}
+.review{padding:14px 0;border-bottom:1px solid rgba(140,120,90,.1)}
+.ravatar{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#46402f,#2e2922);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px 'Manrope'}
+.rstars{display:flex;gap:1px;color:#e0a93a}
+.qarow{display:flex;gap:11px;padding:13px 0;border-bottom:1px solid rgba(140,120,90,.1)}
+.qbadge{width:26px;height:26px;border-radius:9px;background:#f0eadd;color:var(--ink);font:800 12px 'Manrope';display:flex;align-items:center;justify-content:center;flex:none}
+.stickybuy{position:absolute;left:0;right:0;bottom:0;display:flex;gap:11px;padding:13px 16px 16px;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);box-shadow:0 -10px 30px -16px rgba(40,28,12,.3);z-index:30}
+.buyghost{flex:1;height:52px;border-radius:16px;border:1.5px solid var(--ink);background:#fff;color:var(--ink);font:700 14px 'Manrope';cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:.2s}
+.buyfill{flex:1;height:52px;border-radius:16px;border:0;background:var(--ink);color:#fff;font:700 14px 'Manrope';cursor:pointer;box-shadow:0 14px 28px -12px rgba(35,32,27,.55);transition:.2s}
+.buyghost:active,.buyfill:active{transform:scale(.97)}
+/* ===== cart ===== */
+.freeprog{margin:0 18px 4px;padding:14px 16px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1)}
+.fpbar{height:7px;border-radius:4px;background:#efe9df;overflow:hidden;margin-top:9px}
+.fpfill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--ac),#d9b483);transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.cartcard{display:flex;gap:13px;margin:0 18px;padding:12px;background:#fff;border-radius:18px;box-shadow:0 12px 30px -20px rgba(80,58,30,.28),inset 0 0 0 1px rgba(140,120,90,.07);position:relative}
+.cartimg{width:84px;height:84px;border-radius:14px;flex:none}
+.cqty{display:flex;align-items:center;gap:0;background:#f5efe4;border-radius:11px;overflow:hidden}
+.cqtb{width:30px;height:30px;border:0;background:none;color:var(--ink);font:700 16px 'Manrope';cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.15s}
+.cqtb:active{background:#e6ddcc}
+.cqn{min-width:26px;text-align:center;font:700 13px 'Manrope'}
+.cartx{position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:9px;border:0;background:#f5efe4;color:#a89c8a;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cartx:active{transform:scale(.85)}
+.linkrow{display:flex;gap:16px;margin-top:8px}
+.minilink{font:600 11px 'Manrope';color:#8a7f70;background:none;border:0;cursor:pointer;display:flex;align-items:center;gap:5px}
+.promoinput{display:flex;align-items:center;gap:10px;margin:0 18px;padding:5px 6px 5px 16px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.14)}
+.promoinput input{flex:1;border:0;outline:0;background:none;font:600 13px 'Manrope';letter-spacing:.05em;text-transform:uppercase}
+.promoapply{height:38px;padding:0 18px;border-radius:11px;border:0;background:var(--ink);color:#fff;font:700 12px 'Manrope';cursor:pointer}
+.bkdown{margin:0 18px;padding:16px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1)}
+.bkrow{display:flex;justify-content:space-between;padding:7px 0;font-size:13px;color:#6b6256}
+.bktot{display:flex;justify-content:space-between;padding-top:13px;margin-top:6px;border-top:1px solid rgba(140,120,90,.14);font:800 17px 'Manrope';color:var(--ink)}
+.savepill{color:#3f8a52;font-weight:700}
+.checkoutbar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:13px 16px 16px;background:rgba(255,255,255,.88);backdrop-filter:blur(20px);box-shadow:0 -10px 30px -16px rgba(40,28,12,.3);z-index:30}
+.cobtn{flex:1;height:54px;border-radius:16px;border:0;background:var(--ink);color:#fff;font:700 15px 'Manrope';cursor:pointer;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 14px 30px -12px rgba(35,32,27,.55);transition:.2s}
+.cobtn:active{transform:scale(.98)}
+.emptywrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:60px 30px;gap:8px}
+.emptyic{width:96px;height:96px;border-radius:32px;background:#fff;box-shadow:0 18px 40px -20px rgba(80,58,30,.35),inset 0 0 0 1px rgba(140,120,90,.1);display:flex;align-items:center;justify-content:center;color:#cabfac;margin-bottom:10px;animation:floaty 4s ease-in-out infinite}
+/* ===== checkout ===== */
+.steps{display:flex;align-items:center;padding:6px 24px 18px}
+.step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;flex:1}
+.stepdot{width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px #ddd2bf;color:#b3a895;display:flex;align-items:center;justify-content:center;font:800 12px 'Manrope';z-index:2;transition:.3s}
+.step.on .stepdot,.step.done .stepdot{background:var(--ink);color:#fff;box-shadow:none}
+.steplbl{font:600 10px 'Manrope';color:#a89c8a}
+.step.on .steplbl{color:var(--ink)}
+.stepline{position:absolute;top:15px;left:50%;width:100%;height:2px;background:#ddd2bf;z-index:1}
+.step.done .stepline{background:var(--ink)}
+.addrcard{display:flex;gap:13px;margin:0 18px 12px;padding:15px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);cursor:pointer;transition:.2s}
+.addrcard.on{box-shadow:0 0 0 2px var(--ink);background:#fbf8f2}
+.addrad{width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 2px #d0c4b0;flex:none;margin-top:2px;transition:.2s}
+.addrcard.on .addrad{box-shadow:inset 0 0 0 6px var(--ink)}
+.atag{font:700 10px 'Manrope';letter-spacing:.06em;text-transform:uppercase;color:var(--ac);background:rgba(185,122,46,.1);padding:3px 9px;border-radius:20px}
+.addaddr{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 18px 12px;height:50px;border-radius:16px;border:1.5px dashed rgba(140,120,90,.4);background:none;color:var(--ink);font:700 13px 'Manrope';cursor:pointer}
+.payopt{display:flex;align-items:center;gap:13px;margin:0 18px 11px;padding:15px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);cursor:pointer;transition:.2s}
+.payopt.on{box-shadow:0 0 0 2px var(--ink)}
+.payic{width:42px;height:42px;border-radius:13px;background:#f5efe4;display:flex;align-items:center;justify-content:center;color:var(--ink);flex:none}
+.payrad{margin-left:auto;width:20px;height:20px;border-radius:50%;box-shadow:inset 0 0 0 2px #d0c4b0;flex:none}
+.payopt.on .payrad{box-shadow:inset 0 0 0 6px var(--ink)}
+.trustrow{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;color:#8a7f70;font:600 11px 'Manrope'}
+.osumitem{display:flex;align-items:center;gap:12px;margin:0 18px 10px;padding:10px;border-radius:14px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1)}
+.osumimg{width:50px;height:50px;border-radius:12px;flex:none}
+.placebar{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:14px;padding:13px 16px 16px;background:rgba(255,255,255,.9);backdrop-filter:blur(20px);box-shadow:0 -10px 30px -16px rgba(40,28,12,.3);z-index:30}
+.confirmwrap{display:flex;flex-direction:column;align-items:center;text-align:center;padding:50px 30px 30px}
+.confirmcheck{width:108px;height:108px;border-radius:50%;background:linear-gradient(135deg,#33a14d,#2c8a42);display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 22px 44px -16px rgba(47,138,82,.6);margin-bottom:22px;animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+.confimg{width:46px;height:46px;border-radius:12px;flex:none}
+/* ===== orders ===== */
+.ordcard{margin:0 18px 14px;border-radius:20px;background:#fff;overflow:hidden;box-shadow:0 14px 36px -22px rgba(80,58,30,.3),inset 0 0 0 1px rgba(140,120,90,.08);cursor:pointer;transition:.25s}
+.ordcard:active{transform:scale(.99)}
+.ordhd{display:flex;align-items:center;justify-content:space-between;padding:15px 16px;border-bottom:1px solid rgba(140,120,90,.1)}
+.ordbody{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.ordimgs{display:flex}
+.ordimg{width:46px;height:46px;border-radius:12px;box-shadow:0 0 0 3px #fff;margin-left:-12px}
+.ordimg:first-child{margin-left:0}
+.ordprog{display:flex;align-items:center;gap:0;padding:0 16px 16px}
+.ordtl{padding:8px 18px 18px}
+.tlitem{display:flex;gap:14px;position:relative;padding-bottom:22px}
+.tldot{width:24px;height:24px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px #ddd2bf;display:flex;align-items:center;justify-content:center;flex:none;z-index:2;color:transparent}
+.tlitem.done .tldot{background:#33a14d;box-shadow:none;color:#fff}
+.tlitem.now .tldot{background:var(--ink);box-shadow:none;color:#fff}
+.tlline2{position:absolute;left:11px;top:24px;width:2px;height:calc(100% - 24px);background:#e6ddcc}
+.tlitem.done .tlline2{background:#33a14d}
+.ordbtns{display:flex;gap:11px;padding:0 18px 8px}
+.obtn{flex:1;height:46px;border-radius:14px;border:1.5px solid rgba(140,120,90,.25);background:#fff;color:var(--ink);font:700 13px 'Manrope';cursor:pointer;transition:.2s}
+.obtn.fill{background:var(--ink);color:#fff;border-color:var(--ink)}
+.obtn:active{transform:scale(.97)}
+/* ===== notifications ===== */
+.nrow{display:flex;gap:13px;margin:0 18px 10px;padding:14px;border-radius:18px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.08);position:relative;transition:.2s}
+.nrow.unread{background:#fbf8f2;box-shadow:inset 0 0 0 1px rgba(185,122,46,.25)}
+.nic{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex:none;color:#fff}
+.nicg{background:linear-gradient(135deg,#46402f,#6c5a3a)}
+.nico{background:linear-gradient(135deg,#33a14d,#2c8a42)}
+.nicp{background:linear-gradient(135deg,#b97a2e,#d9a14e)}
+.ndot{position:absolute;top:16px;right:16px;width:8px;height:8px;border-radius:50%;background:var(--ac)}
+.ntime{font-size:11px;color:#b3a895;margin-top:5px}
+/* ===== ADMIN extra ===== */
+.adtabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.adtab{padding:9px 16px;border-radius:11px;border:0;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12);font:600 12px 'Manrope';color:#6b6256;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:8px}
+.adtab.on{background:var(--ink);color:#fff;box-shadow:none}
+.adtabn{background:rgba(185,122,46,.14);color:var(--ac);font:700 10px 'Manrope';padding:1px 7px;border-radius:20px}
+.adtab.on .adtabn{background:rgba(255,255,255,.2);color:#fff}
+.prodcell{display:flex;align-items:center;gap:12px}
+.prodimg{width:42px;height:42px;border-radius:11px;flex:none}
+.pill{font:700 11px 'Manrope';padding:4px 11px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.pill.pub{color:#2f8a52;background:rgba(47,138,82,.1)}
+.pill.draft{color:#8a7f70;background:rgba(138,127,112,.12)}
+.pill.out{color:#c0432f;background:rgba(192,67,47,.1)}
+.stockn{font:700 13px 'Manrope'}
+.stocklow{color:#c0432f}
+.iconact{width:30px;height:30px;border-radius:9px;border:0;background:#f7f3ec;color:#8a7f70;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
+.iconact:hover{background:var(--ink);color:#fff}
+.slideover{position:absolute;inset:0;z-index:80;display:flex;justify-content:flex-end;background:rgba(35,28,16,.34);animation:ain .25s}
+.sopanel{width:480px;max-width:88%;background:#f7f3ec;height:100%;overflow-y:auto;box-shadow:-20px 0 60px rgba(40,28,12,.25);animation:slidein .35s cubic-bezier(.2,.9,.3,1);scrollbar-width:none}
+.sopanel::-webkit-scrollbar{display:none}
+.sohd{position:sticky;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:20px 24px;background:rgba(247,243,236,.9);backdrop-filter:blur(12px);border-bottom:1px solid rgba(140,120,90,.12)}
+.sobody{padding:22px 24px}
+@keyframes slidein{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.field{margin-bottom:16px}
+.flabel{font:700 11px 'Manrope';letter-spacing:.04em;text-transform:uppercase;color:#8a7f70;margin-bottom:7px;display:block}
+.input{width:100%;height:44px;border-radius:11px;border:0;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.16);padding:0 14px;font:500 13px 'Manrope';color:var(--ink);outline:0}
+.input:focus{box-shadow:inset 0 0 0 2px var(--ink)}
+textarea.input{height:84px;padding:12px 14px;resize:none}
+.frow{display:flex;gap:12px}.frow .field{flex:1}
+.imgrow{display:flex;gap:10px;flex-wrap:wrap}
+.imgtile{width:72px;height:72px;border-radius:13px;position:relative;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+.imgx{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;border:2px solid #f7f3ec;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer}
+.addimg{width:72px;height:72px;border-radius:13px;border:1.5px dashed rgba(140,120,90,.4);background:#fff;color:#a89c8a;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.sobar{position:sticky;bottom:0;display:flex;gap:12px;padding:16px 24px;background:rgba(247,243,236,.92);backdrop-filter:blur(12px);border-top:1px solid rgba(140,120,90,.12)}
+.varadd{display:flex;align-items:center;gap:8px;font:700 12px 'Manrope';color:var(--ac);background:none;border:0;cursor:pointer;margin-top:4px}
+.varchip{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:10px;background:#fff;box-shadow:inset 0 0 0 1px rgba(140,120,90,.16);font:600 12px 'Manrope';margin:0 8px 8px 0}
+/* settings */
+.setlayout{display:grid;grid-template-columns:230px 1fr;gap:20px}
+.setnav{display:flex;flex-direction:column;gap:3px}
+.setni{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;border:0;background:none;color:#6b6256;font:600 13px 'Manrope';cursor:pointer;text-align:left;transition:.2s}
+.setni:hover{background:#fff}
+.setni.on{background:#fff;color:var(--ink);box-shadow:0 8px 20px -14px rgba(80,58,30,.5)}
+.setni.on .seticx{color:var(--ac)}
+.setrow{display:flex;align-items:center;justify-content:space-between;padding:16px 0;border-bottom:1px solid rgba(140,120,90,.1)}
+.switch{width:46px;height:27px;border-radius:16px;background:#ddd2bf;position:relative;cursor:pointer;transition:.25s;flex:none}
+.switch.on{background:var(--ink)}
+.knob{position:absolute;top:3px;left:3px;width:21px;height:21px;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.2);transition:.25s}
+.switch.on .knob{left:22px}
+.seg{display:inline-flex;background:#f0eadd;border-radius:11px;padding:3px}
+.segi{padding:7px 15px;border-radius:8px;border:0;background:none;font:600 12px 'Manrope';color:#8a7f70;cursor:pointer}
+.segi.on{background:#fff;color:var(--ink);box-shadow:0 4px 10px -6px rgba(0,0,0,.3)}
+.roleav{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#46402f,#2e2922);color:#fff;display:flex;align-items:center;justify-content:center;font:700 12px 'Manrope'}
+.promogrid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:20px}
+.promocard{border-radius:16px;overflow:hidden;background:#fff;box-shadow:0 14px 34px -20px rgba(80,58,30,.26),inset 0 0 0 1px rgba(140,120,90,.07)}
+.promoban{height:120px;position:relative;color:#fff;display:flex;flex-direction:column;justify-content:flex-end;padding:14px}
+.promometa{padding:14px}
+.dragdot{display:flex;flex-direction:column;gap:3px}
+.dragdot span{width:4px;height:4px;border-radius:50%;background:#cabfac}
+.codecell{font:700 12px 'Manrope';letter-spacing:.05em;color:var(--ink);background:#f5efe4;padding:5px 11px;border-radius:8px;display:inline-block}
+.miniprog{height:5px;border-radius:3px;background:#efe9df;overflow:hidden;width:90px}
+.miniprogf{height:100%;background:var(--ac)}
+/* customers + analytics */
+.tierpill{font:700 10px 'Manrope';letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:20px}
+.tierpill.gold{color:#9a6a1e;background:rgba(224,169,58,.18)}
+.tierpill.silver{color:#6b7280;background:rgba(120,130,140,.15)}
+.tierpill.bronze{color:#9a6038;background:rgba(154,96,56,.14)}
+.segpill{font:700 11px 'Manrope';padding:3px 11px;border-radius:20px;color:#6b6256;background:#f0eadd;display:inline-block}
+.cartcell{display:inline-flex;align-items:center;gap:7px;background:#f5efe4;padding:4px 10px;border-radius:20px;font:700 11px 'Manrope';color:var(--ink)}
+.cartcell.empty{background:transparent;color:#b3a895;box-shadow:inset 0 0 0 1px rgba(140,120,90,.16)}
+.donutwrap{display:flex;align-items:center;gap:24px}
+.donut{width:158px;height:158px;border-radius:50%;flex:none;position:relative;box-shadow:0 12px 28px -14px rgba(80,58,30,.45)}
+.donuthole{position:absolute;inset:27px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.donutv{font:800 22px 'Manrope';letter-spacing:-.02em}
+.legi{display:flex;align-items:center;gap:10px;padding:7px 0}
+.legdot{width:11px;height:11px;border-radius:4px;flex:none}
+.legname{font:600 12px 'Manrope';flex:1;color:#5b5246}
+.legpct{font:800 13px 'Manrope'}
+.funrow{margin-bottom:12px}
+.funmeta{display:flex;justify-content:space-between;font:600 11px 'Manrope';color:#8a7f70;margin-bottom:5px}
+.funbar{height:34px;border-radius:9px;background:linear-gradient(90deg,var(--ac),#d9b483);display:flex;align-items:center;padding:0 13px;color:#fff;font:800 12px 'Manrope';box-shadow:0 6px 14px -8px rgba(185,122,46,.6);transition:width .8s cubic-bezier(.2,.8,.2,1);min-width:92px}
+.toprow{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(140,120,90,.09)}
+.toprank{width:24px;height:24px;border-radius:8px;background:#f0eadd;color:var(--ink);font:800 12px 'Manrope';display:flex;align-items:center;justify-content:center;flex:none}
+.topbar2{height:5px;border-radius:3px;background:#efe9df;overflow:hidden;margin-top:6px}
+.topbar2f{height:100%;background:var(--ac);border-radius:3px}
+.custprofile{display:flex;gap:14px;align-items:center;padding:18px;border-radius:16px;background:linear-gradient(135deg,#2e2922,#46402f);color:#fff;margin-bottom:18px}
+.custav{width:54px;height:54px;border-radius:16px;background:rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center;font:700 19px 'Manrope';flex:none}
+.cstatrow{display:flex;gap:10px;margin-bottom:18px}
+.cstatcell{flex:1;background:#fff;border-radius:13px;padding:13px;box-shadow:inset 0 0 0 1px rgba(140,120,90,.1)}
+.cstatv{font:800 17px 'Manrope'}.cstatk{font-size:10px;color:#a89c8a;margin-top:3px;letter-spacing:.04em;text-transform:uppercase}
+.cartlive{border-radius:14px;background:#fbf8f2;box-shadow:inset 0 0 0 1px rgba(185,122,46,.22);padding:14px;margin-bottom:18px}
+.cartliveh{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+</style></helmet><div class="stage {{ stageCls }}" style="--ac:{{ accent }}"><div class="toggle"><button class="tgi {{ custOn }}" onClick="{{ setCustomer }}"><span class="tgdot"></span>Customer App</button><button class="tgi {{ adminOn }}" onClick="{{ setAdmin }}"><span class="tgdot"></span>Admin Dashboard</button></div><sc-if value="{{ isCustomer }}" hint-placeholder-val="{{ true }}"><div class="phwrap"><div class="phone"><div class="pnotch"></div><div class="statusbar"><span>9:41</span><div class="sbicn"><svg width="18" height="12" viewBox="0 0 18 12"><rect x="0" y="7" width="3" height="5" rx="1" fill="currentColor"/><rect x="5" y="4" width="3" height="8" rx="1" fill="currentColor"/><rect x="10" y="1" width="3" height="11" rx="1" fill="currentColor"/><rect x="15" y="0" width="3" height="12" rx="1" fill="currentColor" opacity=".35"/></svg><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 10.5l.01-.01M2 5a9 9 0 0112 0M4.5 7.5a5.5 5.5 0 017 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg width="26" height="13" viewBox="0 0 26 13"><rect x="1" y="1" width="21" height="11" rx="3" stroke="currentColor" stroke-width="1" fill="none"/><rect x="3" y="3" width="15" height="7" rx="1.5" fill="currentColor"/><rect x="23" y="4" width="2" height="5" rx="1" fill="currentColor"/></svg></div></div><div class="phView"><sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}"><div class="scr"><div class="phhead"><button class="loc" style="border:0;background:none;text-align:left;cursor:pointer;padding:0"><span class="loclbl">Deliver to</span><span class="locval">Bandra, Mumbai 400050<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></span></button><div class="fx gap8"><button class="iconbtn" onClick="{{ goNotif }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9a6 6 0 0112 0c0 5 2 6 2 6H4s2-1 2-6z" stroke-linejoin="round"/><path d="M10 20a2 2 0 004 0" stroke-linecap="round"/></svg><span class="dot"></span></button><button class="iconbtn" onClick="{{ goCart }}"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8h12l-1 11a1 1 0 01-1 1H8a1 1 0 01-1-1z" stroke-linejoin="round"/><path d="M9 8a3 3 0 016 0" stroke-linecap="round"/></svg></button></div></div><div class="pad"><div class="searchbar" onClick="{{ goShop }}"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>Search almonds, saffron, gifts…<button class="micbtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke-linecap="round"/></svg></button></div></div><div class="bcar"><sc-for list="{{ banners }}" as="b" hint-placeholder-count="3"><div class="banner" style="background:{{ b.g }}"><div class="banorb"></div><div class="bantag">{{ b.tag }}</div><div class="bantitle">{{ b.title }}</div><div class="bansub">{{ b.sub }}</div><button class="banbtn">Shop now<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></sc-for></div><div class="bdots"><sc-for list="{{ banners }}" as="b" hint-placeholder-count="3"><span class="bdot {{ b.on }}"></span></sc-for></div><div class="flash"><div class="flashL"><div class="fx ac gap8" style="font:800 14px Manrope"><svg width="15" height="15" viewBox="0 0 24 24" fill="#e9c987"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>Flash Sale</div><span class="tiny" style="opacity:.7;margin-top:4px">Premium grades, lowest prices</span></div><div class="timer"><span class="tbox">02</span><span class="tsep">:</span><span class="tbox">14</span><span class="tsep">:</span><span class="tbox">56</span></div></div><div class="sect"><div class="shead"><div><div class="stitle">Daily Deals</div><div class="ssub">Handpicked savings, refreshed daily</div></div><button class="slink" onClick="{{ goShop }}">See all</button></div><div class="prow"><sc-for list="{{ deals }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="row" hint-size="166px,252px"></dc-import></sc-for></div></div><div class="sect"><div class="shead"><div class="stitle">Shop by Category</div><button class="slink" onClick="{{ goShop }}">All</button></div><div class="catgrid"><sc-for list="{{ cats }}" as="c" hint-placeholder-count="8"><button class="cat" onClick="{{ c.open }}"><div class="catimg" style="background:{{ c.grad }}"></div><span class="catname">{{ c.name }}</span></button></sc-for></div></div><div class="sect"><div class="shead"><div class="stitle">Bestsellers</div><button class="slink" onClick="{{ goShop }}">More</button></div><div class="prow"><sc-for list="{{ best }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="row" hint-size="166px,252px"></dc-import></sc-for></div></div><div class="sponsor" style="background:linear-gradient(120deg,#3d4a36,#6c7a4f)"><span class="adlabel">Sponsored</span><div style="font-family:Marcellus,serif;font-size:22px">The Wellness Edit</div><div style="font-size:12px;opacity:.85;margin-top:3px">Seeds, berries &amp; superfoods · up to 25% off</div></div><div class="sect"><div class="shead"><div class="stitle">New Arrivals</div><button class="slink">Fresh in</button></div><div class="g2"><sc-for list="{{ neu }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div></div><div class="sect"><div class="shead"><div class="stitle">Recently Viewed</div></div><div class="prow"><sc-for list="{{ recently }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="row" hint-size="166px,252px"></dc-import></sc-for></div></div><div style="height:14px"></div></div></sc-if><sc-if value="{{ isAccount }}" hint-placeholder-val="x"><div class="scr"><div class="scrhead"><div class="scrtitle">Account</div></div><div class="profcard"><div class="banorb"></div><div class="fx ac gap12"><div class="avatar">AS</div><div style="flex:1"><div style="font:800 18px Manrope">{{ user.name }}</div><div style="font-size:12px;opacity:.8;margin-top:2px">{{ user.email }}</div></div><span class="tier">{{ user.tier }}</span></div><div class="fx" style="margin-top:18px;border-top:1px solid rgba(255,255,255,.14);padding-top:14px"><div class="pstat"><div class="pstatv">{{ user.orders }}</div><div class="pstatk">Orders</div></div><div class="pstat"><div class="pstatv">{{ user.wish }}</div><div class="pstatk">Wishlist</div></div><div class="pstat"><div class="pstatv">{{ user.points }}</div><div class="pstatk">Reward Points</div></div></div></div><div class="mlist"><div class="mrow" onClick="{{ goOrders }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 4h9l3 3v13a1 1 0 01-1 1H6a1 1 0 01-1-1V5a1 1 0 011-1z" stroke-linejoin="round"/><path d="M9 13l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="mlabel">My Orders</div><div class="msub">Track, return or reorder</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div><div class="mrow" onClick="{{ goWish }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20s-7-4.5-9-8.5C1.5 8 3.5 5 7 5c2 0 3.3 1.4 4 2.4C11.7 6.4 13 5 15 5c3.5 0 5.5 3 4 6.5C19 15.5 12 20 12 20z" stroke-linejoin="round"/></svg></div><div><div class="mlabel">Wishlist</div><div class="msub">{{ user.wish }} saved items</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div><div class="mrow" onClick="{{ noop }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z" stroke-linejoin="round"/><circle cx="12" cy="10" r="2.4"/></svg></div><div><div class="mlabel">Addresses</div><div class="msub">2 saved addresses</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div><div class="mrow" onClick="{{ noop }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18" stroke-linecap="round"/></svg></div><div><div class="mlabel">Payment Methods</div><div class="msub">Cards, UPI &amp; wallets</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div><div class="mrow" onClick="{{ goNotif }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9a6 6 0 0112 0c0 5 2 6 2 6H4s2-1 2-6z" stroke-linejoin="round"/><path d="M10 20a2 2 0 004 0" stroke-linecap="round"/></svg></div><div><div class="mlabel">Notifications</div><div class="msub">Offers &amp; order updates</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div><div class="mrow" onClick="{{ noop }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 18l1-3a7 7 0 1112 0l1 3a1 1 0 01-1 1H6a1 1 0 01-1-1z" stroke-linejoin="round"/></svg></div><div><div class="mlabel">Help &amp; Support</div><div class="msub">Chat with us, FAQs</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div><div class="mrow" onClick="{{ noop }}" style="border-bottom:0"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2M6 6l1.5 1.5M16.5 16.5L18 18M18 6l-1.5 1.5M7.5 16.5L6 18" stroke-linecap="round"/></svg></div><div><div class="mlabel">Settings</div><div class="msub">Language, privacy, theme</div></div><svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div></div><button class="logout">Log Out</button><div style="height:14px"></div></div></sc-if><sc-if value="{{ isShop }}" hint-placeholder-val="x"><div class="scr"><div class="topbar"><div class="topttl">Shop</div></div><div class="shopsearch"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a89c8a" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg><input placeholder="Search almonds, saffron, gifts…"/><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke-linecap="round"/></svg></div><div class="sectlabel">Recent searches</div><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><div class="recrow"><div class="recic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 7v5l3 2" stroke-linecap="round"/><circle cx="12" cy="12" r="8.5"/></svg></div><span class="fs14" style="flex:1;font-weight:500">{{ r }}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cabfac" stroke-width="1.8"><path d="M17 7L7 17M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></sc-for><div class="sectlabel">Popular right now</div><div class="poprow"><sc-for list="{{ populars }}" as="t" hint-placeholder-count="6"><span class="tagchip">{{ t }}</span></sc-for></div><div class="chiprow" style="margin-top:16px"><sc-for list="{{ shopCats }}" as="c" hint-placeholder-count="6"><button class="chip {{ c.cls }}" onClick="{{ c.sel }}">{{ c.name }}</button></sc-for></div><div class="filterbar"><button class="fbtn" onClick="{{ openFilter }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18M6 12h12M10 19h4" stroke-linecap="round"/></svg>Filters<sc-if value="{{ filterCountStr }}" hint-placeholder-val="x"><span class="fcount">{{ filterCountStr }}</span></sc-if></button><button class="fbtn" onClick="{{ openFilter }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v16M7 20l-3-3M7 4l3 3M17 20V4M17 4l-3 3M17 20l3-3" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ sortLabel }}</button><div class="viewtog"><button class="{{ vgCls }}" onClick="{{ toggleGrid }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></button><button class="{{ vlCls }}" onClick="{{ toggleList }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg></button></div></div><div class="fx jb" style="padding:0 18px 10px"><span class="tiny muted">{{ shopCount }} products found</span></div><sc-if value="{{ viewGrid }}" hint-placeholder-val="{{ true }}"><div class="g2"><sc-for list="{{ shopProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div></sc-if><sc-if value="{{ viewList }}" hint-placeholder-val="x"><div style="display:flex;flex-direction:column;gap:13px;padding:0 18px"><sc-for list="{{ shopProds }}" as="item" hint-placeholder-count="6"><div class="listcard" onClick="{{ item.open }}"><div class="listimg" style="background:{{ item.grad }}"></div><div class="listinfo"><span class="phlab" style="align-self:flex-start">{{ item.cat }}</span><div class="pname" style="height:auto;margin-top:5px">{{ item.name }}</div><div class="rrow fx ac gap8" style="margin-top:6px"><span class="rate fx ac"><svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg>{{ item.r }}</span><span class="muted fs11">({{ item.rev }})</span></div><div class="prow2 fx ac gap8" style="margin-top:auto"><span class="price">{{ item.price }}</span><span class="mrp">{{ item.mrp }}</span><span class="disc">{{ item.disc }}%</span></div></div><button class="qadd" onClick="{{ item.add }}" style="bottom:12px;right:12px">+</button></div></sc-for></div></sc-if><div style="height:20px"></div></div></sc-if><sc-if value="{{ isProduct }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="position:absolute;left:0;right:0;top:0;z-index:12;background:none"><button class="backbtn" onClick="{{ goShop }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div style="flex:1"></div><button class="backbtn" onClick="{{ goCart }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l-1 11a1 1 0 01-1 1H8a1 1 0 01-1-1z" stroke-linejoin="round"/><path d="M9 8a3 3 0 016 0" stroke-linecap="round"/></svg></button></div><div class="pdmain"><div class="pdbg" style="background:{{ galMain }}"></div><div class="zoomtag"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4M11 8v6M8 11h6" stroke-linecap="round"/></svg>Tap to zoom</div></div><div class="pdthumbs"><sc-for list="{{ gallery }}" as="g" hint-placeholder-count="4"><div class="{{ g.cls }}" style="background:{{ g.grad }}" onClick="{{ g.sel }}"></div></sc-for></div><div class="pad" style="margin-top:8px"><div class="pdbrand">{{ prod.brand }}</div><div class="pdtitle">{{ prod.name }}</div><div class="pdrow"><span class="pdrating"><svg viewBox="0 0 24 24" width="11" height="11" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg>{{ prod.r }}</span><span class="muted fs12">{{ prod.rev }} ratings</span><span style="color:#cabfac">·</span><span class="fs12" style="color:#33a14d;font-weight:700">{{ prod.stock }}</span></div><div class="pdrow" style="margin-top:14px"><span class="pdprice">{{ prod.price }}</span><span class="pdmrp">{{ prod.mrp }}</span><span class="pdoff">{{ prod.disc }}% off</span></div><div class="taxnote">Inclusive of all taxes</div><div class="deliverybox"><div class="delic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div><div style="flex:1"><div style="font:700 13px Manrope">Free delivery by Tomorrow</div><div class="tiny muted">to Bandra, Mumbai 400050 · <span style="color:var(--ac);font-weight:700">Change</span></div></div></div><div class="couponcard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><path d="M4 8l8-4 8 4v8l-8 4-8-4z" stroke-linejoin="round"/></svg><div><div style="font:700 12px Manrope">Save ₹100 with FRESH100</div><div class="tiny muted">On orders above ₹999</div></div><button class="couptag">Apply</button></div><div class="vlabel">{{ prod.vlabel }}</div><div class="packrow"><sc-for list="{{ packs }}" as="pk" hint-placeholder-count="3"><button class="{{ pk.cls }}" onClick="{{ pk.sel }}"><div class="packw">{{ pk.w }}</div><div class="packp">{{ pk.price }}</div></button></sc-for></div><div class="vlabel">Highlights</div><div style="display:flex;flex-direction:column;gap:10px"><sc-for list="{{ highlights }}" as="h" hint-placeholder-count="4"><div class="fx gap10" style="align-items:flex-start"><span style="width:20px;height:20px;border-radius:7px;background:#eef3e8;color:#33a14d;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5 9-10" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="fs13" style="color:#5b5246;line-height:1.45">{{ h }}</span></div></sc-for></div></div><div class="pad" style="margin-top:14px"><div class="{{ descCls }}"><div class="acchead" onClick="{{ toggleDesc }}">Product description<svg class="accchev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></div><div class="accbody">Our {{ prod.name }} are sourced from trusted growers and hand-sorted for size, colour and crunch. Naturally rich in nutrients, they make the perfect everyday snack, festive gift or recipe ingredient. Stored in food-grade, resealable packaging to preserve freshness from our shelf to yours.</div></div><div class="{{ specsCls }}"><div class="acchead" onClick="{{ toggleSpecs }}">Specifications<svg class="accchev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></div><div class="accbody"><sc-for list="{{ specs }}" as="s" hint-placeholder-count="6"><div class="specrow"><span class="speck">{{ s.k }}</span><span class="specv">{{ s.v }}</span></div></sc-for></div></div><div class="{{ shipCls }}"><div class="acchead" onClick="{{ toggleShip }}">Returns &amp; delivery<svg class="accchev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></div><div class="accbody">Free delivery on orders above ₹999. Easy 7-day returns if the seal is intact and the product is unused. Refunds are processed to your original payment method within 3–5 business days.</div></div></div><div class="sect"><div class="shead"><div class="stitle" style="font-size:18px">Ratings &amp; Reviews</div><button class="slink">Write</button></div><div class="pad"><div class="fx ac gap16" style="margin-bottom:10px"><div style="font-family:Marcellus;font-size:42px;line-height:1">{{ prod.r }}</div><div><div class="rstars"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg></div><div class="tiny muted" style="margin-top:3px">{{ prod.rev }} verified ratings</div></div></div><sc-for list="{{ reviews }}" as="rv" hint-placeholder-count="3"><div class="review"><div class="fx ac gap10"><div class="ravatar">{{ rv.av }}</div><div style="flex:1"><div style="font:700 13px Manrope">{{ rv.n }}</div><div class="tiny muted">{{ rv.d }}</div></div><span class="pdrating" style="padding:2px 7px"><svg viewBox="0 0 24 24" width="10" height="10" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg>{{ rv.r }}</span></div><div class="fs13" style="color:#6b6256;line-height:1.5;margin-top:8px">{{ rv.t }}</div></div></sc-for></div></div><div class="sect"><div class="shead"><div class="stitle" style="font-size:18px">Questions &amp; Answers</div></div><div class="pad"><sc-for list="{{ qa }}" as="q" hint-placeholder-count="2"><div class="qarow"><span class="qbadge">Q</span><div><div class="fs13" style="font-weight:700">{{ q.q }}</div><div class="fs13" style="color:#6b6256;margin-top:5px;line-height:1.45">{{ q.a }}</div></div></div></sc-for></div></div><div class="sect"><div class="shead"><div class="stitle" style="font-size:18px">Frequently bought together</div></div><div class="prow"><sc-for list="{{ related }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="row" hint-size="166px,252px"></dc-import></sc-for></div></div><div style="height:20px"></div></div></sc-if><sc-if value="{{ isCart }}" hint-placeholder-val="x"><div class="scr" style="padding-bottom:96px"><div class="topbar"><div class="topttl">Cart</div><span class="muted fs13" style="margin-left:auto">{{ cartCount }} items</span></div><sc-if value="{{ cartEmpty }}" hint-placeholder-val="x"><div class="emptywrap"><div class="emptyic"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 8h12l-1 11a1 1 0 01-1 1H8a1 1 0 01-1-1z" stroke-linejoin="round"/><path d="M9 8a3 3 0 016 0" stroke-linecap="round"/></svg></div><div style="font-family:Marcellus;font-size:23px">Your cart is empty</div><div class="muted fs13" style="max-width:230px;line-height:1.5">Discover premium nuts, dates and gift boxes made for every occasion.</div><button class="applybtn" style="width:auto;padding:0 30px;margin-top:16px" onClick="{{ goShop }}">Start shopping</button></div></sc-if><sc-if value="{{ showCartBar }}" hint-placeholder-val="x"><div><div class="freeprog"><div class="fx jb ac"><span class="fs13" style="font-weight:600">{{ fcartNote }}</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></div><div class="fpbar"><div class="fpfill" style="width:{{ cartProgStr }}"></div></div></div><div style="display:flex;flex-direction:column;gap:13px;margin-top:14px"><sc-for list="{{ cartItems }}" as="item" hint-placeholder-count="3"><div class="cartcard"><div class="cartimg" style="background:{{ item.grad }}"></div><div style="flex:1;min-width:0"><span class="phlab" style="display:inline-block">{{ item.cat }}</span><div class="pname" style="height:auto;margin:5px 0 2px">{{ item.name }}</div><div class="fx ac gap8"><span class="price" style="font-size:14px">{{ item.unit }}</span><span class="tiny muted">· {{ item.cat }}</span></div><div class="fx ac jb" style="margin-top:11px"><div class="cqty"><button class="cqtb" onClick="{{ item.dec }}">−</button><span class="cqn">{{ item.qty }}</span><button class="cqtb" onClick="{{ item.inc }}">+</button></div><span style="font:800 15px Manrope">{{ item.line }}</span></div></div><button class="cartx" onClick="{{ item.rm }}"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div></sc-for></div><div class="sectlabel" style="margin-top:18px">Have a coupon?</div><div class="promoinput"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><path d="M4 8l8-4 8 4v8l-8 4-8-4z" stroke-linejoin="round"/></svg><input placeholder="ENTER PROMO CODE"/><button class="promoapply">Apply</button></div><sc-if value="{{ hasWish }}" hint-placeholder-val="x"><div class="sectlabel" style="margin-top:18px">Saved for later</div><div class="prow"><sc-for list="{{ savedItems }}" as="item" hint-placeholder-count="2"><div class="pcard" style="width:152px"><div class="pimg" style="background:{{ item.grad }};height:104px"></div><div class="pinfo"><div class="pname">{{ item.name }}</div><div class="price" style="font-size:14px;margin-top:6px">{{ item.price }}</div></div><button class="qadd" onClick="{{ item.mv }}" style="bottom:10px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8h12l-1 9H7zM9 8a3 3 0 016 0" stroke-linejoin="round"/></svg></button></div></sc-for></div></sc-if><div class="sectlabel" style="margin-top:14px">Bill details</div><div class="bkdown"><div class="bkrow"><span>Item total</span><span>{{ cartSub }}</span></div><div class="bkrow"><span>Discount</span><span class="savepill">− {{ cartSave }}</span></div><div class="bkrow"><span>Delivery</span><span>{{ cartShip }}</span></div><div class="bkrow"><span>Taxes &amp; charges</span><span>Included</span></div><div class="bktot"><span>Total payable</span><span>{{ cartTotal }}</span></div></div><div style="height:14px"></div></div></sc-if></div></sc-if><sc-if value="{{ isCheckout }}" hint-placeholder-val="x"><div class="scr" style="padding-bottom:96px"><div class="topbar"><button class="backbtn" onClick="{{ coBack }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl">Checkout</div></div><sc-if value="{{ showPlaceBar }}" hint-placeholder-val="{{ true }}"><div><div class="steps"><sc-for list="{{ coSteps }}" as="s" hint-placeholder-count="3"><div class="{{ s.cls }}"><sc-if value="{{ s.notLast }}" hint-placeholder-val="x"><div class="stepline"></div></sc-if><div class="stepdot">{{ s.num }}</div><div class="steplbl">{{ s.lbl }}</div></div></sc-for></div><sc-if value="{{ coIsAddr }}" hint-placeholder-val="x"><div><div class="sectlabel">Delivery address</div><sc-for list="{{ addresses }}" as="a" hint-placeholder-count="2"><div class="{{ a.cls }}" onClick="{{ a.sel }}"><div class="addrad"></div><div style="flex:1"><div class="fx ac gap8"><span class="atag">{{ a.tag }}</span><span style="font:700 13px Manrope">{{ a.name }}</span></div><div class="fs13" style="color:#6b6256;margin-top:6px;line-height:1.5">{{ a.line }}</div><div class="tiny muted" style="margin-top:5px">{{ a.phone }}</div></div></div></sc-for><button class="addaddr"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add new address</button><div class="pad"><div class="field"><label class="flabel">Delivery instructions (optional)</label><textarea class="input" placeholder="e.g. Leave at the door, call on arrival"></textarea></div></div></div></sc-if><sc-if value="{{ coIsPay }}" hint-placeholder-val="x"><div><div class="sectlabel">Payment method</div><sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="5"><div class="{{ m.cls }}" onClick="{{ m.sel }}"><div class="payic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18" stroke-linecap="round"/></svg></div><div><div style="font:700 13px Manrope">{{ m.label }}</div><div class="tiny muted">{{ m.sub }}</div></div><div class="payrad"></div></div></sc-for><div class="pad"><div class="couponcard" style="margin-top:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><path d="M4 8l8-4 8 4v8l-8 4-8-4z" stroke-linejoin="round"/></svg><div><div style="font:700 12px Manrope">FRESH100 applied</div><div class="tiny muted">You saved ₹100 on this order</div></div><span class="atag" style="margin-left:auto">−₹100</span></div></div></div></sc-if><sc-if value="{{ coIsReview }}" hint-placeholder-val="x"><div><div class="sectlabel">Review your order</div><sc-for list="{{ cartItems }}" as="item" hint-placeholder-count="3"><div class="osumitem"><div class="osumimg" style="background:{{ item.grad }}"></div><div style="flex:1;min-width:0"><div class="fs13" style="font-weight:600">{{ item.name }}</div><div class="tiny muted">{{ item.cat }} · Qty {{ item.qty }}</div></div><span style="font:800 14px Manrope">{{ item.line }}</span></div></sc-for><div class="bkdown" style="margin:14px 18px 0"><div class="bkrow"><span>Item total</span><span>{{ cartSub }}</span></div><div class="bkrow"><span>Discount</span><span class="savepill">− {{ cartSave }}</span></div><div class="bkrow"><span>Delivery</span><span>{{ cartShip }}</span></div><div class="bktot"><span>Total payable</span><span>{{ cartTotal }}</span></div></div><div class="trustrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>100% secure payment · easy 7-day returns</div></div></sc-if></div></sc-if><sc-if value="{{ coIsDone }}" hint-placeholder-val="x"><div class="confirmwrap"><div class="confirmcheck"><svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M5 12l5 5 9-11" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="font-family:Marcellus;font-size:27px">Order Confirmed</div><div class="muted fs13" style="margin-top:8px;max-width:250px;line-height:1.5">Thank you, Aarav. Your order <b style="color:var(--ink)">VT-10499</b> is being prepared with care.</div><div class="card" style="width:100%;padding:17px;margin-top:24px;text-align:left"><div class="fx jb ac"><span class="muted fs13">Order total</span><span style="font:800 17px Manrope">{{ cartTotal }}</span></div><div class="fx jb ac" style="margin-top:12px"><span class="muted fs13">Estimated delivery</span><span style="font-weight:700">Tomorrow, by 7 PM</span></div><div class="fx jb ac" style="margin-top:12px"><span class="muted fs13">Payment</span><span style="font-weight:700">UPI · Paid</span></div></div><button class="cobtn" style="margin-top:24px;width:100%" onClick="{{ goOrders }}">Track Order</button><button class="minilink" style="margin-top:16px;justify-content:center" onClick="{{ goHome }}">Continue shopping</button></div></sc-if></div></sc-if><sc-if value="{{ isOrders }}" hint-placeholder-val="x"><div class="scr"><sc-if value="{{ ordList }}" hint-placeholder-val="{{ true }}"><div><div class="scrhead"><div class="scrtitle">My Orders</div></div><sc-for list="{{ orders }}" as="o" hint-placeholder-count="3"><div class="ordcard" onClick="{{ o.open }}"><div class="ordhd"><div><div style="font:800 13px Manrope">{{ o.id }}</div><div class="tiny muted">{{ o.date }} · {{ o.count }}</div></div><span class="st {{ o.statusc }}"><span class="stipdot"></span>{{ o.status }}</span></div><div class="ordbody"><div class="ordimgs"><sc-for list="{{ o.imgs }}" as="g" hint-placeholder-count="2"><div class="ordimg" style="background:{{ g }}"></div></sc-for></div><div style="flex:1;min-width:0"><div class="fs13" style="font-weight:600">{{ o.eta }}</div><div class="tiny muted" style="margin-top:2px">Total {{ o.total }}</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#cabfac" stroke-width="2"><path d="M9 6l6 6-6 6" stroke-linecap="round"/></svg></div></div></sc-for><div style="height:14px"></div></div></sc-if><sc-if value="{{ selOrder }}" hint-placeholder-val="x"><div><div class="topbar"><button class="backbtn" onClick="{{ backOrders }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl">{{ selOrder.id }}</div></div><div class="pad"><span class="st {{ selOrder.statusc }}"><span class="stipdot"></span>{{ selOrder.status }}</span><div style="font-family:Marcellus;font-size:21px;margin-top:10px">{{ selOrder.eta }}</div></div><div class="ordtl" style="margin-top:14px"><sc-for list="{{ selOrder.tl }}" as="t" hint-placeholder-count="5"><div class="{{ t.cls }}"><div class="tldot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tlline2"></div><div><div class="fs13" style="font-weight:600">{{ t.l }}</div><div class="tiny muted">{{ t.t }}</div></div></div></sc-for></div><div class="sectlabel">Items in this order</div><div style="padding:0 18px;display:flex;flex-direction:column;gap:10px"><sc-for list="{{ selOrder.items }}" as="it" hint-placeholder-count="2"><div class="osumitem" style="margin:0"><div class="osumimg" style="background:{{ it.grad }}"></div><div style="flex:1;min-width:0"><div class="fs13" style="font-weight:600">{{ it.name }}</div><div class="tiny muted">{{ it.v }} · Qty {{ it.qty }}</div></div><span style="font:800 14px Manrope">{{ it.price }}</span></div></sc-for></div><div class="bkdown" style="margin-top:16px"><div class="bkrow"><span>Order total</span><span style="font-weight:700;color:var(--ink)">{{ selOrder.total }}</span></div><div class="bkrow"><span>Payment</span><span>UPI · Paid</span></div></div><div class="ordbtns" style="margin-top:16px"><button class="obtn">Need help?</button><button class="obtn fill">Reorder</button></div><div style="height:16px"></div></div></sc-if></div></sc-if><sc-if value="{{ isNotif }}" hint-placeholder-val="x"><div class="scr"><div class="topbar"><button class="backbtn" onClick="{{ goHome }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl">Notifications</div><button class="minilink" style="margin-left:auto">Mark all read</button></div><sc-for list="{{ notifGroups }}" as="grp" hint-placeholder-count="2"><div class="sectlabel">{{ grp.label }}</div><sc-for list="{{ grp.items }}" as="n" hint-placeholder-count="3"><div class="{{ n.rowCls }}"><div class="{{ n.cls }}"><sc-if value="{{ n.isO }}" hint-placeholder-val="x"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></sc-if><sc-if value="{{ n.isP }}" hint-placeholder-val="x"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8l8-4 8 4v8l-8 4-8-4z" stroke-linejoin="round"/></svg></sc-if><sc-if value="{{ n.isG }}" hint-placeholder-val="x"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M4 13h16M12 9v11M8 9a2.5 2.5 0 010-5c2 0 4 5 4 5M16 9a2.5 2.5 0 000-5c-2 0-4 5-4 5" stroke-linejoin="round"/></svg></sc-if></div><div style="flex:1;min-width:0"><div style="font:700 13px Manrope">{{ n.title }}</div><div class="fs13" style="color:#6b6256;margin-top:3px;line-height:1.45">{{ n.body }}</div><div class="ntime">{{ n.time }}</div></div><sc-if value="{{ n.unread }}" hint-placeholder-val="x"><span class="ndot"></span></sc-if></div></sc-for></sc-for><div style="height:14px"></div></div></sc-if><sc-if value="{{ isWish }}" hint-placeholder-val="x"><div class="scr"><div class="topbar"><button class="backbtn" onClick="{{ goAccount }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl">Wishlist</div></div><sc-if value="{{ wishEmpty }}" hint-placeholder-val="x"><div class="emptywrap"><div class="emptyic"><svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 20s-7-4.5-9-8.5C1.5 8 3.5 5 7 5c2 0 3.3 1.4 4 2.4C11.7 6.4 13 5 15 5c3.5 0 5.5 3 4 6.5C19 15.5 12 20 12 20z" stroke-linejoin="round"/></svg></div><div style="font-family:Marcellus;font-size:23px">No saved items yet</div><div class="muted fs13" style="max-width:230px;line-height:1.5">Tap the heart on any product to save it here for later.</div><button class="applybtn" style="width:auto;padding:0 30px;margin-top:16px" onClick="{{ goShop }}">Explore products</button></div></sc-if><sc-if value="{{ hasWish }}" hint-placeholder-val="x"><div class="g2"><sc-for list="{{ wishProds }}" as="item" hint-placeholder-count="2"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div></sc-if><div style="height:16px"></div></div></sc-if><div data-anchor="cust-end"></div></div><sc-if value="{{ showFCart }}" hint-placeholder-val="x"><div class="fcart"><div><div style="font:800 14px Manrope">{{ cartCount }} items · {{ cartTotal }}</div><div class="tiny" style="opacity:.7">{{ fcartNote }}</div></div><button class="fcbtn" onClick="{{ goCart }}">View Cart<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></sc-if><sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav class="botnav" style="--i:{{ tab }}"><div class="navpill"></div><button class="navi {{ tab0 }}" onClick="{{ goHome }}"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11l8-6 8 6v8a1 1 0 01-1 1h-4v-6h-6v6H5a1 1 0 01-1-1z" stroke-linejoin="round"/></svg>Home</button><button class="navi {{ tab1 }}" onClick="{{ goShop }}"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4-4" stroke-linecap="round"/></svg>Shop</button><button class="navi {{ tab2 }}" onClick="{{ goCart }}"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 8h12l-1 11a1 1 0 01-1 1H8a1 1 0 01-1-1z" stroke-linejoin="round"/><path d="M9 8a3 3 0 016 0" stroke-linecap="round"/></svg>Cart<sc-if value="{{ cartCount }}" hint-placeholder-val="x"><span class="navcount">{{ cartCount }}</span></sc-if></button><button class="navi {{ tab3 }}" onClick="{{ goAccount }}"><svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8.5" r="3.5"/><path d="M5.5 20a6.5 6.5 0 0113 0" stroke-linecap="round"/></svg>Account</button></nav></sc-if><sc-if value="{{ isProduct }}" hint-placeholder-val="x"><div class="stickybuy"><button class="buyghost" onClick="{{ addPD }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l-1 11a1 1 0 01-1 1H8a1 1 0 01-1-1z" stroke-linejoin="round"/><path d="M9 8a3 3 0 016 0" stroke-linecap="round"/></svg>Add to Cart</button><button class="buyfill" onClick="{{ buyNow }}">Buy Now · {{ prod.price }}</button></div></sc-if><sc-if value="{{ showCartBar }}" hint-placeholder-val="x"><div class="checkoutbar"><div style="padding-right:4px"><div class="tiny muted">Total payable</div><div style="font:800 18px Manrope">{{ cartTotal }}</div></div><button class="cobtn" onClick="{{ goCheckout }}">Checkout<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></sc-if><sc-if value="{{ showPlaceBar }}" hint-placeholder-val="x"><div class="placebar"><div style="padding-right:4px"><div class="tiny muted">Payable</div><div style="font:800 17px Manrope">{{ cartTotal }}</div></div><button class="cobtn" onClick="{{ coNext }}">{{ coCtaLabel }}<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></sc-if><sc-if value="{{ filterOpen }}" hint-placeholder-val="x"><div class="sheetwrap" onClick="{{ closeFilter }}"><div class="sheet" onClick="{{ stop }}"><div class="ghandle"></div><div class="sheethd"><div class="sheett">Filters &amp; Sort</div><button class="clrlink" onClick="{{ clearFilters }}">Clear all</button></div><div class="fgroup"><div class="fglabel">Sort by</div><sc-for list="{{ sortOptions }}" as="o" hint-placeholder-count="6"><div class="{{ o.cls }}" onClick="{{ o.sel }}">{{ o.label }}<span class="sortrad"></span></div></sc-for></div><div class="fgroup"><div class="fglabel">Price range</div><div class="rng"><div class="rngfill" style="left:14%;width:54%"></div><div class="rngnob" style="left:14%"></div><div class="rngnob" style="left:68%"></div></div><div class="fx jb" style="font:600 12px Manrope;color:#8a7f70;margin-top:4px"><span>₹199</span><span>₹1,599</span></div></div><div class="fgroup"><div class="fglabel">Minimum rating</div><div class="swrow"><sc-for list="{{ ratingOpts }}" as="o" hint-placeholder-count="4"><button class="{{ o.cls }}" onClick="{{ o.sel }}">{{ o.n }}</button></sc-for></div></div><div class="fgroup"><div class="fglabel">Colour / variant</div><div class="swrow"><sc-for list="{{ colors }}" as="c" hint-placeholder-count="6"><button class="{{ c.cls }}" style="background:{{ c.c }}" onClick="{{ c.sel }}"></button></sc-for></div></div><div class="fgroup" style="border-bottom:0"><div class="fglabel">Availability &amp; delivery</div><div class="swrow"><span class="tagchip">In stock</span><span class="tagchip">Free delivery</span><span class="tagchip">Express</span><span class="tagchip">Discounted</span></div></div><button class="applybtn" onClick="{{ applyFilters }}">Show {{ shopCount }} results</button></div></div></sc-if></div></div></sc-if><sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ true }}"><div class="deckwrap"><div class="deck"><div class="deckbar"><span class="tl" style="background:#f0655a"></span><span class="tl" style="background:#f5bd4f"></span><span class="tl" style="background:#5fc85f"></span><div class="urlbar"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg>admin.vitra.store/dashboard</div></div><div class="adbody"><aside class="adside"><div class="adlogo"><div class="adlogomk">V</div><div><div class="serif" style="font-size:17px;line-height:1">Vitra</div><div class="tiny muted" style="letter-spacing:.12em;text-transform:uppercase">Dry Fruits &amp; More</div></div></div><div class="adnavlbl">Manage</div><button class="{{ navOverCls }}" onClick="{{ goAdOverview }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>Overview</button><button class="{{ navProdCls }}" onClick="{{ goAdProducts }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8l8-4 8 4-8 4z" stroke-linejoin="round"/><path d="M4 8v8l8 4 8-4V8" stroke-linejoin="round"/><path d="M12 12v8"/></svg>Products<span class="adnbadge">412</span></button><button class="{{ navOrdCls }}" onClick="{{ goAdOrders }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 4h9l3 3v13a1 1 0 01-1 1H6a1 1 0 01-1-1V5a1 1 0 011-1z" stroke-linejoin="round"/><path d="M9 11h6M9 15h6" stroke-linecap="round"/></svg>Orders<span class="adnbadge">38</span></button><button class="{{ navCustCls }}" onClick="{{ goAdCustomers }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0112 0M16 6a3 3 0 010 5M21 19a5 5 0 00-4-5" stroke-linecap="round"/></svg>Customers</button><button class="{{ navAnalCls }}" onClick="{{ goAdAnalytics }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V5M4 19h16M8 16v-5M12 16V9M16 16v-3" stroke-linecap="round"/></svg>Analytics</button><button class="{{ navPromoCls }}" onClick="{{ goAdPromos }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12l8-8 8 8-8 8z" stroke-linejoin="round"/><circle cx="12" cy="8" r="1.4" fill="currentColor"/></svg>Promotions</button><button class="{{ navSetCls }}" onClick="{{ goAdSettings }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1" stroke-linecap="round"/></svg>Settings</button><div class="aduser"><div class="adav">RK</div><div style="flex:1"><div style="font:700 12px 'Manrope'">Ria Kapoor</div><div class="tiny muted">Store Manager</div></div><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b3a895" stroke-width="2"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></div></aside><main class="admain"><sc-if value="{{ adOverview }}" hint-placeholder-val="{{ true }}"><div class="scr"><div class="adtop"><div><div class="adh1">Overview</div><div class="adh1sub">Welcome back, Ria — here's what's happening today.</div></div><div class="fx ac gap12"><div class="adsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>Search anything…</div><button class="adbtn ghost">Export</button><button class="adbtn" onClick="{{ goAdProducts }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add Product</button></div></div><div class="statgrid"><sc-for list="{{ adStats }}" as="s" hint-placeholder-count="4"><div class="statcard"><div class="stk">{{ s.k }}</div><div class="stv">{{ s.v }}</div><span class="stdelta up"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 15l6-6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>{{ s.delta }}</span><div class="stspark"><sc-for list="{{ s.spk }}" as="b" hint-placeholder-count="7"><span class="spk" style="height:{{ b.h }}"></span></sc-for></div></div></sc-for></div><div class="adcols"><div class="panel"><div class="panelhd"><div class="panelt">Sales Performance</div><span class="tiny muted">Last 12 months · ₹ in thousands</span></div><div class="chart"><sc-for list="{{ adSales }}" as="b" hint-placeholder-count="12"><div class="barcol"><div class="barfill" style="height:{{ b.h }}"></div><span class="barlbl">{{ b.m }}</span></div></sc-for></div></div><div class="panel"><div class="panelhd"><div class="panelt">Best Sellers</div><button class="slink" onClick="{{ goAdProducts }}">View</button></div><sc-for list="{{ adBest }}" as="b" hint-placeholder-count="5"><div class="bestrow"><div class="bestimg" style="background:{{ b.grad }}"></div><div style="flex:1;min-width:0"><div class="bestn">{{ b.name }}</div><div class="bestmeta">{{ b.meta }}</div></div><div class="bestrev"><div class="bestrevv">{{ b.rev }}</div><div class="tiny muted">revenue</div></div></div></sc-for></div></div><div class="adcols"><div class="panel"><div class="panelhd"><div class="panelt">Recent Orders</div><button class="slink" onClick="{{ goAdOrders }}">All orders</button></div><table class="atable"><thead><tr><th>Order</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody><sc-for list="{{ adRecent }}" as="o" hint-placeholder-count="6"><tr class="atr"><td><span class="oid">{{ o.id }}</span></td><td>{{ o.cust }}</td><td class="muted">{{ o.items }}</td><td style="font-weight:700">{{ o.total }}</td><td><span class="st {{ o.stc }}"><span class="stipdot"></span>{{ o.st }}</span></td></tr></sc-for></tbody></table></div><div class="panel"><div class="panelhd"><div class="panelt">Low Stock Alerts</div><span class="st refund"><span class="stipdot"></span>{{ lowCount }}</span></div><sc-for list="{{ adLow }}" as="l" hint-placeholder-count="4"><div class="lowrow"><div class="bestimg" style="background:{{ l.grad }};width:38px;height:38px"></div><div style="flex:1;min-width:0"><div class="bestn" style="font-size:12px">{{ l.name }}</div><div class="lowbar"><div class="lowfill" style="width:{{ l.w }}"></div></div></div><div style="text-align:right"><div style="font:800 15px Manrope;color:#c0432f">{{ l.stock }}</div><div class="tiny muted">left</div></div></div></sc-for></div></div><div class="quickrow"><button class="quick" onClick="{{ goAdProducts }}"><div class="quickic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 8l8-4 8 4-8 4z" stroke-linejoin="round"/><path d="M4 8v8l8 4 8-4V8" stroke-linejoin="round"/></svg></div><div style="font:700 13px Manrope">Add Product</div><div class="tiny muted">List a new item</div></button><button class="quick" onClick="{{ goAdPromos }}"><div class="quickic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12l8-8 8 8-8 8z" stroke-linejoin="round"/><circle cx="12" cy="8" r="1.4" fill="currentColor"/></svg></div><div style="font:700 13px Manrope">New Promotion</div><div class="tiny muted">Launch a campaign</div></button><button class="quick" onClick="{{ goAdOrders }}"><div class="quickic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 4h9l3 3v13a1 1 0 01-1 1H6a1 1 0 01-1-1V5a1 1 0 011-1z" stroke-linejoin="round"/><path d="M9 13l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="font:700 13px Manrope">Process Orders</div><div class="tiny muted">38 pending</div></button><button class="quick" onClick="{{ noop }}"><div class="quickic"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V5M4 19h16M8 16v-5M12 16V8M16 16v-3" stroke-linecap="round"/></svg></div><div style="font:700 13px Manrope">View Reports</div><div class="tiny muted">Analytics &amp; exports</div></button></div><div style="height:8px"></div></div></sc-if><sc-if value="{{ adProducts }}" hint-placeholder-val="x"><div class="scr"><div class="adtop"><div><div class="adh1">Products</div><div class="adh1sub">412 products · 7 low on stock</div></div><div class="fx ac gap12"><div class="adsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>Search products…</div><button class="adbtn ghost">Import CSV</button><button class="adbtn" onClick="{{ openAddProd }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add Product</button></div></div><div class="adtabs"><sc-for list="{{ prodTabs }}" as="t" hint-placeholder-count="4"><button class="{{ t.cls }}" onClick="{{ t.sel }}">{{ t.t }}<span class="adtabn">{{ t.n }}</span></button></sc-for></div><div class="panel" style="padding:6px 18px 14px"><table class="atable"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>SKU</th><th>Status</th><th></th></tr></thead><tbody><sc-for list="{{ adProds }}" as="r" hint-placeholder-count="8"><tr class="atr"><td><div class="prodcell"><div class="prodimg" style="background:{{ r.grad }}"></div><div style="font-weight:600;max-width:210px">{{ r.name }}</div></div></td><td class="muted">{{ r.cat }}</td><td style="font-weight:700">{{ r.price }}</td><td><span class="stockn {{ r.stockCls }}">{{ r.stock }}</span></td><td class="muted" style="font-size:11px">{{ r.sku }}</td><td><span class="pill {{ r.stc }}">{{ r.st }}</span></td><td><button class="iconact" onClick="{{ r.edit }}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 19h14M14 5l4 4L8 19l-4 1 1-4z" stroke-linejoin="round"/></svg></button></td></tr></sc-for></tbody></table></div><div style="height:8px"></div><sc-if value="{{ drawerOpen }}" hint-placeholder-val="x"><div class="slideover" onClick="{{ closeDrawer }}"><div class="sopanel" onClick="{{ stop }}"><div class="sohd"><div><div style="font-family:Marcellus;font-size:20px">{{ drawerTitle }}</div><div class="tiny muted">Fill in the product details below</div></div><button class="iconact" onClick="{{ closeDrawer }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div><div class="sobody"><label class="flabel">Product images</label><div class="imgrow" style="margin-bottom:18px"><div class="imgtile" style="background:linear-gradient(140deg,#f3e3c8,#e7c9a0)"><div class="imgx">×</div></div><div class="imgtile" style="background:linear-gradient(140deg,#f0e6cf,#ead9b8)"><div class="imgx">×</div></div><div class="addimg"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg></div></div><div class="field"><label class="flabel">Product name</label><input class="input" defaultValue="{{ drawerName }}" placeholder="e.g. California Almonds, Premium"/></div><div class="frow"><div class="field"><label class="flabel">Category</label><input class="input" defaultValue="{{ drawerCat }}" placeholder="Almonds"/></div><div class="field"><label class="flabel">SKU</label><input class="input" defaultValue="{{ drawerSku }}" placeholder="VT-XXX-01"/></div></div><div class="field"><label class="flabel">Description</label><textarea class="input" placeholder="Describe the product, its origin and highlights…"></textarea></div><div class="frow"><div class="field"><label class="flabel">Price (₹)</label><input class="input" defaultValue="{{ drawerPrice }}" placeholder="549"/></div><div class="field"><label class="flabel">Discount %</label><input class="input" placeholder="21"/></div></div><div class="frow"><div class="field"><label class="flabel">Stock quantity</label><input class="input" defaultValue="{{ drawerStock }}" placeholder="120"/></div><div class="field"><label class="flabel">Status</label><input class="input" defaultValue="Published"/></div></div><label class="flabel">Variants / pack sizes</label><div style="margin:6px 0 2px"><span class="varchip">250 g<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#cabfac" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></span><span class="varchip">500 g<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#cabfac" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></span><span class="varchip">1 kg<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#cabfac" stroke-width="2.4"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></span></div><button class="varadd"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add variant</button></div><div class="sobar"><button class="adbtn ghost" style="flex:1;justify-content:center" onClick="{{ closeDrawer }}">Cancel</button><button class="adbtn" style="flex:1;justify-content:center" onClick="{{ closeDrawer }}">Save Product</button></div></div></div></sc-if></div></sc-if><sc-if value="{{ adOrders }}" hint-placeholder-val="x"><div class="scr"><div class="adtop"><div><div class="adh1">Orders</div><div class="adh1sub">2,847 total · 38 pending fulfilment</div></div><div class="fx ac gap12"><div class="adsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>Search order, customer…</div><button class="adbtn ghost">Export</button></div></div><div class="adtabs"><sc-for list="{{ ordTabs }}" as="t" hint-placeholder-count="5"><button class="{{ t.cls }}" onClick="{{ t.sel }}">{{ t.t }}</button></sc-for></div><div class="panel" style="padding:6px 18px 14px"><table class="atable"><thead><tr><th>Order</th><th>Customer</th><th>Date</th><th>Items</th><th>Payment</th><th>Total</th><th>Status</th></tr></thead><tbody><sc-for list="{{ adOrderRows }}" as="o" hint-placeholder-count="8"><tr class="atr" onClick="{{ o.open }}" style="cursor:pointer"><td><span class="oid">#{{ o.id }}</span></td><td><div style="font-weight:600">{{ o.cust }}</div><div class="tiny muted">{{ o.email }}</div></td><td class="muted">{{ o.date }}</td><td class="muted">{{ o.items }}</td><td>{{ o.pay }}</td><td style="font-weight:700">{{ o.total }}</td><td><span class="st {{ o.stc }}"><span class="stipdot"></span>{{ o.st }}</span></td></tr></sc-for></tbody></table></div><div style="height:8px"></div><sc-if value="{{ adOrderOpen }}" hint-placeholder-val="x"><div class="slideover" onClick="{{ closeAdOrder }}"><div class="sopanel" onClick="{{ stop }}"><div class="sohd"><div><div style="font-family:Marcellus;font-size:20px">#{{ adSelOrder.id }}</div><div class="tiny muted">{{ adSelOrder.date }} · {{ adSelOrder.cust }}</div></div><button class="iconact" onClick="{{ closeAdOrder }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div><div class="sobody"><div class="fx gap10" style="margin-bottom:20px"><span class="st {{ adSelOrder.stc }}"><span class="stipdot"></span>{{ adSelOrder.st }}</span><span class="st" style="background:#f0eadd;color:#6b6256"><span class="stipdot"></span>{{ adSelOrder.pay }}</span></div><label class="flabel">Items</label><div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px"><sc-for list="{{ adSelOrder.prods }}" as="it" hint-placeholder-count="2"><div class="osumitem" style="margin:0;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12)"><div class="osumimg" style="background:{{ it.grad }}"></div><div style="flex:1;min-width:0"><div class="fs13" style="font-weight:600">{{ it.name }}</div><div class="tiny muted">{{ it.v }}</div></div><span style="font-weight:700">{{ it.price }}</span></div></sc-for></div><label class="flabel">Shipping address</label><div class="fs13" style="color:#6b6256;line-height:1.5;margin:6px 0 20px">{{ adSelOrder.addr }}</div><label class="flabel">Fulfilment timeline</label><div class="ordtl" style="padding:12px 0 0"><sc-for list="{{ adSelOrder.tl }}" as="t" hint-placeholder-count="5"><div class="{{ t.cls }}"><div class="tldot"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l4 4 10-11" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="tlline2"></div><div class="fs13" style="font-weight:600;padding-top:2px">{{ t.l }}</div></div></sc-for></div></div><div class="sobar"><button class="adbtn ghost" style="flex:1;justify-content:center" onClick="{{ closeAdOrder }}">Print Invoice</button><button class="adbtn" style="flex:1;justify-content:center" onClick="{{ closeAdOrder }}">Update Status</button></div></div></div></sc-if></div></sc-if><sc-if value="{{ adPromos }}" hint-placeholder-val="x"><div class="scr"><div class="adtop"><div><div class="adh1">Promotions</div><div class="adh1sub">Banners, promo codes &amp; seasonal campaigns</div></div><button class="adbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Create Banner</button></div><div class="adnavlbl" style="padding-left:0">Active banners</div><div class="promogrid"><sc-for list="{{ adBanners }}" as="b" hint-placeholder-count="3"><div class="promocard"><div class="promoban" style="background:{{ b.grad }}"><span class="adlabel">{{ b.placement }}</span><div style="font-family:Marcellus;font-size:19px">{{ b.title }}</div><div style="font-size:11px;opacity:.85">{{ b.sub }}</div></div><div class="promometa fx ac jb"><span class="st {{ b.stc }}"><span class="stipdot"></span>{{ b.st }}</span><div class="fx gap8"><button class="iconact"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 19h14M14 5l4 4L8 19l-4 1 1-4z" stroke-linejoin="round"/></svg></button><button class="iconact"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M5 7h14M9 7V5h6v2M7 7l1 13h8l1-13" stroke-linejoin="round"/></svg></button></div></div></div></sc-for></div><div class="adcols" style="grid-template-columns:1.45fr 1fr"><div class="panel"><div class="panelhd"><div class="panelt">Promo codes</div><button class="slink">New code</button></div><table class="atable"><thead><tr><th>Code</th><th>Offer</th><th>Usage</th><th>Status</th></tr></thead><tbody><sc-for list="{{ adCodes }}" as="c" hint-placeholder-count="4"><tr class="atr"><td><span class="codecell">{{ c.code }}</span></td><td>{{ c.desc }}</td><td><div class="fx ac gap8"><div class="miniprog"><div class="miniprogf" style="width:{{ c.w }}"></div></div><span class="tiny muted">{{ c.used }}/{{ c.limit }}</span></div></td><td><span class="st {{ c.stc }}"><span class="stipdot"></span>{{ c.st }}</span></td></tr></sc-for></tbody></table></div><div class="panel"><div class="panelhd"><div class="panelt">Campaigns</div></div><sc-for list="{{ adCampaigns }}" as="c" hint-placeholder-count="3"><div class="bestrow"><div class="bestimg" style="background:{{ c.grad }}"></div><div style="flex:1;min-width:0"><div class="bestn">{{ c.name }}</div><div class="bestmeta">{{ c.period }}</div></div><span class="st paid">{{ c.perf }}</span></div></sc-for></div></div><div style="height:8px"></div></div></sc-if><sc-if value="{{ adSettings }}" hint-placeholder-val="x"><div class="scr"><div class="adtop"><div><div class="adh1">Settings</div><div class="adh1sub">Manage your store configuration</div></div><button class="adbtn ghost">View storefront</button></div><div class="setlayout"><div class="setnav"><button class="{{ secStore }}" onClick="{{ goSecStore }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 9l1-4h14l1 4M4 9v10a1 1 0 001 1h14a1 1 0 001-1V9M4 9h16" stroke-linejoin="round"/></svg></span>Store Details</button><button class="{{ secPay }}" onClick="{{ goSecPay }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18" stroke-linecap="round"/></svg></span>Payments</button><button class="{{ secShip }}" onClick="{{ goSecShip }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h11v8H3zM14 10h4l3 3v2h-7z" stroke-linejoin="round"/><circle cx="7" cy="17" r="1.6"/><circle cx="17" cy="17" r="1.6"/></svg></span>Shipping</button><button class="{{ secTax }}" onClick="{{ goSecTax }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 17L17 7M8.5 8.5h.01M15.5 15.5h.01" stroke-linecap="round"/><circle cx="12" cy="12" r="9"/></svg></span>Taxes</button><button class="{{ secNotif }}" onClick="{{ goSecNotif }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9a6 6 0 0112 0c0 5 2 6 2 6H4s2-1 2-6z" stroke-linejoin="round"/><path d="M10 20a2 2 0 004 0" stroke-linecap="round"/></svg></span>Notifications</button><button class="{{ secTeam }}" onClick="{{ goSecTeam }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3"/><path d="M3 19a6 6 0 0112 0M16 6a3 3 0 010 5M21 19a5 5 0 00-4-5" stroke-linecap="round"/></svg></span>Team &amp; Roles</button><button class="{{ secSecurity }}" onClick="{{ goSecSecurity }}"><span class="seticx"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/></svg></span>Security</button></div><div class="panel"><sc-if value="{{ isSecStore }}" hint-placeholder-val="{{ true }}"><div><div style="font-family:Marcellus;font-size:20px">Store Details</div><div class="tiny muted" style="margin:4px 0 20px">Basic information shown across your store</div><div class="frow"><div class="field"><label class="flabel">Store name</label><input class="input" defaultValue="Vitra Dry Fruits"/></div><div class="field"><label class="flabel">Support email</label><input class="input" defaultValue="care@vitra.store"/></div></div><div class="frow"><div class="field"><label class="flabel">Support phone</label><input class="input" defaultValue="+91 1800 123 4567"/></div><div class="field"><label class="flabel">Currency</label><input class="input" defaultValue="Indian Rupee (₹)"/></div></div><div class="field"><label class="flabel">Registered address</label><textarea class="input">Unit 12, Saki Vihar Industrial Estate, Andheri East, Mumbai 400072</textarea></div><div class="field"><label class="flabel">About the store</label><textarea class="input">Premium, hand-picked dry fruits, nuts and saffron sourced directly from the world's finest farms — delivered fresh to your door.</textarea></div><div class="fx gap12" style="margin-top:6px"><button class="adbtn">Save Changes</button><button class="adbtn ghost">Cancel</button></div></div></sc-if><sc-if value="{{ isSecPay }}" hint-placeholder-val="x"><div><div style="font-family:Marcellus;font-size:20px">Payments</div><div class="tiny muted" style="margin:4px 0 14px">Choose which methods customers can use</div><div class="setrow"><div><div style="font:700 13px Manrope">UPI</div><div class="tiny muted">GPay, PhonePe, Paytm</div></div><div class="switch on"><div class="knob"></div></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Credit / Debit Cards</div><div class="tiny muted">Visa, Mastercard, RuPay</div></div><div class="switch on"><div class="knob"></div></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Cash on Delivery</div><div class="tiny muted">Available below ₹5,000</div></div><div class="switch on"><div class="knob"></div></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Vitra Wallet</div><div class="tiny muted">Store credit &amp; refunds</div></div><div class="switch"><div class="knob"></div></div></div><div class="setrow" style="border-bottom:0"><div><div style="font:700 13px Manrope">Net Banking</div><div class="tiny muted">All major banks</div></div><div class="switch on"><div class="knob"></div></div></div></div></sc-if><sc-if value="{{ isSecShip }}" hint-placeholder-val="x"><div><div style="font-family:Marcellus;font-size:20px">Shipping</div><div class="tiny muted" style="margin:4px 0 18px">Delivery rates and zones</div><div class="frow"><div class="field"><label class="flabel">Free shipping above (₹)</label><input class="input" defaultValue="999"/></div><div class="field"><label class="flabel">Standard delivery fee (₹)</label><input class="input" defaultValue="79"/></div></div><div class="frow"><div class="field"><label class="flabel">Express delivery fee (₹)</label><input class="input" defaultValue="149"/></div><div class="field"><label class="flabel">Default dispatch time</label><input class="input" defaultValue="Within 24 hours"/></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Enable express delivery</div><div class="tiny muted">Same-day in select metros</div></div><div class="switch on"><div class="knob"></div></div></div><div class="setrow" style="border-bottom:0"><div><div style="font:700 13px Manrope">International shipping</div><div class="tiny muted">Ship outside India</div></div><div class="switch"><div class="knob"></div></div></div></div></sc-if><sc-if value="{{ isSecTax }}" hint-placeholder-val="x"><div><div style="font-family:Marcellus;font-size:20px">Taxes</div><div class="tiny muted" style="margin:4px 0 18px">GST configuration</div><div class="frow"><div class="field"><label class="flabel">GSTIN</label><input class="input" defaultValue="27AABCV1234F1Z5"/></div><div class="field"><label class="flabel">Default GST rate (%)</label><input class="input" defaultValue="5"/></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Prices include tax</div><div class="tiny muted">Show tax-inclusive pricing</div></div><div class="switch on"><div class="knob"></div></div></div><div class="setrow" style="border-bottom:0"><div><div style="font:700 13px Manrope">Charge tax on shipping</div><div class="tiny muted">Apply GST to delivery fees</div></div><div class="switch"><div class="knob"></div></div></div></div></sc-if><sc-if value="{{ isSecNotif }}" hint-placeholder-val="x"><div><div style="font-family:Marcellus;font-size:20px">Notifications</div><div class="tiny muted" style="margin:4px 0 14px">What customers receive</div><div class="setrow"><div><div style="font:700 13px Manrope">Order updates</div><div class="tiny muted">Shipping, delivery &amp; status changes</div></div><div class="{{ swOrders }}" onClick="{{ tgOrders }}"><div class="knob"></div></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Promotions</div><div class="tiny muted">Offers, sales &amp; campaigns</div></div><div class="{{ swPromos }}" onClick="{{ tgPromos }}"><div class="knob"></div></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Price drop alerts</div><div class="tiny muted">When wishlisted items get cheaper</div></div><div class="{{ swPrice }}" onClick="{{ tgPrice }}"><div class="knob"></div></div></div><div class="setrow"><div><div style="font:700 13px Manrope">Restock alerts</div><div class="tiny muted">When sold-out items return</div></div><div class="{{ swRestock }}" onClick="{{ tgRestock }}"><div class="knob"></div></div></div><div class="setrow" style="border-bottom:0"><div><div style="font:700 13px Manrope">Weekly newsletter</div><div class="tiny muted">Recipes &amp; wellness tips</div></div><div class="{{ swNews }}" onClick="{{ tgNews }}"><div class="knob"></div></div></div></div></sc-if><sc-if value="{{ isSecTeam }}" hint-placeholder-val="x"><div><div class="fx ac jb" style="margin-bottom:14px"><div><div style="font-family:Marcellus;font-size:20px">Team &amp; Roles</div><div class="tiny muted" style="margin-top:4px">People who can manage this store</div></div><button class="adbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Invite</button></div><table class="atable"><thead><tr><th>Member</th><th>Role</th><th>Status</th><th></th></tr></thead><tbody><sc-for list="{{ adTeam }}" as="m" hint-placeholder-count="3"><tr class="atr"><td><div class="prodcell"><div class="roleav">{{ m.av }}</div><div style="font-weight:600">{{ m.n }}</div></div></td><td class="muted">{{ m.role }}</td><td><span class="st paid"><span class="stipdot"></span>Active</span></td><td><button class="iconact"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg></button></td></tr></sc-for></tbody></table></div></sc-if><sc-if value="{{ isSecSecurity }}" hint-placeholder-val="x"><div><div style="font-family:Marcellus;font-size:20px">Security</div><div class="tiny muted" style="margin:4px 0 18px">Protect your store account</div><div class="setrow"><div><div style="font:700 13px Manrope">Two-factor authentication</div><div class="tiny muted">Require a code at sign-in</div></div><div class="switch on"><div class="knob"></div></div></div><div class="frow" style="margin-top:16px"><div class="field"><label class="flabel">Current password</label><input class="input" type="password" defaultValue="account"/></div><div class="field"><label class="flabel">New password</label><input class="input" type="password" placeholder="••••••••"/></div></div><div class="setrow" style="border-bottom:0"><div><div style="font:700 13px Manrope">Active sessions</div><div class="tiny muted">2 devices · Mumbai, India</div></div><button class="adbtn ghost">Sign out all</button></div></div></sc-if></div></div><div style="height:8px"></div></div></sc-if><sc-if value="{{ adCustomers }}" hint-placeholder-val="x"><div class="scr"><div class="adtop"><div><div class="adh1">Customers</div><div class="adh1sub">9,233 total · 1,840 with active carts</div></div><div class="fx ac gap12"><div class="adsearch"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>Search name, email, phone…</div><button class="adbtn ghost">Export</button></div></div><div class="panel" style="padding:6px 18px 14px"><table class="atable"><thead><tr><th>Customer</th><th>Segment</th><th>Orders</th><th>Lifetime spend</th><th>Live cart</th><th>Tier</th><th>Status</th></tr></thead><tbody><sc-for list="{{ customers }}" as="c" hint-placeholder-count="8"><tr class="atr" onClick="{{ c.open }}" style="cursor:pointer"><td><div class="prodcell"><div class="roleav">{{ c.av }}</div><div><div style="font-weight:600">{{ c.name }}</div><div class="tiny muted">{{ c.email }}</div></div></div></td><td><span class="segpill">{{ c.seg }}</span></td><td class="muted">{{ c.orders }}</td><td style="font-weight:700">{{ c.spent }}</td><td><sc-if value="{{ c.cartn }}" hint-placeholder-val="x"><span class="cartcell"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 8h12l-1 9H7zM9 8a3 3 0 016 0" stroke-linejoin="round"/></svg>{{ c.cartn }} · {{ c.cartTotal }}</span></sc-if><sc-if value="{{ c.cartEmpty }}" hint-placeholder-val="x"><span class="cartcell empty">Empty</span></sc-if></td><td><span class="tierpill {{ c.tierc }}">{{ c.tier }}</span></td><td><span class="st {{ c.statusc }}"><span class="stipdot"></span>{{ c.status }}</span></td></tr></sc-for></tbody></table></div><div style="height:8px"></div><sc-if value="{{ adCustOpen }}" hint-placeholder-val="x"><div class="slideover" onClick="{{ closeAdCust }}"><div class="sopanel" onClick="{{ stop }}"><div class="sohd"><div><div style="font-family:Marcellus;font-size:20px">Customer Profile</div><div class="tiny muted">{{ adCustSel.last }} · last order</div></div><button class="iconact" onClick="{{ closeAdCust }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg></button></div><div class="sobody"><div class="custprofile"><div class="custav">{{ adCustSel.av }}</div><div style="flex:1;min-width:0"><div style="font:800 16px Manrope">{{ adCustSel.name }}</div><div style="font-size:12px;opacity:.85;margin-top:2px">{{ adCustSel.email }}</div><div style="font-size:12px;opacity:.85">{{ adCustSel.phone }}</div></div><span class="tierpill {{ adCustSel.tierc }}">{{ adCustSel.tier }}</span></div><div class="cstatrow"><div class="cstatcell"><div class="cstatv">{{ adCustSel.orders }}</div><div class="cstatk">Orders</div></div><div class="cstatcell"><div class="cstatv">{{ adCustSel.spent }}</div><div class="cstatk">Lifetime</div></div><div class="cstatcell"><div class="cstatv">{{ adCustSel.since }}</div><div class="cstatk">Since</div></div></div><div class="cartlive"><div class="cartliveh"><label class="flabel" style="margin:0">Current cart</label><span class="cartcell">{{ adCustSel.cartTotal }}</span></div><sc-if value="{{ adCustSel.cartn }}" hint-placeholder-val="x"><div style="display:flex;flex-direction:column;gap:9px"><sc-for list="{{ adCustSel.cart }}" as="it" hint-placeholder-count="2"><div class="osumitem" style="margin:0;background:#fff"><div class="osumimg" style="background:{{ it.grad }}"></div><div style="flex:1;min-width:0"><div class="fs13" style="font-weight:600">{{ it.name }}</div><div class="tiny muted">Qty {{ it.qty }}</div></div><span style="font-weight:700">{{ it.price }}</span></div></sc-for></div></sc-if><sc-if value="{{ adCustSel.cartEmpty }}" hint-placeholder-val="x"><div class="tiny muted">No items in cart right now.</div></sc-if></div><label class="flabel">Segment &amp; status</label><div class="fx gap8" style="margin:6px 0 18px"><span class="segpill">{{ adCustSel.seg }}</span><span class="st {{ adCustSel.statusc }}"><span class="stipdot"></span>{{ adCustSel.status }}</span></div><label class="flabel">Recent order</label><div class="osumitem" style="margin:6px 0 18px;box-shadow:inset 0 0 0 1px rgba(140,120,90,.12)"><div style="flex:1"><div class="fs13" style="font-weight:600">#{{ adCustSel.last }}</div><div class="tiny muted">Most recent order</div></div><span class="st paid"><span class="stipdot"></span>Delivered</span></div><label class="flabel">Internal notes</label><textarea class="input" style="margin-top:6px" defaultValue="{{ adCustSel.notes }}"></textarea></div><div class="sobar"><button class="adbtn ghost" style="flex:1;justify-content:center" onClick="{{ closeAdCust }}">Message</button><button class="adbtn" style="flex:1;justify-content:center" onClick="{{ closeAdCust }}">View full profile</button></div></div></div></sc-if></div></sc-if><sc-if value="{{ adAnalytics }}" hint-placeholder-val="x"><div class="scr"><div class="adtop"><div><div class="adh1">Analytics</div><div class="adh1sub">Performance across all categories · last 12 months</div></div><div class="fx ac gap12"><button class="adbtn ghost">Last 12 months</button><button class="adbtn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7 11l5 5 5-5M5 20h14" stroke-linecap="round" stroke-linejoin="round"/></svg>Download report</button></div></div><div class="statgrid"><sc-for list="{{ anKpis }}" as="k" hint-placeholder-count="4"><div class="statcard"><div class="stk">{{ k.k }}</div><div class="stv">{{ k.v }}</div><span class="{{ k.dcls }}">{{ k.d }}</span></div></sc-for></div><div class="adcols"><div class="panel"><div class="panelhd"><div class="panelt">Revenue performance</div><span class="tiny muted">₹ in thousands</span></div><div class="chart"><sc-for list="{{ adSales }}" as="b" hint-placeholder-count="12"><div class="barcol"><div class="barfill" style="height:{{ b.h }}"></div><span class="barlbl">{{ b.m }}</span></div></sc-for></div></div><div class="panel"><div class="panelhd"><div class="panelt">Sales by category</div></div><div class="donutwrap"><div class="donut" style="background:{{ donut }}"><div class="donuthole"><div class="donutv">₹18.4L</div><div class="tiny muted">total</div></div></div><div style="flex:1"><sc-for list="{{ catLeg }}" as="l" hint-placeholder-count="5"><div class="legi"><span class="legdot" style="background:{{ l.c }}"></span><span class="legname">{{ l.name }}</span><span class="legpct">{{ l.pct }}</span></div></sc-for></div></div></div></div><div class="adcols" style="grid-template-columns:1fr 1fr"><div class="panel"><div class="panelhd"><div class="panelt">Conversion funnel</div></div><sc-for list="{{ funnel }}" as="f" hint-placeholder-count="5"><div class="funrow"><div class="funmeta"><span>{{ f.s }}</span><span>{{ f.v }}</span></div><div class="funbar" style="width:{{ f.w }}">{{ f.w }}</div></div></sc-for></div><div class="panel"><div class="panelhd"><div class="panelt">Top products</div><button class="slink" onClick="{{ goAdProducts }}">All</button></div><sc-for list="{{ anTop }}" as="t" hint-placeholder-count="5"><div class="toprow"><div class="bestimg" style="background:{{ t.grad }};width:38px;height:38px"></div><div style="flex:1;min-width:0"><div class="bestn" style="font-size:13px">{{ t.name }}</div><div class="topbar2"><div class="topbar2f" style="width:{{ t.w }}"></div></div></div><div style="text-align:right"><div class="bestrevv" style="font-size:13px">{{ t.rev }}</div><div class="tiny muted">{{ t.units }}</div></div></div></sc-for></div></div><div class="panel"><div class="panelhd"><div class="panelt">New customer growth</div><span class="tiny muted">monthly acquisitions</span></div><div class="chart" style="height:150px"><sc-for list="{{ growth }}" as="b" hint-placeholder-count="12"><div class="barcol"><div class="barfill" style="height:{{ b.h }};background:linear-gradient(180deg,#3d4a36,#6c7a4f)"></div><span class="barlbl">{{ b.m }}</span></div></sc-for></div></div><div style="height:8px"></div></div></sc-if><div data-anchor="admin-end"></div></main></div></div></div></sc-if></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#b97a2e&quot;,&quot;options&quot;:[&quot;#b97a2e&quot;,&quot;#6e7a3a&quot;,&quot;#5a4632&quot;,&quot;#b5613e&quot;,&quot;#7c5566&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Theme&quot;},&quot;theme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;warm&quot;,&quot;cool&quot;],&quot;default&quot;:&quot;warm&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Theme&quot;}}">
+class Component extends DCLogic {
+  state = { mode:'customer', cust:'home', admin:'overview', tab:0, cart:{p1:1,p5:2,p9:1}, wish:{p3:true,p8:true}, pid:'p1', pack:1, gal:0, spec:'desc', co:0, coAddr:0, coPay:'upi', ord:null, view:'grid', filterOpen:false, sort:'Popularity', activeCat:'All', ratingMin:0, colorSel:0, drawer:null, adProdTab:'All', adProdSel:null, adOrderTab:'All', adOrderSel:null, adCustSel:null, setSection:'store', prefs:{orderUpdates:true,promotions:true,priceDrops:false,restock:true,newsletter:false} };
+
+  PRODUCTS = [
+    {id:'p1',name:'California Almonds, Premium',cat:'Almonds',tone:'#e7c9a0',p:549,mrp:699,r:4.8,rev:1240,badge:'Bestseller',free:true},
+    {id:'p2',name:'Roasted Cashews W320',cat:'Cashews',tone:'#ead9b8',p:629,mrp:799,r:4.7,rev:980,badge:'Bestseller',free:true},
+    {id:'p3',name:'Iranian Akbari Pistachios',cat:'Pistachios',tone:'#c2d4a4',p:899,mrp:1099,r:4.9,rev:760,badge:'New',free:true},
+    {id:'p4',name:'Kashmiri Walnut Kernels',cat:'Walnuts',tone:'#c9a27e',p:749,mrp:949,r:4.6,rev:540,badge:'-21%',free:false},
+    {id:'p5',name:'Jumbo Medjool Dates',cat:'Dates',tone:'#b98a5e',p:699,mrp:849,r:4.8,rev:1120,badge:'Bestseller',free:true},
+    {id:'p6',name:'Golden Seedless Raisins',cat:'Raisins',tone:'#cbb27e',p:299,mrp:379,r:4.5,rev:430,badge:'',free:false},
+    {id:'p7',name:'Turkish Dried Figs',cat:'Figs',tone:'#caa6bf',p:549,mrp:659,r:4.7,rev:310,badge:'New',free:false},
+    {id:'p8',name:'Pure Kashmiri Saffron 2g',cat:'Saffron',tone:'#e3b23c',p:1299,mrp:1599,r:4.9,rev:210,badge:'Premium',free:true},
+    {id:'p9',name:'Mixed Seeds & Berries',cat:'Seeds',tone:'#cfc8a8',p:449,mrp:549,r:4.6,rev:670,badge:'',free:true},
+    {id:'p10',name:'Signature Festive Gift Box',cat:'Gift Box',tone:'#d8c3a5',p:1499,mrp:1899,r:4.9,rev:540,badge:'Limited',free:true},
+    {id:'p11',name:'Sun-Dried Apricots',cat:'Apricots',tone:'#e8b17a',p:399,mrp:499,r:4.5,rev:280,badge:'',free:false},
+    {id:'p12',name:'Trail Mix Deluxe',cat:'Trail Mix',tone:'#d3c39a',p:499,mrp:599,r:4.7,rev:820,badge:'Bestseller',free:true},
+    {id:'p13',name:'UltraBook Pro 14" M3',cat:'Laptops',tone:'#b7c0cf',p:124999,mrp:139999,r:4.8,rev:540,badge:'Bestseller',free:true},
+    {id:'p14',name:'Vitra X5 5G Smartphone',cat:'Mobiles',tone:'#c2c7d0',p:38999,mrp:44999,r:4.7,rev:1320,badge:'New',free:true},
+    {id:'p15',name:'AeroBuds Pro ANC',cat:'Audio',tone:'#cdbfd6',p:8999,mrp:11999,r:4.6,rev:980,badge:'-25%',free:true},
+    {id:'p16',name:'StudioMax Over-Ear Headphones',cat:'Audio',tone:'#d0c2da',p:14999,mrp:18999,r:4.8,rev:430,badge:'Premium',free:true},
+    {id:'p17',name:'Voyager Cabin Trolley',cat:'Travel Bags',tone:'#c9b59a',p:6499,mrp:8999,r:4.7,rev:410,badge:'Bestseller',free:true},
+    {id:'p18',name:'Urban Daypack 22L',cat:'Travel Bags',tone:'#a9b8a6',p:2999,mrp:3999,r:4.5,rev:360,badge:'',free:false},
+    {id:'p19',name:'Cold-Pressed Almond Oil 500ml',cat:'Oils',tone:'#d8c98a',p:749,mrp:899,r:4.8,rev:290,badge:'New',free:false},
+    {id:'p20',name:'Extra Virgin Olive Oil 1L',cat:'Oils',tone:'#cbd39a',p:1199,mrp:1499,r:4.7,rev:220,badge:'',free:true},
+  ];
+  CATS = ['Almonds','Cashews','Pistachios','Walnuts','Dates','Saffron','Gift Box','Laptops','Mobiles','Audio','Travel Bags','Oils'];
+  HOMECATS = ['Almonds','Cashews','Pistachios','Dates','Laptops','Mobiles','Travel Bags','Oils'];
+  CATTONE = {Almonds:'#e7c9a0',Cashews:'#ead9b8',Pistachios:'#c2d4a4',Walnuts:'#c9a27e',Dates:'#b98a5e',Raisins:'#cbb27e',Saffron:'#e3b23c','Gift Box':'#d8c3a5',Figs:'#caa6bf',Seeds:'#cfc8a8',Apricots:'#e8b17a','Trail Mix':'#d3c39a',Laptops:'#b7c0cf',Mobiles:'#c2c7d0',Audio:'#cdbfd6','Travel Bags':'#c9b59a',Oils:'#d8c98a'};
+  BANNERS = [
+    {tag:'Harvest Season',title:'Fresh Almonds,\nStraight From California',sub:'Up to 30% off premium grade',g:'linear-gradient(125deg,#7a5a32,#a8824a)'},
+    {tag:'Gifting',title:'Curated Festive\nGift Boxes',sub:'Hand-packed in signature trays',g:'linear-gradient(125deg,#3d4a36,#6c7a4f)'},
+    {tag:'Limited Drop',title:'Pure Kashmiri\nSaffron, Grade A+',sub:'Only 200 jars this month',g:'linear-gradient(125deg,#8a5a1c,#c98a2e)'},
+  ];
+  NOTIFS = [];
+
+  ADNAV = [
+    {k:'overview',label:'Overview',badge:''},
+    {k:'products',label:'Products',badge:'412'},
+    {k:'orders',label:'Orders',badge:'38'},
+    {k:'promos',label:'Promotions',badge:''},
+    {k:'settings',label:'Settings',badge:''},
+  ];
+
+  rupee(n){ return '₹'+Math.round(n).toLocaleString('en-IN'); }
+  mix(hex,a){ const n=parseInt(hex.slice(1),16); let r=(n>>16)&255,g=(n>>8)&255,b=n&255; r=Math.round(r+(255-r)*a);g=Math.round(g+(255-g)*a);b=Math.round(b+(255-b)*a); return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1); }
+  grad(t,ang){ return 'linear-gradient('+(ang||140)+'deg,'+this.mix(t,.5)+' 0%,'+t+' 78%)'; }
+
+  setCustomer=()=>this.setState({mode:'customer'});
+  setAdmin=()=>this.setState({mode:'admin'});
+  go(s){ const tabMap={home:0,shop:1,cart:2,account:3}; this.setState({cust:s, tab:(tabMap[s]!==undefined?tabMap[s]:this.state.tab)}); const v=document.querySelector('.phView'); if(v) v.scrollTop=0; }
+  openProduct=(id)=>this.setState({cust:'product',pid:id,pack:1,gal:0,spec:0});
+  add=(id)=>this.setState(s=>({cart:{...s.cart,[id]:(s.cart[id]||0)+1}}));
+  inc=(id)=>this.setState(s=>({cart:{...s.cart,[id]:(s.cart[id]||0)+1}}));
+  dec=(id)=>this.setState(s=>{ const q=(s.cart[id]||0)-1; const c={...s.cart}; if(q<=0) delete c[id]; else c[id]=q; return {cart:c}; });
+  rm=(id)=>this.setState(s=>{ const c={...s.cart}; delete c[id]; return {cart:c}; });
+  toggleWish=(id)=>this.setState(s=>({wish:{...s.wish,[id]:!s.wish[id]}}));
+  setCo=(n)=>{ this.setState({co:n}); const v=document.querySelector('.phView'); if(v) v.scrollTop=0; };
+
+  vp(p){
+    const wished=!!this.state.wish[p.id];
+    return {
+      id:p.id, name:p.name, cat:p.cat, tone:p.tone, grad:this.grad(p.tone),
+      badge:p.badge, free:p.free, r:p.r, rev:p.rev,
+      price:this.rupee(p.p), mrp:this.rupee(p.mrp), disc:Math.round((1-p.p/p.mrp)*100),
+      wished, wishCls:wished?'wbtn on':'wbtn',
+      open:()=>this.openProduct(p.id),
+      add:(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); this.add(p.id); },
+      toggleWish:(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); this.toggleWish(p.id); },
+    };
+  }
+
+  renderVals(){
+    const accent=this.props.accent||'#b97a2e';
+    const motion=this.props.motion!==false;
+    const theme=this.props.theme||'warm';
+    const P=this.PRODUCTS;
+    const products=P.map(p=>this.vp(p));
+    const byId=id=>P.find(x=>x.id===id);
+    // cart
+    const cartIds=Object.keys(this.state.cart);
+    const cartItems=cartIds.map(id=>{ const p=byId(id); const qty=this.state.cart[id]; const unit=p.p; return {...this.vp(p), qty, unit:this.rupee(unit), line:this.rupee(unit*qty), _u:unit*qty, inc:()=>this.inc(id), dec:()=>this.dec(id), rm:()=>this.rm(id)}; });
+    const sub=cartItems.reduce((a,b)=>a+b._u,0);
+    const cartCount=cartItems.reduce((a,b)=>a+b.qty,0);
+    const ship=sub>0&&sub<999?79:0;
+    const savings=cartItems.reduce((a,b)=>a+(byId(b.id).mrp-byId(b.id).p)*b.qty,0);
+    const total=sub+ship;
+    const prog=Math.min(100,Math.round(sub/999*100));
+
+    return {
+      accent, stageCls:(motion?'':'nomo')+(theme==='cool'?' cool':''),
+      isCustomer:this.state.mode==='customer', isAdmin:this.state.mode==='admin',
+      custOn:this.state.mode==='customer'?'on':'', adminOn:this.state.mode==='admin'?'on':'',
+      setCustomer:this.setCustomer, setAdmin:this.setAdmin,
+      tab:this.state.tab,
+      tab0:this.state.tab===0?'on':'', tab1:this.state.tab===1?'on':'', tab2:this.state.tab===2?'on':'', tab3:this.state.tab===3?'on':'',
+      goHome:()=>this.go('home'), goShop:()=>this.go('shop'), goCart:()=>this.go('cart'), goAccount:()=>this.go('account'),
+      cartCount: cartCount||'',
+      // data exposed for screens
+      products, _byId:byId, _P:P,
+      best:P.filter(p=>p.badge==='Bestseller').map(p=>this.vp(p)),
+      neu:P.filter(p=>p.badge==='New'||p.badge==='Limited'||p.badge==='Premium').map(p=>this.vp(p)),
+      deals:[...P].sort((a,b)=>(1-a.p/a.mrp)<(1-b.p/b.mrp)?1:-1).slice(0,6).map(p=>this.vp(p)),
+      recently:[P[3],P[7],P[1],P[10]].map(p=>this.vp(p)),
+      cats:this.HOMECATS.map(c=>({name:c, grad:this.grad(this.CATTONE[c]), open:()=>this.setState({cust:'shop',activeCat:c}) })),
+      banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':''})),
+      cartItems, cartSub:this.rupee(sub), cartShip:ship?this.rupee(ship):'Free', cartSave:this.rupee(savings), cartTotal:this.rupee(total), cartProg:prog, cartProgStr:prog+'%', cartEmpty:cartItems.length===0,
+      freeLeft: sub<999?this.rupee(999-sub):'',
+      goShopCta:()=>this.go('shop'), goCartCta:()=>this.go('cart'),
+      isHome:this.state.cust==='home', isShop:this.state.cust==='shop', isProduct:this.state.cust==='product', isCart:this.state.cust==='cart', isCheckout:this.state.cust==='checkout', isOrders:this.state.cust==='orders', isNotif:this.state.cust==='notif', isAccount:this.state.cust==='account', isWish:this.state.cust==='wish',
+      goNotif:()=>this.go('notif'), goOrders:()=>this.go('orders'), goWish:()=>this.go('wish'), noop:()=>{},
+      showFCart: (cartCount>0 && ['home','shop'].includes(this.state.cust)),
+      showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),
+      showCartBar: this.state.cust==='cart' && cartItems.length>0,
+      showPlaceBar: this.state.cust==='checkout' && this.state.co<3,
+      goCheckout:()=>{ this.go('checkout'); this.setCo(0); },
+      fcartNote: sub<999 ? (this.rupee(999-sub)+' away from free shipping') : 'Free shipping unlocked',
+      user:{name:'Aarav Sharma',email:'aarav.sharma@gmail.com',phone:'+91 98200 41122',tier:'Gold Member',orders:24,wish:Object.keys(this.state.wish).filter(k=>this.state.wish[k]).length,points:'1,840'},
+      adOverview:this.state.admin==='overview', adProducts:this.state.admin==='products', adOrders:this.state.admin==='orders', adCustomers:this.state.admin==='customers', adAnalytics:this.state.admin==='analytics', adPromos:this.state.admin==='promos', adSettings:this.state.admin==='settings',
+      goAdOverview:()=>this.setState({admin:'overview'}), goAdProducts:()=>this.setState({admin:'products'}), goAdOrders:()=>this.setState({admin:'orders'}), goAdCustomers:()=>this.setState({admin:'customers'}), goAdAnalytics:()=>this.setState({admin:'analytics'}), goAdPromos:()=>this.setState({admin:'promos'}), goAdSettings:()=>this.setState({admin:'settings'}),
+      navOverCls:this.state.admin==='overview'?'adni on':'adni', navProdCls:this.state.admin==='products'?'adni on':'adni', navOrdCls:this.state.admin==='orders'?'adni on':'adni', navCustCls:this.state.admin==='customers'?'adni on':'adni', navAnalCls:this.state.admin==='analytics'?'adni on':'adni', navPromoCls:this.state.admin==='promos'?'adni on':'adni', navSetCls:this.state.admin==='settings'?'adni on':'adni',
+      lowCount:'4 low',
+      ...this.screenData(),
+      ...this.adminData(),
+    };
+  }
+
+  moveToCart(id){ this.add(id); this.toggleWish(id); }
+  ORDERS_DATA(){
+    const G=(t,a)=>this.grad(t,a);
+    return [
+      {id:'VT-10482',date:'26 Jun 2026',status:'Out for delivery',statusc:'shipped',total:'₹2,371',count:'2 items',eta:'Arriving today by 7 PM',imgs:[G('#e7c9a0'),G('#b98a5e')],items:[{name:'California Almonds, Premium',grad:G('#e7c9a0'),v:'500g',qty:1,price:'₹1,043'},{name:'Jumbo Medjool Dates',grad:G('#b98a5e'),v:'500g',qty:1,price:'₹1,328'}],tl:[{l:'Order placed',t:'26 Jun, 10:24 AM',s:'done'},{l:'Packed & ready',t:'26 Jun, 4:10 PM',s:'done'},{l:'Shipped',t:'27 Jun, 9:00 AM',s:'done'},{l:'Out for delivery',t:'28 Jun, 11:30 AM',s:'now'},{l:'Delivered',t:'Expected today',s:''}]},
+      {id:'VT-10310',date:'12 Jun 2026',status:'Delivered',statusc:'paid',total:'₹1,708',count:'2 items',eta:'Delivered on 14 Jun',imgs:[G('#c2d4a4'),G('#cfc8a8')],items:[{name:'Iranian Akbari Pistachios',grad:G('#c2d4a4'),v:'250g',qty:1,price:'₹899'},{name:'Mixed Seeds & Berries',grad:G('#cfc8a8'),v:'500g',qty:1,price:'₹809'}],tl:[{l:'Order placed',t:'12 Jun, 8:02 PM',s:'done'},{l:'Packed & ready',t:'13 Jun, 10:00 AM',s:'done'},{l:'Shipped',t:'13 Jun, 6:00 PM',s:'done'},{l:'Out for delivery',t:'14 Jun, 9:15 AM',s:'done'},{l:'Delivered',t:'14 Jun, 1:42 PM',s:'done'}]},
+      {id:'VT-10188',date:'01 Jun 2026',status:'Cancelled',statusc:'cancel',total:'₹549',count:'1 item',eta:'Refund completed',imgs:[G('#d3c39a')],items:[{name:'Trail Mix Deluxe',grad:G('#d3c39a'),v:'500g',qty:1,price:'₹549'}],tl:[{l:'Order placed',t:'01 Jun, 3:20 PM',s:'done'},{l:'Cancelled by you',t:'01 Jun, 5:00 PM',s:'done'},{l:'Refund initiated',t:'02 Jun, 11:00 AM',s:'done'},{l:'Refund completed',t:'04 Jun, 2:00 PM',s:'done'}]},
+    ];
+  }
+  NOTIF_DATA(){
+    const mk=(kind,title,body,time,unread)=>({kind,title,body,time,unread,rowCls:unread?'nrow unread':'nrow',isO:kind==='o',isP:kind==='p',isG:kind==='g',cls:kind==='o'?'nic nico':(kind==='p'?'nic nicp':'nic nicg')});
+    return [
+      {label:'Today',items:[
+        mk('o','Out for delivery','Order VT-10482 is arriving today by 7 PM. Keep your phone handy.','2h ago',true),
+        mk('p','Price drop alert','Iranian Akbari Pistachios you viewed just dropped by ₹120.','5h ago',true),
+        mk('g','A festive offer, just for you','Flat 25% off on all signature gift boxes this weekend only.','8h ago',false),
+      ]},
+      {label:'Earlier',items:[
+        mk('o','Order delivered','Order VT-10310 was delivered. Tap to rate your experience.','2d ago',false),
+        mk('p','Back in stock','Pure Kashmiri Saffron 2g is available again. Limited jars.','3d ago',false),
+        mk('g','Refund processed','₹549 has been refunded to your UPI for order VT-10188.','5d ago',false),
+      ]},
+    ];
+  }
+  AD_ORDERS(){
+    const sc={Pending:'pending',Paid:'paid',Shipped:'shipped',Refund:'refund',Cancelled:'cancel'};
+    const rows=[
+      {id:'VT-10482',cust:'Aarav Sharma',email:'aarav.sharma@gmail.com',date:'26 Jun 2026',items:'2 items',total:'₹2,371',st:'Shipped',pay:'UPI'},
+      {id:'VT-10481',cust:'Meera Iyer',email:'meera.iyer@gmail.com',date:'26 Jun 2026',items:'1 item',total:'₹899',st:'Paid',pay:'Card'},
+      {id:'VT-10480',cust:'Rohan Gupta',email:'rohan.g@gmail.com',date:'25 Jun 2026',items:'5 items',total:'₹3,240',st:'Pending',pay:'COD'},
+      {id:'VT-10479',cust:'Sara Khan',email:'sara.khan@gmail.com',date:'25 Jun 2026',items:'2 items',total:'₹1,099',st:'Paid',pay:'UPI'},
+      {id:'VT-10478',cust:'Dev Patel',email:'dev.patel@gmail.com',date:'24 Jun 2026',items:'1 item',total:'₹549',st:'Refund',pay:'Wallet'},
+      {id:'VT-10477',cust:'Ananya Rao',email:'ananya.rao@gmail.com',date:'24 Jun 2026',items:'4 items',total:'₹2,398',st:'Shipped',pay:'UPI'},
+      {id:'VT-10476',cust:'Karan Mehta',email:'karan.m@gmail.com',date:'23 Jun 2026',items:'3 items',total:'₹1,847',st:'Pending',pay:'COD'},
+      {id:'VT-10475',cust:'Priya Nair',email:'priya.nair@gmail.com',date:'22 Jun 2026',items:'2 items',total:'₹1,248',st:'Cancelled',pay:'Card'},
+    ];
+    return rows.map(r=>({...r,stc:sc[r.st],prods:[{name:'California Almonds, Premium',grad:this.grad('#e7c9a0'),v:'500g · Qty 1',price:'₹1,043'},{name:'Jumbo Medjool Dates',grad:this.grad('#b98a5e'),v:'500g · Qty 1',price:'₹1,328'}],addr:'402, Palm Springs, Linking Rd, Bandra West, Mumbai 400050',tl:[{l:'Order placed',s:'done'},{l:'Payment confirmed',s:'done'},{l:'Packed',s:r.st==='Pending'?'now':'done'},{l:'Shipped',s:(r.st==='Shipped')?'now':(r.st==='Pending'||r.st==='Paid'?'':'done')},{l:'Delivered',s:''}]}));
+  }
+  variantsFor(cat){
+    const V={
+      Laptops:{label:'Configuration',opts:[{w:'16GB · 512GB',m:1},{w:'16GB · 1TB',m:1.16},{w:'32GB · 1TB',m:1.38}]},
+      Mobiles:{label:'Storage',opts:[{w:'128 GB',m:1},{w:'256 GB',m:1.12},{w:'512 GB',m:1.28}]},
+      Audio:{label:'Colour',opts:[{w:'Midnight',m:1},{w:'Ivory',m:1},{w:'Sand',m:1}]},
+      'Travel Bags':{label:'Size',opts:[{w:'Cabin 55cm',m:1},{w:'Check-in 68cm',m:1.22}]},
+      Oils:{label:'Volume',opts:[{w:'500 ml',m:1},{w:'1 Litre',m:1.8}]},
+    };
+    return V[cat]||{label:'Pack size',opts:[{w:'250 g',m:1},{w:'500 g',m:1.9},{w:'1 kg',m:3.6}]};
+  }
+  highlightsFor(cat){
+    if(cat==='Laptops'||cat==='Mobiles'||cat==='Audio') return ['Sealed-box unit with full brand warranty','100% genuine — authenticity guaranteed','Free express delivery & easy setup','No-cost EMI available at checkout'];
+    if(cat==='Travel Bags') return ['Cabin & airline approved sizing','Scratch-resistant hard shell','TSA-approved combination lock','5-year manufacturer warranty'];
+    if(cat==='Oils') return ['Cold-pressed with zero chemicals','Single-estate sourced','Rich in natural nutrients','Recyclable glass packaging'];
+    return ['100% natural — no preservatives, no added sugar','Hand-picked, premium export grade','Vacuum-sealed to lock in freshness','Rich in protein, fibre & good fats'];
+  }
+  specsFor(cat,w){
+    if(cat==='Laptops') return [{k:'Processor',v:'M3 8-core'},{k:'Display',v:'14" Liquid Retina'},{k:'Configuration',v:w},{k:'Battery',v:'Up to 18 hrs'},{k:'Weight',v:'1.24 kg'},{k:'Warranty',v:'1 year'}];
+    if(cat==='Mobiles') return [{k:'Display',v:'6.7" AMOLED 120Hz'},{k:'Storage',v:w},{k:'Camera',v:'50MP triple'},{k:'Battery',v:'5000 mAh'},{k:'Network',v:'5G Dual SIM'},{k:'Warranty',v:'1 year'}];
+    if(cat==='Audio') return [{k:'Type',v:'In-ear ANC'},{k:'Colour',v:w},{k:'Battery',v:'8h + 24h case'},{k:'Connectivity',v:'Bluetooth 5.3'},{k:'Water resist',v:'IPX4'},{k:'Warranty',v:'1 year'}];
+    if(cat==='Travel Bags') return [{k:'Material',v:'Polycarbonate'},{k:'Size',v:w},{k:'Wheels',v:'360° spinner'},{k:'Lock',v:'TSA-approved'},{k:'Weight',v:'2.8 kg'},{k:'Warranty',v:'5 years'}];
+    if(cat==='Oils') return [{k:'Type',v:'Cold-pressed'},{k:'Volume',v:w},{k:'Origin',v:'Single estate'},{k:'Shelf Life',v:'12 months'},{k:'Storage',v:'Cool & dark place'},{k:'Packaging',v:'Glass bottle'}];
+    return [{k:'Origin',v:cat==='Saffron'?'Pampore, Kashmir':(cat==='Dates'?'Medina, KSA':'California, USA')},{k:'Grade',v:'A+ Premium'},{k:'Net Weight',v:w},{k:'Shelf Life',v:'9 months'},{k:'Storage',v:'Cool & dry place'},{k:'Packaging',v:'Resealable pouch'}];
+  }
+  CUSTOMERS(){
+    const g=t=>this.grad(t);
+    const C=(name,email,phone,since,orders,spent,tier,tierc,status,statusc,seg,cart,cartTotal,notes,last)=>({name,email,phone,since,orders,spent,tier,tierc,status,statusc,seg,cart,cartTotal,notes,last,cartn:cart.length,av:name.split(' ').map(x=>x[0]).join('').slice(0,2)});
+    return [
+      C('Aarav Sharma','aarav.sharma@gmail.com','+91 98200 41122','Mar 2023',24,'₹48,200','Gold','gold','Active','paid','VIP',[{name:'California Almonds, Premium',grad:g('#e7c9a0'),qty:1,price:'₹1,043'},{name:'UltraBook Pro 14"',grad:g('#b7c0cf'),qty:1,price:'₹1,24,999'}],'₹1,26,042','Prefers weekend delivery. High-value repeat buyer.','VT-10482'),
+      C('Meera Iyer','meera.iyer@gmail.com','+91 99300 22145','Jul 2023',11,'₹19,400','Silver','silver','Active','paid','Loyal',[{name:'Iranian Akbari Pistachios',grad:g('#c2d4a4'),qty:2,price:'₹1,798'}],'₹1,798','Loves pistachios & saffron.','VT-10481'),
+      C('Rohan Gupta','rohan.g@gmail.com','+91 98765 11200','Jan 2024',6,'₹14,900','Silver','silver','Active','paid','New',[{name:'Voyager Cabin Trolley',grad:g('#c9b59a'),qty:1,price:'₹6,499'},{name:'AeroBuds Pro ANC',grad:g('#cdbfd6'),qty:1,price:'₹8,999'}],'₹15,498','Travel & gadgets buyer.','VT-10480'),
+      C('Sara Khan','sara.khan@gmail.com','+91 90011 88222','Sep 2023',9,'₹12,300','Silver','silver','Active','paid','Loyal',[],'₹0','Cart currently empty.','VT-10479'),
+      C('Dev Patel','dev.patel@gmail.com','+91 98200 77654','Nov 2024',2,'₹1,098','Bronze','bronze','At risk','refund','At-risk',[{name:'Trail Mix Deluxe',grad:g('#d3c39a'),qty:1,price:'₹499'}],'₹499','One refund raised — re-engage with an offer.','VT-10478'),
+      C('Ananya Rao','ananya.rao@gmail.com','+91 99999 33221','May 2023',17,'₹33,600','Gold','gold','Active','paid','VIP',[{name:'Vitra X5 5G Smartphone',grad:g('#c2c7d0'),qty:1,price:'₹38,999'}],'₹38,999','Electronics + gifting customer.','VT-10477'),
+      C('Karan Mehta','karan.m@gmail.com','+91 98330 45611','Feb 2024',4,'₹5,400','Bronze','bronze','Active','pending','New',[{name:'Cold-Pressed Almond Oil 500ml',grad:g('#d8c98a'),qty:2,price:'₹1,498'}],'₹1,498','Pantry & oils.','VT-10476'),
+      C('Priya Nair','priya.nair@gmail.com','+91 90909 12121','Aug 2022',31,'₹72,800','Platinum','gold','Active','paid','VIP',[{name:'Signature Festive Gift Box',grad:g('#d8c3a5'),qty:3,price:'₹4,497'}],'₹4,497','Top spender — bulk gifting each festival.','VT-10475'),
+    ];
+  }
+  custAnalytics(){
+    const S=this.state, setS=(o)=>this.setState(o), g=t=>this.grad(t);
+    const customers=this.CUSTOMERS().map(c=>({...c,open:()=>setS({adCustSel:c.email}),cartEmpty:c.cartn===0}));
+    const adCustSel=this.CUSTOMERS().find(c=>c.email===S.adCustSel)||null; if(adCustSel) adCustSel.cartEmpty=adCustSel.cartn===0;
+    const accent=this.props.accent||'#b97a2e';
+    const catSplit=[{name:'Dry Fruits & Nuts',pct:48,c:accent},{name:'Electronics',pct:23,c:'#3d4a36'},{name:'Travel & Bags',pct:14,c:'#8a5a1c'},{name:'Oils & Pantry',pct:9,c:'#c98a2e'},{name:'Other',pct:6,c:'#cabfac'}];
+    let acc=0; const donut='conic-gradient('+catSplit.map(s=>{const seg=s.c+' '+acc+'% '+(acc+s.pct)+'%';acc+=s.pct;return seg;}).join(',')+')';
+    const catLeg=catSplit.map(s=>({name:s.name,pct:s.pct+'%',c:s.c}));
+    const funnel=[{s:'Store visits',v:'128.4K',w:'100%'},{s:'Product views',v:'86.2K',w:'67%'},{s:'Added to cart',v:'31.5K',w:'45%'},{s:'Checkout started',v:'14.8K',w:'30%'},{s:'Purchased',v:'9.2K',w:'19%'}];
+    const gv=[120,140,135,165,180,175,210,230,220,260,290,275]; const gm=Math.max(...gv);
+    const growth=['J','F','M','A','M','J','J','A','S','O','N','D'].map((m,i)=>({m,h:Math.round(gv[i]/gm*100)+'%'}));
+    const anKpis=[{k:'Avg. order value',v:'₹1,642',d:'+6.1%',down:false},{k:'Conversion rate',v:'3.8%',d:'+0.4%',down:false},{k:'Repeat purchase',v:'42%',d:'+3.2%',down:false},{k:'Refund rate',v:'1.9%',d:'0.3% lower',down:true}].map(x=>({...x,dcls:x.down?'stdelta down':'stdelta up'}));
+    const anTop=[this.PRODUCTS[0],this.PRODUCTS[12],this.PRODUCTS[4],this.PRODUCTS[13],this.PRODUCTS[7]].filter(Boolean).map((p,i)=>({name:p.name,grad:g(p.tone),units:(1240-i*190)+' units',rev:this.rupee(Math.round(p.p*(1240-i*190)/10)),w:(100-i*15)+'%'}));
+    return { customers, custCount:customers.length, adCustSel, adCustOpen:!!S.adCustSel, closeAdCust:()=>setS({adCustSel:null}), catLeg, donut, funnel, growth, anKpis, anTop };
+  }
+  screenData(){
+    const P=this.PRODUCTS, S=this.state, setS=(o)=>this.setState(o), R=(n)=>this.rupee(n);
+    // SHOP
+    const shopCats=['All',...this.CATS].map(c=>({name:c,on:S.activeCat===c,sel:()=>setS({activeCat:c})}));
+    let list=P.filter(p=>(S.activeCat==='All'||p.cat===S.activeCat) && p.r>=S.ratingMin);
+    if(S.sort==='Price: Low to High') list=[...list].sort((a,b)=>a.p-b.p);
+    else if(S.sort==='Price: High to Low') list=[...list].sort((a,b)=>b.p-a.p);
+    else if(S.sort==='Rating') list=[...list].sort((a,b)=>b.r-a.r);
+    else if(S.sort==='Discount') list=[...list].sort((a,b)=>(1-b.p/b.mrp)-(1-a.p/a.mrp));
+    else if(S.sort==='Newest') list=[...list].reverse();
+    const shopProds=list.map(p=>this.vp(p));
+    const filterCount=(S.activeCat!=='All'?1:0)+(S.ratingMin>0?1:0)+(S.colorSel>0?1:0);
+    const sortOptions=['Popularity','Price: Low to High','Price: High to Low','Rating','Discount','Newest'].map(o=>({label:o,on:S.sort===o,cls:S.sort===o?'sortopt on':'sortopt',sel:()=>setS({sort:o})}));
+    const ratingOpts=[{n:'4.5★ & above',v:4.5},{n:'4.0★ & above',v:4},{n:'3.5★ & above',v:3.5},{n:'All ratings',v:0}].map(o=>({n:o.n,cls:S.ratingMin===o.v?'chip on':'chip',sel:()=>setS({ratingMin:o.v})}));
+    const colors=['#e7c9a0','#c2d4a4','#b98a5e','#caa6bf','#e3b23c','#cfc8a8'].map((c,i)=>({c,cls:S.colorSel===i?'swatch on':'swatch',sel:()=>setS({colorSel:i})}));
+    // PRODUCT DETAIL
+    const p=P.find(x=>x.id===S.pid)||P[0], angs=[135,160,110,185];
+    const vdef=this.variantsFor(p.cat); const vi=Math.min(S.pack,vdef.opts.length-1); const vm=vdef.opts[vi].m; const curW=vdef.opts[vi].w;
+    const prod={...this.vp(p),brand:'Vitra · '+p.cat,price:R(p.p*vm),mrp:R(p.mrp*vm),disc:Math.round((1-p.p/p.mrp)*100),stock:p.id==='p8'?'Only 5 left':'In stock',vlabel:vdef.label};
+    const gallery=angs.map((a,i)=>({i,grad:this.grad(p.tone,a),cls:S.gal===i?'pdthumb on':'pdthumb',sel:()=>setS({gal:i})}));
+    const galMain=this.grad(p.tone,angs[S.gal]);
+    const packs=vdef.opts.map((o,i)=>({w:o.w,price:R(p.p*o.m),cls:vi===i?'packchip on':'packchip',sel:()=>setS({pack:i})}));
+    const highlights=this.highlightsFor(p.cat);
+    const specs=this.specsFor(p.cat,curW);
+    const reviews=[{n:'Meera I.',av:'MI',r:5,t:'Absolutely fresh and crunchy. Packaging keeps them perfect for weeks.',d:'2 days ago'},{n:'Rohan G.',av:'RG',r:5,t:'Premium quality, worth every rupee. Reordering for sure.',d:'1 week ago'},{n:'Sara K.',av:'SK',r:4,t:'Great taste and quick delivery. Slightly pricey but worth it.',d:'2 weeks ago'}].map(rv=>({...rv,stars:[1,1,1,1,1].slice(0,rv.r),dim:5-rv.r}));
+    const qa=[{q:'Are these roasted or raw?',a:'These are 100% raw and natural — unroasted and unsalted.'},{q:'Is the pouch resealable?',a:'Yes, every pack has a zip-lock resealable seal for freshness.'}];
+    const related=P.filter(x=>x.id!==p.id).slice(0,6).map(x=>this.vp(x));
+    // CHECKOUT
+    const addresses=[{tag:'Home',name:'Aarav Sharma',line:'402, Palm Springs, Linking Rd, Bandra West, Mumbai 400050',phone:'+91 98200 41122'},{tag:'Office',name:'Aarav Sharma',line:'9th Floor, Lotus Towers, BKC, Mumbai 400051',phone:'+91 98200 41122'}].map((a,i)=>({...a,cls:S.coAddr===i?'addrcard on':'addrcard',sel:()=>setS({coAddr:i})}));
+    const payMethods=[{k:'upi',label:'UPI',sub:'GPay · PhonePe · Paytm'},{k:'card',label:'Credit / Debit Card',sub:'Visa · Mastercard · RuPay'},{k:'cod',label:'Cash on Delivery',sub:'Pay when it arrives'},{k:'wallet',label:'Vitra Wallet',sub:'Balance · ₹240'},{k:'nb',label:'Net Banking',sub:'All major banks'}].map(m=>({...m,cls:S.coPay===m.k?'payopt on':'payopt',sel:()=>setS({coPay:m.k})}));
+    const coSteps=[{lbl:'Address'},{lbl:'Payment'},{lbl:'Review'}].map((s,i)=>({lbl:s.lbl,num:i+1,cls:S.co>i?'step done':(S.co===i?'step on':'step'),notLast:i<2}));
+    // ORDERS
+    const orders=this.ORDERS_DATA().map(o=>({...o,open:()=>{ setS({ord:o.id}); const v=document.querySelector('.phView'); if(v)v.scrollTop=0; }}));
+    const selOrder=this.ORDERS_DATA().find(o=>o.id===S.ord)||null;
+    if(selOrder){ selOrder.tl=selOrder.tl.map(t=>({...t,cls:t.s==='done'?'tlitem done':(t.s==='now'?'tlitem now':'tlitem')})); }
+    // NOTIF / WISH
+    const notifGroups=this.NOTIF_DATA();
+    const wishProds=P.filter(x=>S.wish[x.id]).map(x=>({...this.vp(x),mv:()=>this.moveToCart(x.id)}));
+    const savedItems=P.filter(x=>S.wish[x.id]).slice(0,2).map(x=>({...this.vp(x),mv:()=>this.moveToCart(x.id)}));
+    // ADMIN PRODUCTS
+    const stk=[120,86,8,14,210,64,40,5,96,11,38,150,34,52,120,28,46,90,140,72];
+    const statusOf=(id)=>['p3','p8'].includes(id)?['Out of stock','out']:(id==='p11'?['Draft','draft']:['Published','pub']);
+    const adProdAll=P.map((pr,i)=>{const[st,stc]=statusOf(pr.id);return{id:pr.id,name:pr.name,grad:this.grad(pr.tone),cat:pr.cat,price:R(pr.p),stock:stk[i],low:stk[i]<20,stockCls:stk[i]<20?'stocklow':'',sku:'VT-'+pr.cat.replace(' ','').slice(0,3).toUpperCase()+'-'+String(i+1).padStart(2,'0'),st,stc,edit:()=>setS({drawer:'edit',adProdSel:pr.id})};});
+    const adProds=adProdAll.filter(r=>S.adProdTab==='All'||(S.adProdTab==='Published'&&r.stc==='pub')||(S.adProdTab==='Draft'&&r.stc==='draft')||(S.adProdTab==='Out of stock'&&r.stc==='out'));
+    const prodTabs=['All','Published','Draft','Out of stock'].map(t=>({t,cls:S.adProdTab===t?'adtab on':'adtab',n:t==='All'?adProdAll.length:adProdAll.filter(r=>(t==='Published'&&r.stc==='pub')||(t==='Draft'&&r.stc==='draft')||(t==='Out of stock'&&r.stc==='out')).length,sel:()=>setS({adProdTab:t})}));
+    const drawerProd=S.adProdSel?adProdAll.find(r=>r.id===S.adProdSel):null;
+    // ADMIN ORDERS
+    const adOrdersAll=this.AD_ORDERS();
+    const adOrderRows=adOrdersAll.filter(o=>S.adOrderTab==='All'||o.st===S.adOrderTab).map(o=>({...o,open:()=>setS({adOrderSel:o.id})}));
+    const ordTabs=['All','Pending','Paid','Shipped','Refund'].map(t=>({t,cls:S.adOrderTab===t?'adtab on':'adtab',sel:()=>setS({adOrderTab:t})}));
+    let adSelOrder=S.adOrderSel?adOrdersAll.find(o=>o.id===S.adOrderSel):null;
+    if(adSelOrder){ adSelOrder={...adSelOrder,tl:adSelOrder.tl.map(t=>({...t,cls:t.s==='done'?'tlitem done':(t.s==='now'?'tlitem now':'tlitem')}))}; }
+    // ADMIN PROMOS
+    const adBanners=[{title:'Harvest Festival',sub:'Up to 30% off premium nuts',placement:'Home · Hero',grad:'linear-gradient(125deg,#7a5a32,#a8824a)',st:'Live',stc:'paid'},{title:'Gifting Season',sub:'Curated festive boxes',placement:'Category · Top',grad:'linear-gradient(125deg,#3d4a36,#6c7a4f)',st:'Scheduled',stc:'pending'},{title:'Saffron Drop',sub:'Grade A+, limited jars',placement:'Home · Strip',grad:'linear-gradient(125deg,#8a5a1c,#c98a2e)',st:'Draft',stc:'cancel'}];
+    const adCodes=[{code:'VITRA25',desc:'25% off gift boxes',type:'Percentage',used:418,limit:1000,w:'42%',st:'Active',stc:'paid'},{code:'FRESH100',desc:'₹100 off above ₹999',type:'Fixed',used:902,limit:1000,w:'90%',st:'Active',stc:'paid'},{code:'WELCOME15',desc:'15% off first order',type:'Percentage',used:1240,limit:2000,w:'62%',st:'Active',stc:'paid'},{code:'DIWALI50',desc:'Flat ₹50 cashback',type:'Cashback',used:0,limit:500,w:'0%',st:'Scheduled',stc:'pending'}];
+    const adCampaigns=[{name:'Diwali Mega Sale',period:'20 Oct – 05 Nov',grad:'linear-gradient(125deg,#8a3a1c,#c9682e)',perf:'+38% revenue'},{name:'Summer Wellness',period:'01 – 30 Apr',grad:'linear-gradient(125deg,#3d4a36,#6c7a4f)',perf:'+21% orders'},{name:'New Year Hampers',period:'26 Dec – 02 Jan',grad:'linear-gradient(125deg,#46402f,#8a7048)',perf:'+44% AOV'}];
+    // ADMIN TEAM
+    const adTeam=[{n:'Ria Kapoor',av:'RK',role:'Store Manager · Admin'},{n:'Imran Shaikh',av:'IS',role:'Catalog Editor'},{n:'Neha Verma',av:'NV',role:'Support Agent'}];
+    // SETTINGS prefs
+    const pf=S.prefs, sw=(k)=>pf[k]?'switch on':'switch', tg=(k)=>()=>setS({prefs:{...pf,[k]:!pf[k]}});
+    const sec=(k)=>S.setSection===k?'setni on':'setni';
+    return {
+      shopCats, shopProds, shopCount:shopProds.length, filterCount, filterCountStr:filterCount||'', sortLabel:S.sort, sortOptions, ratingOpts, colors,
+      recents:['Almonds','Saffron','Gift box','Medjool dates'], populars:['Cashew W320','Trail mix','Pistachios','Walnuts','Figs','Apricots'],
+      viewGrid:S.view==='grid', viewList:S.view==='list', vgCls:S.view==='grid'?'vtb on':'vtb', vlCls:S.view==='list'?'vtb on':'vtb', toggleGrid:()=>setS({view:'grid'}), toggleList:()=>setS({view:'list'}),
+      filterOpen:S.filterOpen, openFilter:()=>setS({filterOpen:true}), closeFilter:()=>setS({filterOpen:false}), applyFilters:()=>setS({filterOpen:false}), clearFilters:()=>setS({activeCat:'All',ratingMin:0,colorSel:0,sort:'Popularity'}), stop:(e)=>{ if(e&&e.stopPropagation)e.stopPropagation(); },
+      prod, gallery, galMain, packs, highlights, specs, reviews, qa, related,
+      descCls:S.spec==='desc'?'pdacc open':'pdacc', specsCls:S.spec==='specs'?'pdacc open':'pdacc', shipCls:S.spec==='ship'?'pdacc open':'pdacc',
+      toggleDesc:()=>setS({spec:S.spec==='desc'?'':'desc'}), toggleSpecs:()=>setS({spec:S.spec==='specs'?'':'specs'}), toggleShip:()=>setS({spec:S.spec==='ship'?'':'ship'}),
+      addPD:()=>this.add(S.pid), buyNow:()=>{ this.add(S.pid); this.go('checkout'); this.setCo(0); },
+      addresses, payMethods, coSteps, coIsAddr:S.co===0, coIsPay:S.co===1, coIsReview:S.co===2, coIsDone:S.co===3,
+      coNext:()=>this.setCo(Math.min(3,S.co+1)), coBack:()=>{ if(S.co===0) this.go('cart'); else this.setCo(S.co-1); }, placeOrder:()=>this.setCo(3), coCtaLabel:['Continue to Payment','Review Order','Place Order'][S.co]||'',
+      savedItems,
+      orders, selOrder, ordList:!S.ord, hasWish:wishProds.length>0, backOrders:()=>setS({ord:null}),
+      notifGroups, wishProds, wishEmpty:wishProds.length===0,
+      adProds, prodTabs, drawerOpen:S.drawer!==null, drawerProd, drawerIsAdd:S.drawer==='add', drawerTitle:S.drawer==='add'?'Add Product':'Edit Product', drawerName:drawerProd?drawerProd.name:'', drawerCat:drawerProd?drawerProd.cat:'', drawerSku:drawerProd?drawerProd.sku:'', drawerPrice:drawerProd?String(drawerProd.price).replace('₹',''):'', drawerStock:drawerProd?drawerProd.stock:'',
+      openAddProd:()=>setS({drawer:'add',adProdSel:null}), closeDrawer:()=>setS({drawer:null,adProdSel:null}),
+      adOrderRows, ordTabs, adSelOrder, adOrderOpen:!!S.adOrderSel, closeAdOrder:()=>setS({adOrderSel:null}),
+      adBanners, adCodes, adCampaigns, adTeam,
+      secStore:sec('store'),secPay:sec('payment'),secShip:sec('shipping'),secTax:sec('tax'),secNotif:sec('notif'),secTeam:sec('team'),secSecurity:sec('security'),
+      isSecStore:S.setSection==='store',isSecPay:S.setSection==='payment',isSecShip:S.setSection==='shipping',isSecTax:S.setSection==='tax',isSecNotif:S.setSection==='notif',isSecTeam:S.setSection==='team',isSecSecurity:S.setSection==='security',
+      goSecStore:()=>setS({setSection:'store'}),goSecPay:()=>setS({setSection:'payment'}),goSecShip:()=>setS({setSection:'shipping'}),goSecTax:()=>setS({setSection:'tax'}),goSecNotif:()=>setS({setSection:'notif'}),goSecTeam:()=>setS({setSection:'team'}),goSecSecurity:()=>setS({setSection:'security'}),
+      swOrders:sw('orderUpdates'),swPromos:sw('promotions'),swPrice:sw('priceDrops'),swRestock:sw('restock'),swNews:sw('newsletter'),
+      tgOrders:tg('orderUpdates'),tgPromos:tg('promotions'),tgPrice:tg('priceDrops'),tgRestock:tg('restock'),tgNews:tg('newsletter'),
+      ...this.custAnalytics(),
+    };
+  }
+
+  adminData(){
+    const mx=v=>v.reduce((a,b)=>Math.max(a,b),1);
+    const stats=[
+      {k:'Total Revenue',v:'₹18.4L',delta:'12.6%',spark:[40,55,48,62,58,72,80]},
+      {k:'Orders',v:'2,847',delta:'8.2%',spark:[30,42,38,50,46,58,64]},
+      {k:'Products',v:'412',delta:'5 new',spark:[20,22,24,26,28,30,33]},
+      {k:'Active Customers',v:'9,233',delta:'3.1%',spark:[50,52,49,55,58,60,63]},
+    ].map(s=>({...s,spk:s.spark.map(x=>({h:Math.round(x/mx(s.spark)*100)+'%'}))}));
+    const sv=[42,55,48,63,70,58,75,82,69,88,94,80]; const sm=mx(sv);
+    const sales=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].map((m,i)=>({m,h:Math.round(sv[i]/sm*100)+'%'}));
+    const best=[this.PRODUCTS[0],this.PRODUCTS[4],this.PRODUCTS[1],this.PRODUCTS[7],this.PRODUCTS[2]].map((p,i)=>({name:p.name,grad:this.grad(p.tone),meta:(1240-i*180)+' units · '+p.cat,rev:this.rupee(p.p*(1240-i*180)/10)}));
+    const recent=[
+      {id:'#VT-10482',cust:'Aarav Sharma',items:'3 items',total:'₹1,847',st:'Paid',stc:'paid'},
+      {id:'#VT-10481',cust:'Meera Iyer',items:'1 item',total:'₹899',st:'Shipped',stc:'shipped'},
+      {id:'#VT-10480',cust:'Rohan Gupta',items:'5 items',total:'₹3,240',st:'Pending',stc:'pending'},
+      {id:'#VT-10479',cust:'Sara Khan',items:'2 items',total:'₹1,099',st:'Paid',stc:'paid'},
+      {id:'#VT-10478',cust:'Dev Patel',items:'1 item',total:'₹549',st:'Refund',stc:'refund'},
+      {id:'#VT-10477',cust:'Ananya Rao',items:'4 items',total:'₹2,398',st:'Shipped',stc:'shipped'},
+    ];
+    const low=[
+      {name:'Iranian Akbari Pistachios',tone:'#c2d4a4',stock:8,w:'7%'},
+      {name:'Pure Kashmiri Saffron 2g',tone:'#e3b23c',stock:5,w:'6%'},
+      {name:'Kashmiri Walnut Kernels',tone:'#c9a27e',stock:14,w:'10%'},
+      {name:'Signature Festive Gift Box',tone:'#d8c3a5',stock:11,w:'13%'},
+    ].map(x=>({...x,grad:this.grad(x.tone)}));
+    return {adStats:stats, adSales:sales, adBest:best, adRecent:recent, adLow:low};
+  }
+
+  buildAdminNav(){
+    const h=React.createElement;
+    return this.ADNAV.map(n=>h('button',{key:n.k,className:'adni '+(this.state.admin===n.k?'on':''),onClick:()=>{ this.setState({admin:n.k}); const m=document.querySelector('.admain'); if(m)m.scrollTop=0; }},
+      this.adIcon(n.k), h('span',null,n.label), n.badge?h('span',{className:'adnbadge'},n.badge):null));
+  }
+  adIcon(k){
+    const h=React.createElement; const sp={width:18,height:18,viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:1.7};
+    const I={
+      overview:h('svg',sp,h('rect',{x:4,y:4,width:7,height:7,rx:1.5}),h('rect',{x:13,y:4,width:7,height:7,rx:1.5}),h('rect',{x:4,y:13,width:7,height:7,rx:1.5}),h('rect',{x:13,y:13,width:7,height:7,rx:1.5})),
+      products:h('svg',sp,h('path',{d:'M4 8l8-4 8 4-8 4z',strokeLinejoin:'round'}),h('path',{d:'M4 8v8l8 4 8-4V8',strokeLinejoin:'round'}),h('path',{d:'M12 12v8'})),
+      orders:h('svg',sp,h('path',{d:'M6 4h9l3 3v13a1 1 0 01-1 1H6a1 1 0 01-1-1V5a1 1 0 011-1z',strokeLinejoin:'round'}),h('path',{d:'M9 11h6M9 15h6',strokeLinecap:'round'})),
+      promos:h('svg',sp,h('path',{d:'M4 12l8-8 8 8-8 8z',strokeLinejoin:'round'}),h('circle',{cx:12,cy:8,r:1.4,fill:'currentColor'})),
+      settings:h('svg',sp,h('circle',{cx:12,cy:12,r:3.2}),h('path',{d:'M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1',strokeLinecap:'round'})),
+    };
+    return I[k]||I.overview;
+  }
+}
+</script>
+<script>
+(async () => {
+  if (!document.title || !document.title.trim()) document.title = "Vitra";
+  // Prepend so page-supplied @page / break rules (deck-stage's margin:0,
+  // author CSS) keep source-order precedence over the baseline.
+  const baseCss = document.createElement('style');
+  baseCss.textContent = "@media print {\n  figure, table { break-inside: avoid; }\n  *, *::before, *::after {\n    print-color-adjust: exact; -webkit-print-color-adjust: exact;\n    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;\n    animation-delay: -99s !important; animation-duration: .001s !important;\n    animation-iteration-count: 1 !important; animation-fill-mode: both !important;\n    animation-play-state: running !important; transition-duration: 0s !important;\n  }\n}";
+  document.head.prepend(baseCss);
+  if (document.readyState === 'loading') {
+    await new Promise((r) => document.addEventListener('DOMContentLoaded', r, { once: true }));
+  }
+  let ds = document.querySelector('deck-stage');
+  // whenDefined never resolves when nothing registers the element, so only
+  // await it when a <deck-stage> tag exists (and race a timeout regardless).
+  if (ds && !customElements.get('deck-stage')) {
+    try {
+      await Promise.race([
+        customElements.whenDefined('deck-stage'),
+        new Promise((r) => setTimeout(r, 3000)),
+      ]);
+    } catch (e) {}
+    ds = document.querySelector('deck-stage');
+  }
+  // dc-runtime assigns window.DCLogic at init and mounts into #dc-root on
+  // DOMContentLoaded; settle on that subtree so React has rendered before
+  // print(). Non-DC pages fall through to weighing body.
+  const isDc = !ds && 'DCLogic' in window;
+  const settleRoot = ds || (isDc ? document.getElementById('dc-root') : null) || document.body;
+  if (settleRoot) {
+    // Weigh only content children — skip script/style/template so inline
+    // Babel/CSS doesn't register as stable "content" before the framework
+    // has mounted anything.
+    const MEDIA = 'img,svg,canvas,video,picture,iframe,embed,object';
+    const weigh = () => {
+      let text = 0, media = 0;
+      for (const c of settleRoot.children) {
+        const t = c.tagName;
+        if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+        text += (c.textContent || '').trim().length;
+        media += c.querySelectorAll(MEDIA).length + (c.matches(MEDIA) ? 1 : 0);
+      }
+      return text + media * 100;
+    };
+    // "Non-zero and stable" alone is not sufficient to mean rendered: generic
+    // body can carry a static shell while async main content is pending, and
+    // #dc-root can carry the root DC's static text while child refs are still
+    // .sc-placeholder boxes. Gate generic on readyState 'complete', and never
+    // accept stability while a dc-runtime placeholder is present.
+    const isGeneric = settleRoot === document.body;
+    const deadline = Date.now() + 15000;
+    let last = -1, stable = 0;
+    while (Date.now() < deadline) {
+      const n = weigh();
+      const ready =
+        (!isGeneric || document.readyState === 'complete') &&
+        !settleRoot.querySelector('.sc-placeholder');
+      if (n > 0 && n === last && ready) { if (++stable >= 2) break; } else { stable = 0; }
+      last = n;
+      await new Promise((r) => setTimeout(r, 250));
+    }
+  }
+  // Project support.js may predate runtime default-seeding; push via bridge.
+  if (isDc && window.__dcSetProps && window.__dcRootName) {
+    try {
+      const dpEl = document.querySelector('script[data-dc-script]');
+      const meta = JSON.parse((dpEl && dpEl.getAttribute('data-props')) || '{}');
+      const bag = {};
+      for (const k in meta)
+        if (k[0] !== '$' && meta[k] && meta[k].default !== undefined)
+          bag[k] = meta[k].default;
+      if (Object.keys(bag).length) {
+        window.__dcSetProps(window.__dcRootName(), bag);
+        await new Promise((r) => setTimeout(r, 50));
+      }
+    } catch (e) {}
+  }
+  // Reveal content gated on scroll or visibility before printing. Lazy <img>,
+  // IntersectionObserver fade-ins, and collapsed <details> don't render while
+  // off-screen, so a long page would print with them blank or closed. Open
+  // every <details>, force native-lazy images eager, and scroll the document
+  // through its full height to trip lazy-load + IO; then wait (bounded) for the
+  // newly-triggered images. Inert for deck-stage (slides aren't scroll-gated).
+  try {
+    for (const d of document.querySelectorAll('details')) d.open = true;
+    for (const img of document.querySelectorAll('img[loading="lazy"]'))
+      img.loading = 'eager';
+    const scroller = document.scrollingElement || document.documentElement;
+    const full = Math.max(scroller.scrollHeight, document.body.scrollHeight);
+    const step = window.innerHeight || 800;
+    for (let y = 0; y <= full; y += step) {
+      window.scrollTo(0, y);
+      await new Promise((r) => requestAnimationFrame(r));
+    }
+    window.scrollTo(0, 0);
+    await Promise.race([
+      Promise.all(
+        [...document.images].map((img) =>
+          img.complete
+            ? null
+            : new Promise((res) => {
+                img.addEventListener('load', res, { once: true });
+                img.addEventListener('error', res, { once: true });
+              })
+        )
+      ),
+      new Promise((r) => setTimeout(r, 4000)),
+    ]);
+  } catch (e) {}
+  try { await document.fonts.ready; } catch (e) {}
+  // Jump every animation to its end state so print() never captures a slide
+  // mid-entrance. Ordering matters: the 0s-transition style must be live
+  // BEFORE data-deck-active is set so attribute-keyed transitions don't
+  // start a (now-0s) run from the pre-active base.
+  const st = document.createElement('style');
+  st.textContent = '*,*::before,*::after{animation-delay:-99s !important;animation-duration:.001s !important;animation-iteration-count:1 !important;animation-fill-mode:both !important;animation-play-state:running !important;transition-duration:0s !important}';
+  document.head.appendChild(st);
+  for (const d of document.querySelectorAll('deck-stage')) {
+    for (const c of d.children) {
+      const t = c.tagName;
+      if (t === 'SCRIPT' || t === 'STYLE' || t === 'TEMPLATE') continue;
+      c.setAttribute('data-deck-active', '');
+    }
+  }
+  // Re-append deck-stage's @page last so no author @page can add a margin and
+  // spill each full-bleed slide onto two sheets. Backstop for old copies.
+  if (ds) {
+    let pg = document.getElementById('deck-stage-print-page');
+    if (!pg) {
+      pg = document.createElement('style');
+      pg.textContent = '@page{size:' + (+ds.getAttribute('width') || 1920) +
+        'px ' + (+ds.getAttribute('height') || 1080) + 'px;margin:0}';
+    }
+    document.body.appendChild(pg);
+  }
+  try {
+    const sweep = () => {
+      for (const a of document.getAnimations()) {
+        try { a.finish(); } catch (e) {
+          try { a.currentTime = (a.effect && a.effect.getComputedTiming().duration) || 0; a.pause(); } catch (e2) {}
+        }
+      }
+    };
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+    sweep();
+    await new Promise((r) => requestAnimationFrame(r));
+  } catch (e) {}
+  // Size the PDF page to the rendered design unless the file opted into
+  // standard paper via @page{size:letter|A4|…}. Decks own their own @page.
+  // Wrappers (body, …) lose padding+margin so the frame sits at (0,0); the
+  // frame itself loses only margin — its padding is INSIDE the measured
+  // rect and must stay, or content shifts and leaves a gap at bottom/right.
+  var __m = null;
+  try { __m = (() => {
+  var docEl = document.documentElement;
+  var doc = { width: docEl.scrollWidth, height: docEl.scrollHeight };
+
+  var ds = document.querySelector('deck-stage');
+  if (ds) {
+    var dw = Number(ds.getAttribute('width')) || 1920;
+    var dh = Number(ds.getAttribute('height')) || 1080;
+    var n = typeof ds.length === 'number' ? ds.length : ds.children.length;
+    var idx = typeof ds.index === 'number' ? ds.index : 0;
+    var frames = [];
+    for (var i = 0; i < n; i++) frames.push({ left: 0, top: 0, width: dw, height: dh });
+    return { kind: 'deck', doc: doc, frames: frames,
+      authored: frames.map(function(){return{width:true,height:true}}),
+      deck: { width: dw, height: dh, slideCount: n, index: idx },
+      signals: { paperPage: false, pxPage: false } };
+  }
+
+  var paperPage = false, pxPage = false;
+  var eachRule = function (fn) {
+    for (var s = 0; s < document.styleSheets.length; s++) {
+      var rs; try { rs = document.styleSheets[s].cssRules; } catch (e) { continue; }
+      for (var r = 0; r < rs.length; r++) {
+        fn(rs[r]);
+        if (rs[r].cssRules) for (var n = 0; n < rs[r].cssRules.length; n++) fn(rs[r].cssRules[n]);
+      }
+    }
+  };
+  eachRule(function (r) {
+    if (r.type !== 6) return;
+    var m = /\bsize\s*:\s*([^;}]+)/i.exec(r.cssText || '');
+    if (!m) return;
+    if (/\b(letter|a[3-5]|legal|ledger)\b/i.test(m[1])) paperPage = true;
+    if (/\d+(?:\.\d+)?px\b/i.test(m[1])) pxPage = true;
+  });
+  var signals = { paperPage: paperPage, pxPage: pxPage };
+
+  var pxVal = function (v) {
+    var m = /^(\d+(?:\.\d+)?)px$/.exec(v || ''); return m ? +m[1] : 0;
+  };
+  var authoredPx = function (el, prop) {
+    if (pxVal(el.style[prop])) return true;
+    var attr = el.getAttribute(prop);
+    if (attr && /^\d+$/.test(attr)) return true;
+    var hit = false;
+    eachRule(function (r) {
+      if (hit || r.type !== 1 || !r.style) return;
+      try { if (el.matches(r.selectorText) && pxVal(r.style[prop])) hit = true; } catch (e) {}
+    });
+    return hit;
+  };
+
+  var el = document.body, rootPxW = false;
+  for (;;) {
+    var kids = [];
+    for (var c = 0; c < el.children.length; c++) {
+      var t = el.children[c].tagName;
+      if (t !== 'SCRIPT' && t !== 'STYLE' && t !== 'TEMPLATE') kids.push(el.children[c]);
+    }
+    if (kids.length !== 1 || !(kids[0] instanceof HTMLElement)) break;
+    el.setAttribute('data-om-frame-wrap', '');
+    el = kids[0];
+    rootPxW = authoredPx(el, 'width');
+    if (rootPxW) break;
+  }
+  if (!rootPxW) rootPxW = authoredPx(el, 'width');
+
+  // @page{size:letter} alone is a flowing doc; with a px-width root it's a
+  // fixed sheet pretending to be paper — fall through and size to render.
+  if (paperPage && !rootPxW) {
+    return { kind: 'paper-doc', doc: doc, signals: signals,
+      frames: [{ left: 0, top: 0, width: doc.width, height: doc.height }],
+      authored: [{ width: false, height: false }] };
+  }
+
+  var sx = window.scrollX || 0, sy = window.scrollY || 0;
+  var rectOf = function (e) {
+    var r = e.getBoundingClientRect();
+    var oy; try { oy = getComputedStyle(e).overflowY; } catch (err) {}
+    var h = oy === 'visible' ? Math.max(r.height, e.scrollHeight || 0) : r.height;
+    return { left: r.left + sx, top: r.top + sy, width: r.width, height: h };
+  };
+
+  // Multi-frame: ≥2 visible non-fixed children, each with authored px width
+  // AND height, all within ±2px of each other. Off unless the page opts in
+  // via data-om-multi-frame on the stop element — guards against card grids
+  // and pricing tables that match the geometry but aren't separate canvases.
+  if (el.hasAttribute('data-om-multi-frame')) {
+    var cands = [];
+    for (var k = 0; k < el.children.length; k++) {
+      var ch = el.children[k];
+      var cs; try { cs = getComputedStyle(ch); } catch (e) { continue; }
+      if (cs.display === 'none' || cs.visibility === 'hidden' || cs.position === 'fixed') continue;
+      var rc = rectOf(ch);
+      if (rc.width < 2 || rc.height < 2) continue;
+      if (!authoredPx(ch, 'width') || !authoredPx(ch, 'height')) continue;
+      cands.push(rc);
+    }
+    if (cands.length >= 2) {
+      var w0 = cands[0].width, h0 = cands[0].height, ok = true;
+      for (var q = 1; q < cands.length; q++)
+        if (Math.abs(cands[q].width - w0) > 2 || Math.abs(cands[q].height - h0) > 2) ok = false;
+      if (ok) return { kind: 'multi-frame', doc: doc, signals: signals,
+        frames: cands, authored: cands.map(function(){return{width:true,height:true}}) };
+    }
+  }
+
+  el.setAttribute('data-om-frame', '');
+  return { kind: 'single-canvas', doc: doc, signals: signals,
+    frames: [rectOf(el)],
+    authored: [{ width: rootPxW, height: authoredPx(el, 'height') }] };
+})(); } catch (e) {}
+  var frame = null;
+  if (__m && __m.kind === 'single-canvas') {
+    var f = __m.frames && __m.frames[0];
+    if (f && f.width >= 200 && f.height >= 200) {
+      frame = f;
+      var fst = document.createElement('style');
+      fst.textContent = '@media print{@page{size:' + Math.ceil(f.width) + 'px ' +
+        Math.ceil(f.height) + 'px;margin:0}' +
+        'html,body,[data-om-frame-wrap]{padding:0!important;margin:0!important;background:none!important}' +
+        '[data-om-frame]{margin:0!important}}';
+      document.body.appendChild(fst);
+    }
+  }
+  // Relax break-inside on oversized elements. An element taller than a
+  // printable page can't honor break-inside: avoid — browsers either overflow
+  // it or push it whole to the next page, leaving a blank gap, then break it
+  // anyway at an arbitrary point. After the final layout (content revealed,
+  // animations jumped), find elements taller than a page that still compute
+  // break-inside: avoid and reset them to auto, so the browser breaks them at
+  // their children's boundaries instead (children keep their own avoid). PAGE_PX
+  // is a conservative portrait estimate at 96 CSS px/in — Letter/A4 usable
+  // height minus our 0.5in margins — so only clearly-oversized elements are
+  // touched and under-page elements still stay whole. Skipped for decks (slides
+  // are sized to the page) and for fixed-size canvases (frame set, or an author
+  // px-based @page) — runs as before for flowing docs on letter/A4.
+  try {
+    if (!ds && !frame && !(__m && __m.signals && __m.signals.pxPage)) {
+      const PAGE_PX = 1024;
+      // Our print defaults add a real @page margin only when the source has
+      // no @page of its own; computed style can't tell us (it reports screen
+      // media), so read the injected rule directly.
+      const defaults = document.querySelector('style[data-omelette-print-defaults]');
+      const pageInset = /@page\s*\{[^}]*margin/.test(defaults ? defaults.textContent || '' : '');
+      const SEL = 'section,article,figure,table,pre,blockquote,[class~="card" i],[class~="page" i],[class~="sheet" i]';
+      for (const el of document.body.querySelectorAll(SEL)) {
+        if (el instanceof HTMLElement && el.offsetHeight > PAGE_PX) {
+          el.setAttribute('data-om-oversized', '');
+          // Fake-paged docs simulate sheets with over-tall break-after:page
+          // boxes; honoring the break spills half-blank pages and ends a
+          // colored box mid-sheet. Flow them, and (only when we own the page
+          // inset) drop the redundant padding/background via the rule below.
+          const cs = getComputedStyle(el);
+          if (cs.breakAfter === 'page' || cs.pageBreakAfter === 'always') {
+            el.setAttribute('data-om-fakepage', '');
+          }
+        }
+      }
+      const ost = document.createElement('style');
+      ost.textContent = '@media print{' +
+        '[data-om-oversized]{break-inside:auto !important;page-break-inside:auto !important}' +
+        '[data-om-fakepage]{break-after:auto !important;page-break-after:auto !important}' +
+        (pageInset ? '[data-om-fakepage]{padding:0 !important;background:none !important}' : '') +
+        '}';
+      document.head.appendChild(ost);
+    }
+  } catch (e) {}
+  // macOS Preview renders Skia-PDF Luminosity soft-masks as opaque grey boxes;
+  // swap the CSS that triggers them for Preview-safe forms.
+  try {
+    for (const el of document.body.querySelectorAll('*')) {
+      const cs = getComputedStyle(el);
+
+      if (cs.boxShadow !== 'none' && cs.filter === 'none') {
+        const outs = [], kept = [];
+        for (const s of cs.boxShadow.split(/,(?![^(]*[)])/)) {
+          const t = s.trim();
+          const m = t.match(/^(rgba?[(][^)]+[)]) (-?[0-9.]+px) (-?[0-9.]+px) ([0-9.]+px) -?[0-9.]+px$/);
+          if (m && parseFloat(m[4]) > 0) outs.push('drop-shadow(' + m[2] + ' ' + m[3] + ' ' + m[4] + ' ' + m[1] + ')');
+          else kept.push(t);
+        }
+        if (outs.length) {
+          el.style.setProperty('filter', outs.join(' '), 'important');
+          el.style.setProperty('box-shadow', kept.join(', ') || 'none', 'important');
+        }
+      }
+
+      const mask = cs.maskImage && cs.maskImage !== 'none' ? cs.maskImage : cs.webkitMaskImage;
+      if (mask && mask !== 'none' && cs.filter === 'none') el.style.setProperty('filter', 'opacity(1)', 'important');
+    }
+  } catch (e) {}
+  setTimeout(() => { try { window.print(); } catch (e) {} }, 200);
+})();
+</script>
+</body>
+</html>
