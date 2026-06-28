@@ -1,0 +1,22 @@
+{
+  "name": "vitra-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vitra Dry Fruits & More — customer mobile app (Capacitor / Android + iOS)",
+  "scripts": {
+    "build:www": "node build-www.mjs",
+    "sync": "npm run build:www && cap sync",
+    "open:android": "cap open android",
+    "apk:debug": "npm run build:www && cap sync android && cd android && ./gradlew assembleDebug",
+    "apk:release": "npm run build:www && cap sync android && cd android && ./gradlew assembleRelease"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.2.0",
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/splash-screen": "^6.0.3",
+    "@capacitor/status-bar": "^6.0.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  }
+}

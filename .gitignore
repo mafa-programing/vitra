@@ -1,0 +1,25 @@
+# dependencies
+node_modules/
+.build-tmp/
+
+# secrets / local config
+shared/config.js
+*.keystore
+*.jks
+
+# Capacitor / Android build output
+vitra-app/android/.gradle/
+vitra-app/android/build/
+vitra-app/android/app/build/
+vitra-app/android/local.properties
+vitra-app/android/.idea/
+vitra-app/android/captures/
+*.apk
+*.aab
+
+# vercel
+.vercel/
+
+# os
+.DS_Store
+Thumbs.db
