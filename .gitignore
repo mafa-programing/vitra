@@ -3,7 +3,7 @@ node_modules/
 .build-tmp/
 
 # secrets / local config
-shared/config.js
+# (shared/config.js is committed: it holds only the PUBLIC anon key, safe by design)
 *.keystore
 *.jks
 
