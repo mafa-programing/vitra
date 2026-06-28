@@ -1,0 +1,8 @@
+{
+  "name": "vitra",
+  "private": true,
+  "description": "Vitra — admin dashboard (Vercel) build entry. The app lives in vitra-app/.",
+  "scripts": {
+    "build": "node admin/build-admin.mjs"
+  }
+}
