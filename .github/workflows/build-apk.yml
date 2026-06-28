@@ -1,0 +1,70 @@
+name: Build Android APK
+
+# Builds the Vitra customer app into an installable APK on GitHub's cloud runners
+# (they ship the Android SDK), then publishes it as a downloadable artifact and
+# a GitHub Release. Runs on every push to main, or on demand from the Actions tab.
+
+on:
+  push:
+    branches: [ main ]
+    paths: [ 'vitra-app/**', '.github/workflows/build-apk.yml' ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install dependencies
+        working-directory: vitra-app
+        run: npm install
+
+      - name: Build web assets + sync Capacitor
+        working-directory: vitra-app
+        run: |
+          npm run build:www
+          npx cap sync android
+
+      - name: Build debug APK
+        working-directory: vitra-app/android
+        run: |
+          chmod +x ./gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Rename APK
+        run: cp vitra-app/android/app/build/outputs/apk/debug/app-debug.apk vitra-debug.apk
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitra-debug-apk
+          path: vitra-debug.apk
+          if-no-files-found: error
+
+      - name: Publish to a Release (latest)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: Vitra (latest debug build)
+          files: vitra-debug.apk
+          body: "Auto-built debug APK. Download vitra-debug.apk below, copy to your Android phone, and install (allow 'unknown sources')."
+          make_latest: true
