@@ -61,7 +61,36 @@ const NATIVE_HEAD = `<script src="./vendor/react.production.min.js"></script>
   .fcart{bottom:calc(92px + var(--safe-bot))!important;}
   .stickybuy,.checkoutbar{padding-bottom:calc(16px + var(--safe-bot))!important;}
   .sheetwrap{padding-bottom:var(--safe-bot)!important;}
-</style>`;
+</style>
+<script>
+// Native back-button + edge-swipe handling. Without this, Android's back gesture
+// exits the app (the app navigates via internal state, not browser history).
+// Order: close an open sheet/modal -> use the on-screen back arrow -> go to Home
+// tab -> only then minimize to the launcher.
+(function(){
+  function whenReady(fn){
+    var C = window.Capacitor;
+    if (C && C.Plugins && C.Plugins.App) return fn(C.Plugins.App);
+    setTimeout(function(){ whenReady(fn); }, 250);
+  }
+  function visible(el){ return !!(el && el.offsetParent !== null); }
+  whenReady(function(App){
+    App.addListener('backButton', function(){
+      // 1) a bottom sheet / filter / sort / modal is open -> close it
+      var sheet = document.querySelector('.sheetwrap');
+      if (sheet){ sheet.click(); return; }
+      // 2) the current screen has a back arrow (Product, Checkout, Order detail, ...) -> use it
+      var back = document.querySelector('.backbtn');
+      if (visible(back)){ back.click(); return; }
+      // 3) on a secondary tab (Shop / Cart / Account) -> go to Home
+      var navis = document.querySelectorAll('.navi');
+      if (navis.length && !navis[0].classList.contains('on')){ navis[0].click(); return; }
+      // 4) already on Home -> drop to the launcher instead of killing the app
+      if (App.minimizeApp) App.minimizeApp(); else App.exitApp();
+    });
+  });
+})();
+</script>`;
 html = replaceOnce(html, '<script src="./support.js"></script>', NATIVE_HEAD, 'support.js->vendor+native');
 
 // 4) fonts: serve the vendored, offline copies instead of Google Fonts
