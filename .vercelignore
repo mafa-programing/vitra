@@ -1,0 +1,7 @@
+node_modules
+.build-tmp
+vitra-app/android
+vitra-app/node_modules
+admin/node_modules
+*.zip
+.git

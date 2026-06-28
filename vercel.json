@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node admin/build-admin.mjs",
+  "outputDirectory": "admin/public",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "framework": null
+}
