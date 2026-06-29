@@ -337,7 +337,18 @@ html = replaceOnce(html,
     const homeProds=P.slice(0,12).map(x=>this.vp(x));
     const pdWishCls=S.wish[p.id]?'backbtn on':'backbtn';
     const toggleWishPD=()=>this.toggleWish(p.id);
-    const sharePD=()=>{ try{ if(navigator.share){navigator.share({title:p.name,url:window.location.href});}else{ navigator.clipboard&&navigator.clipboard.writeText(p.name+' - Vitra'); } }catch(e){} };`,
+    const sharePD=async()=>{
+      const shareUrl=(window.location.origin&&window.location.origin!=='null'?window.location.origin:'https://vitra.app')+'/#product='+p.id;
+      const shareData={title:p.name,text:p.name+' — premium dry fruits on Vitra',url:shareUrl};
+      const toast=(msg)=>{ this.setState({_toast:msg}); setTimeout(()=>this.setState({_toast:''}),1900); };
+      // 1) Capacitor native share sheet (real device)
+      try{ const C=window.Capacitor; if(C&&C.Plugins&&C.Plugins.Share){ await C.Plugins.Share.share({title:shareData.title,text:shareData.text,url:shareData.url,dialogTitle:'Share '+p.name}); return; } }catch(e){ if(e&&e.name==='AbortError') return; }
+      // 2) Web Share API (Android WebView / mobile browsers)
+      try{ if(navigator.share){ await navigator.share(shareData); return; } }catch(e){ if(e&&e.name==='AbortError') return; }
+      // 3) Clipboard fallback — always confirm with a toast
+      try{ if(navigator.clipboard&&navigator.clipboard.writeText){ await navigator.clipboard.writeText(shareData.text+' '+shareUrl); toast('Link copied to clipboard'); return; } }catch(e){}
+      toast('Share link: '+shareUrl);
+    };`,
   'homeProds-and-wish-share'
 );
 
@@ -415,7 +426,7 @@ html = replaceOnce(html,
 // 25) Order detail: add Cancel / Return request buttons
 html = replaceOnce(html,
   '<div class="ordbtns" style="margin-top:16px"><button class="obtn">Need help?</button><button class="obtn fill">Reorder</button></div>',
-  '<div class="ordbtns" style="margin-top:16px"><sc-if value="{{ selOrderCanCancel }}" hint-placeholder-val="x"><button class="obtn" onClick="{{ cancelOrder }}" style="color:#c0432f;border-color:rgba(192,67,47,.35)">Cancel Order</button></sc-if><sc-if value="{{ selOrderCanReturn }}" hint-placeholder-val="x"><button class="obtn" onClick="{{ returnOrder }}">Request Return</button></sc-if><sc-if value="{{ selOrderShowHelp }}" hint-placeholder-val="x"><button class="obtn">Need help?</button></sc-if><button class="obtn fill">Reorder</button></div>',
+  '<sc-if value="{{ selOrderHasReq }}" hint-placeholder-val="x"><div style="margin-top:16px;display:flex;align-items:center;gap:9px;padding:12px 14px;border-radius:14px;background:#fff7e6;border:1.5px solid rgba(185,122,46,.3)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#b97a2e" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2" stroke-linecap="round"/></svg><div><div style="font:700 13px Manrope;color:#8a5a1c">{{ selOrderReqLabel }}</div><div style="font-size:11px;color:#a8824a">Waiting for admin approval. We will notify you once it is processed.</div></div></div></sc-if><div class="ordbtns" style="margin-top:16px"><sc-if value="{{ selOrderCanCancel }}" hint-placeholder-val="x"><button class="obtn" onClick="{{ cancelOrder }}" style="color:#c0432f;border-color:rgba(192,67,47,.35)">Request Cancellation</button></sc-if><sc-if value="{{ selOrderCanReturn }}" hint-placeholder-val="x"><button class="obtn" onClick="{{ returnOrder }}">Request Return</button></sc-if><sc-if value="{{ selOrderShowHelp }}" hint-placeholder-val="x"><button class="obtn">Need help?</button></sc-if><button class="obtn fill">Reorder</button></div>',
   'order-cancel-return-buttons'
 );
 
@@ -475,12 +486,21 @@ html = replaceOnce(html,
     const isAddresses=S.cust==='addresses', isPayments=S.cust==='payments', isHelp=S.cust==='help', isSettings=S.cust==='settings';
     const goAddresses=()=>setS({cust:'addresses'}), goPayments=()=>setS({cust:'payments'}), goHelp=()=>setS({cust:'help'}), goSettings=()=>setS({cust:'settings'});
     const userAddresses=addresses;
-    // Order cancel/return
-    const selOrderCanCancel=!!(selOrder && selOrder.statusc==='shipped');
-    const selOrderCanReturn=!!(selOrder && selOrder.statusc==='paid');
-    const selOrderShowHelp=!selOrderCanCancel && !selOrderCanReturn;
-    const cancelOrder=()=>{ if(selOrder){ this.setState({ord:null}); } };
-    const returnOrder=()=>{ if(selOrder){ this.setState({ord:null}); } };
+    // Order cancel/return — REQUEST based. Customer can only REQUEST; the order
+    // is marked "…Requested" (pending). It only becomes Cancelled/Refunded after
+    // an admin approves (that approval step is cross-device → needs the backend).
+    const _orderReqs=S.orderReqs||{};
+    const _selReq=selOrder?_orderReqs[selOrder.id]:null;
+    // undelivered = shipped/pending/paid-but-not-delivered; delivered = 'paid' here
+    const _delivered=!!(selOrder && selOrder.statusc==='paid');
+    const _undelivered=!!(selOrder && (selOrder.statusc==='shipped'||selOrder.statusc==='pending'));
+    const selOrderCanCancel=!!(_undelivered && !_selReq);
+    const selOrderCanReturn=!!(_delivered && !_selReq);
+    const selOrderHasReq=!!_selReq;
+    const selOrderReqLabel=_selReq==='cancel'?'Cancellation Requested':(_selReq==='return'?'Return Requested':'');
+    const selOrderShowHelp=!selOrderCanCancel && !selOrderCanReturn && !selOrderHasReq;
+    const cancelOrder=()=>{ if(selOrder) this.setState(st=>({orderReqs:{...(st.orderReqs||{}),[selOrder.id]:'cancel'},_toast:'Cancellation requested — pending approval'})); setTimeout(()=>this.setState({_toast:''}),2200); };
+    const returnOrder=()=>{ if(selOrder) this.setState(st=>({orderReqs:{...(st.orderReqs||{}),[selOrder.id]:'return'},_toast:'Return requested — pending approval'})); setTimeout(()=>this.setState({_toast:''}),2200); };
     // Review sheet + all reviews
     const isReviews=S.cust==='reviews';
     const openAllReviews=()=>setS({cust:'reviews'});
@@ -531,18 +551,12 @@ html = replaceOnce(html,
   'search-input-interactive'
 );
 
-// 38) Shop screen: wrap recent searches + popular in sc-if so they only show when search is open
+// 38) Shop screen: REMOVE recent searches + "Popular right now" suggestions entirely.
+// The search is now a pure real-time product filter — no trending/suggestion UI.
 html = replaceOnce(html,
-  '<div class="sectlabel">Recent searches</div><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><div class="recrow">',
-  '<sc-if value="{{ searchOpen }}" hint-placeholder-val="x"><div class="sectlabel">Recent searches</div><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><div class="recrow">',
-  'recent-searches-collapsed'
-);
-
-// Close the sc-if after the Popular section chips row + before category chips
-html = replaceOnce(html,
-  '</sc-for></div><div class="chiprow" style="margin-top:16px">',
-  '</sc-for></div></sc-if><div class="chiprow" style="margin-top:16px">',
-  'search-suggestions-close'
+  '<div class="sectlabel">Recent searches</div><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><div class="recrow"><div class="recic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 7v5l3 2" stroke-linecap="round"/><circle cx="12" cy="12" r="8.5"/></svg></div><span class="fs14" style="flex:1;font-weight:500">{{ r }}</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cabfac" stroke-width="1.8"><path d="M17 7L7 17M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></sc-for><div class="sectlabel">Popular right now</div><div class="poprow"><sc-for list="{{ populars }}" as="t" hint-placeholder-count="6"><span class="tagchip">{{ t }}</span></sc-for></div>',
+  '',
+  'remove-search-suggestions'
 );
 
 // 39) Shop screen: show categories grid INSTEAD of product grid when no search/filter active
@@ -635,8 +649,9 @@ html = replaceOnce(html,
   `const pMin=S.priceMin||199; const pMax=S.priceMax||1599;
     let list=P.filter(p=>(S.activeCat==='All'||p.cat===S.activeCat) && p.r>=S.ratingMin && p.p>=pMin && p.p<=pMax);`,
   `const pMin=S.priceMin||199; const pMax=S.priceMax||1599;
-    const _sq=(S.searchQuery||'').toLowerCase();
-    let list=P.filter(p=>(S.activeCat==='All'||p.cat===S.activeCat) && p.r>=S.ratingMin && p.p>=pMin && p.p<=pMax && (!_sq||p.name.toLowerCase().includes(_sq)||p.cat.toLowerCase().includes(_sq)));`,
+    const _sqTokens=(S.searchQuery||'').toLowerCase().trim().split(/\\s+/).filter(Boolean);
+    const _matchSearch=(p)=>{ if(!_sqTokens.length) return true; const hay=(p.name+' '+p.cat).toLowerCase(); return _sqTokens.every(t=>hay.includes(t)); };
+    let list=P.filter(p=>(S.activeCat==='All'||p.cat===S.activeCat) && p.r>=S.ratingMin && p.p>=pMin && p.p<=pMax && _matchSearch(p));`,
   'search-filter-shopprods'
 );
 
@@ -667,8 +682,75 @@ html = replaceOnce(html,
       isFlashSale, goFlashSale, flashProds, flashProdCount,
       isBanner, bannerGrad, bannerTitle, bannerProds, bannerProdCount,
       searchQuery, isSearching, searchOpen, setSearchQ, openSearch, clearSearch,
-      showCatGrid, showProducts, allCatTiles,`,
+      showCatGrid, showProducts, allCatTiles,
+      selOrderHasReq, selOrderReqLabel,
+      toast:S._toast||'', showToast:!!(S._toast),
+      flashHH, flashMM, flashSS, flashLive,`,
   'expose-new-vars-in-return'
+);
+
+// ── ROUND 3: ticking flash countdown, color filter removal, share toast ──────
+
+// 50) Remove the non-functional "Colour / variant" filter group (dry fruits have
+//     no colour variants; this control filtered nothing).
+html = replaceOnce(html,
+  '<div class="fgroup"><div class="fglabel">Colour / variant</div><div class="swrow"><sc-for list="{{ colors }}" as="c" hint-placeholder-count="6"><button class="{{ c.cls }}" style="background:{{ c.c }}" onClick="{{ c.sel }}"></button></sc-for></div></div>',
+  '',
+  'remove-colour-filter'
+);
+
+// 51) Flash sale: real ticking HH:MM:SS countdown (was a static "02:14:56").
+html = replaceOnce(html,
+  '<div class="timer"><span class="tbox">02</span><span class="tsep">:</span><span class="tbox">14</span><span class="tsep">:</span><span class="tbox">56</span></div>',
+  '<div class="timer"><span class="tbox">{{ flashHH }}</span><span class="tsep">:</span><span class="tbox">{{ flashMM }}</span><span class="tsep">:</span><span class="tbox">{{ flashSS }}</span></div>',
+  'flash-timer-binding'
+);
+
+// 52) Start a 1s interval so the countdown actually ticks. The DC host forwards
+//     componentDidMount/WillUnmount to the logic instance.
+html = replaceOnce(html,
+  '  rupee(n){ return ',
+  `  componentDidMount(){ this.__tick=setInterval(()=>{ const c=this.state.cust; if(c==='home'||c==='flashsale') this.forceUpdate(); },1000); }
+  componentWillUnmount(){ if(this.__tick) clearInterval(this.__tick); }
+  rupee(n){ return `,
+  'flash-tick-interval'
+);
+
+// 53) Compute the countdown + live flag in screenData. End time is configurable
+//     (S.flashEndsAt, set by admin); default is the next rolling N-hour window so
+//     it always shows a real, moving countdown.
+html = replaceOnce(html,
+  'const flashProds=P.filter(p=>flashPidMap[p.id]).map(x=>this.vp(x));',
+  `const flashProds=P.filter(p=>flashPidMap[p.id]).map(x=>this.vp(x));
+    const flashLive=S.flashLive!==false;
+    const _flashWindowMs=(S.flashWindowHours||3)*3600*1000;
+    const _flashEnd=S.flashEndsAt||(Math.ceil(Date.now()/_flashWindowMs)*_flashWindowMs);
+    let _rem=Math.max(0,Math.floor((_flashEnd-Date.now())/1000));
+    const _hh=Math.floor(_rem/3600); _rem%=3600; const _mm=Math.floor(_rem/60); const _ss=_rem%60;
+    const _pad=(n)=>String(n).padStart(2,'0');
+    const flashHH=_pad(_hh), flashMM=_pad(_mm), flashSS=_pad(_ss);`,
+  'flash-countdown-compute'
+);
+
+// 53b) Home: hide the whole flash-sale strip when the sale is toggled off (admin).
+html = replaceOnce(html,
+  '<div class="flash" style="cursor:pointer" onClick="{{ goFlashSale }}"><div class="flashL">',
+  '<sc-if value="{{ flashLive }}" hint-placeholder-val="x"><div class="flash" style="cursor:pointer" onClick="{{ goFlashSale }}"><div class="flashL">',
+  'flash-live-wrap-open'
+);
+html = replaceOnce(html,
+  '<span class="tbox">{{ flashSS }}</span></div></div>',
+  '<span class="tbox">{{ flashSS }}</span></div></div></sc-if>',
+  'flash-live-wrap-close'
+);
+
+// 54) Toast overlay (share confirmation, order-request confirmation).
+// Place the toast OUTSIDE the showNav conditional so it appears on every screen
+// (product, banner, flash, orders…), not only on tabs that show the bottom nav.
+html = replaceOnce(html,
+  '<sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav class="botnav" style="--i:{{ tab }}">',
+  '<sc-if value="{{ showToast }}" hint-placeholder-val="x"><div style="position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(35,32,27,.96);color:#fff;padding:11px 20px;border-radius:24px;font:600 13px Manrope;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,.3);max-width:80%;text-align:center">{{ toast }}</div></sc-if><sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav class="botnav" style="--i:{{ tab }}">',
+  'toast-overlay'
 );
 
 writeFileSync(OUT, html, 'utf8');
