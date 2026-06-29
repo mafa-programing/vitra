@@ -116,6 +116,97 @@ html = replaceOnce(
   'local-fonts-link'
 );
 
+// ── PRODUCTS & IMAGES ────────────────────────────────────────────────────────
+
+// A) Add real Unsplash images to p1-p12 (existing dry fruit products)
+html = html.replace(
+  `{id:'p1',name:'California Almonds, Premium',cat:'Almonds',tone:'#e7c9a0',p:549,mrp:699,r:4.8,rev:1240,badge:'Bestseller',free:true},
+    {id:'p2',name:'Roasted Cashews W320',cat:'Cashews',tone:'#ead9b8',p:629,mrp:799,r:4.7,rev:980,badge:'Bestseller',free:true},
+    {id:'p3',name:'Iranian Akbari Pistachios',cat:'Pistachios',tone:'#c2d4a4',p:899,mrp:1099,r:4.9,rev:760,badge:'New',free:true},
+    {id:'p4',name:'Kashmiri Walnut Kernels',cat:'Walnuts',tone:'#c9a27e',p:749,mrp:949,r:4.6,rev:540,badge:'-21%',free:false},
+    {id:'p5',name:'Jumbo Medjool Dates',cat:'Dates',tone:'#b98a5e',p:699,mrp:849,r:4.8,rev:1120,badge:'Bestseller',free:true},
+    {id:'p6',name:'Golden Seedless Raisins',cat:'Raisins',tone:'#cbb27e',p:299,mrp:379,r:4.5,rev:430,badge:'',free:false},
+    {id:'p7',name:'Turkish Dried Figs',cat:'Figs',tone:'#caa6bf',p:549,mrp:659,r:4.7,rev:310,badge:'New',free:false},
+    {id:'p8',name:'Pure Kashmiri Saffron 2g',cat:'Saffron',tone:'#e3b23c',p:1299,mrp:1599,r:4.9,rev:210,badge:'Premium',free:true},
+    {id:'p9',name:'Mixed Seeds & Berries',cat:'Seeds',tone:'#cfc8a8',p:449,mrp:549,r:4.6,rev:670,badge:'',free:true},
+    {id:'p10',name:'Signature Festive Gift Box',cat:'Gift Box',tone:'#d8c3a5',p:1499,mrp:1899,r:4.9,rev:540,badge:'Limited',free:true},
+    {id:'p11',name:'Sun-Dried Apricots',cat:'Apricots',tone:'#e8b17a',p:399,mrp:499,r:4.5,rev:280,badge:'',free:false},
+    {id:'p12',name:'Trail Mix Deluxe',cat:'Trail Mix',tone:'#d3c39a',p:499,mrp:599,r:4.7,rev:820,badge:'Bestseller',free:true},`,
+  `{id:'p1',name:'California Almonds, Premium',cat:'Almonds',tone:'#e7c9a0',p:549,mrp:699,r:4.8,rev:1240,badge:'Bestseller',free:true,img:'https://images.unsplash.com/photo-1508061253366-f7da158b6d46?w=400&h=400&fit=crop&q=80'},
+    {id:'p2',name:'Roasted Cashews W320',cat:'Cashews',tone:'#ead9b8',p:629,mrp:799,r:4.7,rev:980,badge:'Bestseller',free:true,img:'https://images.unsplash.com/photo-1571680322279-a226e6a4cc2a?w=400&h=400&fit=crop&q=80'},
+    {id:'p3',name:'Iranian Akbari Pistachios',cat:'Pistachios',tone:'#c2d4a4',p:899,mrp:1099,r:4.9,rev:760,badge:'New',free:true,img:'https://images.unsplash.com/photo-1573552466d9ec2c1c02a0?w=400&h=400&fit=crop&q=80'},
+    {id:'p4',name:'Kashmiri Walnut Kernels',cat:'Walnuts',tone:'#c9a27e',p:749,mrp:949,r:4.6,rev:540,badge:'-21%',free:false,img:'https://images.unsplash.com/photo-1589927986089-35812388d1f4?w=400&h=400&fit=crop&q=80'},
+    {id:'p5',name:'Jumbo Medjool Dates',cat:'Dates',tone:'#b98a5e',p:699,mrp:849,r:4.8,rev:1120,badge:'Bestseller',free:true,img:'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=400&h=400&fit=crop&q=80'},
+    {id:'p6',name:'Golden Seedless Raisins',cat:'Raisins',tone:'#cbb27e',p:299,mrp:379,r:4.5,rev:430,badge:'',free:false,img:'https://images.unsplash.com/photo-1596591607025-4ebf6c45c63b?w=400&h=400&fit=crop&q=80'},
+    {id:'p7',name:'Turkish Dried Figs',cat:'Figs',tone:'#caa6bf',p:549,mrp:659,r:4.7,rev:310,badge:'New',free:false,img:'https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=400&h=400&fit=crop&q=80'},
+    {id:'p8',name:'Pure Kashmiri Saffron 2g',cat:'Saffron',tone:'#e3b23c',p:1299,mrp:1599,r:4.9,rev:210,badge:'Premium',free:true,img:'https://images.unsplash.com/photo-1590301157890-4810ed352733?w=400&h=400&fit=crop&q=80'},
+    {id:'p9',name:'Mixed Seeds & Berries',cat:'Seeds',tone:'#cfc8a8',p:449,mrp:549,r:4.6,rev:670,badge:'',free:true,img:'https://images.unsplash.com/photo-1542282811-943ef1a977c3?w=400&h=400&fit=crop&q=80'},
+    {id:'p10',name:'Signature Festive Gift Box',cat:'Gift Box',tone:'#d8c3a5',p:1499,mrp:1899,r:4.9,rev:540,badge:'Limited',free:true,img:'https://images.unsplash.com/photo-1549465220-1a629bb7ad09?w=400&h=400&fit=crop&q=80'},
+    {id:'p11',name:'Sun-Dried Apricots',cat:'Apricots',tone:'#e8b17a',p:399,mrp:499,r:4.5,rev:280,badge:'',free:false,img:'https://images.unsplash.com/photo-1618373952433-3a20cb7e7bc7?w=400&h=400&fit=crop&q=80'},
+    {id:'p12',name:'Trail Mix Deluxe',cat:'Trail Mix',tone:'#d3c39a',p:499,mrp:599,r:4.7,rev:820,badge:'Bestseller',free:true,img:'https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?w=400&h=400&fit=crop&q=80'},`
+);
+
+// B) Replace tech/lifestyle p13-p20 with proper dry fruit & nut products
+html = replaceOnce(html,
+  `{id:'p13',name:'UltraBook Pro 14" M3',cat:'Laptops',tone:'#b7c0cf',p:124999,mrp:139999,r:4.8,rev:540,badge:'Bestseller',free:true},
+    {id:'p14',name:'Vitra X5 5G Smartphone',cat:'Mobiles',tone:'#c2c7d0',p:38999,mrp:44999,r:4.7,rev:1320,badge:'New',free:true},
+    {id:'p15',name:'AeroBuds Pro ANC',cat:'Audio',tone:'#cdbfd6',p:8999,mrp:11999,r:4.6,rev:980,badge:'-25%',free:true},
+    {id:'p16',name:'StudioMax Over-Ear Headphones',cat:'Audio',tone:'#d0c2da',p:14999,mrp:18999,r:4.8,rev:430,badge:'Premium',free:true},
+    {id:'p17',name:'Voyager Cabin Trolley',cat:'Travel Bags',tone:'#c9b59a',p:6499,mrp:8999,r:4.7,rev:410,badge:'Bestseller',free:true},
+    {id:'p18',name:'Urban Daypack 22L',cat:'Travel Bags',tone:'#a9b8a6',p:2999,mrp:3999,r:4.5,rev:360,badge:'',free:false},
+    {id:'p19',name:'Cold-Pressed Almond Oil 500ml',cat:'Oils',tone:'#d8c98a',p:749,mrp:899,r:4.8,rev:290,badge:'New',free:false},
+    {id:'p20',name:'Extra Virgin Olive Oil 1L',cat:'Oils',tone:'#cbd39a',p:1199,mrp:1499,r:4.7,rev:220,badge:'',free:true},`,
+  `{id:'p13',name:'Chilgoza Pine Nuts',cat:'Pine Nuts',tone:'#d4c49e',p:1799,mrp:2199,r:4.8,rev:180,badge:'Premium',free:true,img:'https://images.unsplash.com/photo-1562280963-430a94042fe8?w=400&h=400&fit=crop&q=80'},
+    {id:'p14',name:'Dried Blueberries',cat:'Berries',tone:'#8a7ab0',p:649,mrp:799,r:4.5,rev:340,badge:'New',free:false,img:'https://images.unsplash.com/photo-1502741126161-b048400d085d?w=400&h=400&fit=crop&q=80'},
+    {id:'p15',name:'Brazil Nuts, Whole',cat:'Nuts',tone:'#c9ab8a',p:1199,mrp:1499,r:4.6,rev:210,badge:'',free:false,img:'https://images.unsplash.com/photo-1608797178974-15b35a64ede9?w=400&h=400&fit=crop&q=80'},
+    {id:'p16',name:'Macadamia Nuts',cat:'Nuts',tone:'#e8d9c0',p:1499,mrp:1799,r:4.7,rev:156,badge:'Premium',free:true,img:'https://images.unsplash.com/photo-1619566636858-adf3ef46400b?w=400&h=400&fit=crop&q=80'},
+    {id:'p17',name:'Dried Cranberries',cat:'Berries',tone:'#c9607a',p:449,mrp:549,r:4.4,rev:290,badge:'',free:false,img:'https://images.unsplash.com/photo-1541348263662-e068662d82af?w=400&h=400&fit=crop&q=80'},
+    {id:'p18',name:'Hazelnut Kernels',cat:'Hazelnuts',tone:'#c49a6a',p:899,mrp:1099,r:4.6,rev:170,badge:'New',free:false,img:'https://images.unsplash.com/photo-1559181567-c3190144480a?w=400&h=400&fit=crop&q=80'},
+    {id:'p19',name:'Chia Seeds, Organic',cat:'Seeds',tone:'#8a8a7a',p:349,mrp:449,r:4.5,rev:420,badge:'',free:false,img:'https://images.unsplash.com/photo-1514325253031-4b06b82d0f4c?w=400&h=400&fit=crop&q=80'},
+    {id:'p20',name:'Dried Mango Slices',cat:'Dried Fruits',tone:'#e8b97a',p:399,mrp:499,r:4.6,rev:380,badge:'Bestseller',free:false,img:'https://images.unsplash.com/photo-1597181366021-e96a83fccc48?w=400&h=400&fit=crop&q=80'},`,
+  'replace-tech-products'
+);
+
+// C) Update CATS to dry fruit categories only
+html = replaceOnce(html,
+  "CATS = ['Almonds','Cashews','Pistachios','Walnuts','Dates','Saffron','Gift Box','Laptops','Mobiles','Audio','Travel Bags','Oils'];",
+  "CATS = ['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Saffron','Seeds','Gift Box','Apricots','Trail Mix','Pine Nuts','Berries','Nuts','Hazelnuts','Dried Fruits'];",
+  'update-cats'
+);
+
+// D) Update HOMECATS to relevant dry fruit categories
+html = replaceOnce(html,
+  "HOMECATS = ['Almonds','Cashews','Pistachios','Dates','Laptops','Mobiles','Travel Bags','Oils'];",
+  "HOMECATS = ['Almonds','Cashews','Pistachios','Dates','Walnuts','Saffron','Gift Box','Trail Mix'];",
+  'update-homecats'
+);
+
+// E) Update CATTONE with new categories + remove tech ones
+html = replaceOnce(html,
+  "CATTONE = {Almonds:'#e7c9a0',Cashews:'#ead9b8',Pistachios:'#c2d4a4',Walnuts:'#c9a27e',Dates:'#b98a5e',Raisins:'#cbb27e',Saffron:'#e3b23c','Gift Box':'#d8c3a5',Figs:'#caa6bf',Seeds:'#cfc8a8',Apricots:'#e8b17a','Trail Mix':'#d3c39a',Laptops:'#b7c0cf',Mobiles:'#c2c7d0',Audio:'#cdbfd6','Travel Bags':'#c9b59a',Oils:'#d8c98a'};",
+  "CATTONE = {Almonds:'#e7c9a0',Cashews:'#ead9b8',Pistachios:'#c2d4a4',Walnuts:'#c9a27e',Dates:'#b98a5e',Raisins:'#cbb27e',Saffron:'#e3b23c','Gift Box':'#d8c3a5',Figs:'#caa6bf',Seeds:'#cfc8a8',Apricots:'#e8b17a','Trail Mix':'#d3c39a','Pine Nuts':'#d4c49e',Berries:'#8a7ab0',Nuts:'#c9ab8a',Hazelnuts:'#c49a6a','Dried Fruits':'#e8b97a'};",
+  'update-cattone'
+);
+
+// F) Include img in vp() output
+html = replaceOnce(html,
+  'id:p.id, name:p.name, cat:p.cat, tone:p.tone, grad:this.grad(p.tone),',
+  'id:p.id, name:p.name, cat:p.cat, tone:p.tone, grad:this.grad(p.tone), img:p.img||null,',
+  'vp-include-img'
+);
+
+// G) Product detail: use real image for galMain and thumbnails
+html = replaceOnce(html,
+  'const galMain=this.grad(p.tone,angs[S.gal]);',
+  "const galMain=p.img?('url('+p.img+') center/cover no-repeat'):this.grad(p.tone,angs[S.gal]);",
+  'galMain-real-image'
+);
+html = replaceOnce(html,
+  'const gallery=angs.map((a,i)=>({i,grad:this.grad(p.tone,a),cls:S.gal===i?\'pdthumb on\':\'pdthumb\',sel:()=>setS({gal:i})}));',
+  "const gallery=angs.map((a,i)=>({i,grad:p.img?('url('+p.img+') center/cover no-repeat'):this.grad(p.tone,a),cls:S.gal===i?'pdthumb on':'pdthumb',sel:()=>setS({gal:i})}));",
+  'gallery-real-image'
+);
+
 // ── UI CHANGES ──────────────────────────────────────────────────────────────
 
 // 5) Home screen: remove Daily Deals section
@@ -354,7 +445,7 @@ html = replaceOnce(html,
 // NOTE: Must stay as a property (banners:...) not const declarations — this is inside a return {} object literal
 html = replaceOnce(html,
   "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':''})),",
-  "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix'],['Gift Box'],['Saffron']][i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))})),",
+  "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix','Pine Nuts','Nuts','Hazelnuts','Dried Fruits'],['Gift Box'],['Saffron']][i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))})),",
   'banner-go-function'
 );
 
