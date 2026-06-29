@@ -108,7 +108,7 @@ html = replaceOnce(html,
 
 html = replaceOnce(html,
   "showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),",
-  "showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),\n      isAddresses:this.state.cust==='addresses', isPayments:this.state.cust==='payments', isHelp:this.state.cust==='help', isSettings:this.state.cust==='settings', isReviews:this.state.cust==='reviews',",
+  "showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),\n      isAddresses:this.state.cust==='addresses', isPayments:this.state.cust==='payments', isHelp:this.state.cust==='help', isSettings:this.state.cust==='settings', isReviews:this.state.cust==='reviews', isBanner:this.state.cust==='banner', isFlashSale:this.state.cust==='flashsale',",
   'admin-extend-shownav'
 );
 

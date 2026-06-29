@@ -656,7 +656,7 @@ class Component extends DCLogic {
       goNotif:()=>this.go('notif'), goOrders:()=>this.go('orders'), goWish:()=>this.go('wish'), noop:()=>{},
       showFCart: (cartCount>0 && ['home','shop'].includes(this.state.cust)),
       showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),
-      isAddresses:this.state.cust==='addresses', isPayments:this.state.cust==='payments', isHelp:this.state.cust==='help', isSettings:this.state.cust==='settings', isReviews:this.state.cust==='reviews',
+      isAddresses:this.state.cust==='addresses', isPayments:this.state.cust==='payments', isHelp:this.state.cust==='help', isSettings:this.state.cust==='settings', isReviews:this.state.cust==='reviews', isBanner:this.state.cust==='banner', isFlashSale:this.state.cust==='flashsale',
       showCartBar: this.state.cust==='cart' && cartItems.length>0,
       showPlaceBar: this.state.cust==='checkout' && this.state.co<3,
       goCheckout:()=>{ this.go('checkout'); this.setCo(0); },

@@ -139,11 +139,32 @@ html = replaceOnce(html,
   'remove-new-arrivals'
 );
 
-// 8) Home screen: replace Recently Viewed with unified "All Products" grid
+// 8) Home screen: remove Bestsellers section (replace with nothing — "All Products" comes from step below)
+html = replaceOnce(html,
+  '<div class="sect"><div class="shead"><div class="stitle">Bestsellers</div><button class="slink" onClick="{{ goShop }}">More</button></div><div class="prow"><sc-for list="{{ best }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="row" hint-size="166px,252px"></dc-import></sc-for></div></div>',
+  '',
+  'remove-bestsellers'
+);
+
+// 8b) Home screen: replace Recently Viewed with "All Products" grid (all products)
 html = replaceOnce(html,
   '<div class="sect"><div class="shead"><div class="stitle">Recently Viewed</div></div><div class="prow"><sc-for list="{{ recently }}" as="item" hint-placeholder-count="4"><dc-import name="ProductCard" item="{{ item }}" cls="row" hint-size="166px,252px"></dc-import></sc-for></div></div>',
   '<div class="sect"><div class="shead"><div class="stitle">All Products</div><button class="slink" onClick="{{ goShop }}">See all</button></div><div class="g2"><sc-for list="{{ homeProds }}" as="item" hint-placeholder-count="8"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div></div>',
   'all-products-section'
+);
+
+// 8c) Home screen: make flash sale section clickable → dedicated flash sale page
+html = replaceOnce(html,
+  '<div class="flash"><div class="flashL">',
+  '<div class="flash" style="cursor:pointer" onClick="{{ goFlashSale }}"><div class="flashL">',
+  'flash-clickable'
+);
+
+// 8d) Home screen: Shop by Category "All" → "See all" (same goShop destination, clearer label)
+html = replaceOnce(html,
+  '<div class="sect"><div class="shead"><div class="stitle">Shop by Category</div><button class="slink" onClick="{{ goShop }}">All</button>',
+  '<div class="sect"><div class="shead"><div class="stitle">Shop by Category</div><button class="slink" onClick="{{ goShop }}">See all</button>',
+  'category-see-all'
 );
 
 // 9) Profile: remove Reward Points stat
@@ -229,11 +250,12 @@ html = replaceOnce(html,
   'homeProds-and-wish-share'
 );
 
-// 20) Add markAllRead + respect _notifAllRead in notification groups
+// 20) markAllRead + per-notification delete support
 html = replaceOnce(html,
   'const notifGroups=this.NOTIF_DATA();',
   `const rawNotifs=this.NOTIF_DATA();
-    const notifGroups=S._notifAllRead?rawNotifs.map(g=>({...g,items:g.items.map(n=>({...n,unread:false,rowCls:'nrow'}))})):rawNotifs;
+    const deletedNotifs=S.deletedNotifs||{};
+    const notifGroups=rawNotifs.map(g=>({...g,items:g.items.filter(n=>!deletedNotifs[n.title]).map(n=>({...n,unread:S._notifAllRead?false:n.unread,rowCls:S._notifAllRead?'nrow':n.rowCls,del:()=>this.setState(st=>({deletedNotifs:{...(st.deletedNotifs||{}),[n.title]:true}}))})).filter(n=>true)}));
     const markAllRead=()=>this.setState({_notifAllRead:true});`,
   'mark-all-read-logic'
 );
@@ -327,10 +349,12 @@ html = replaceOnce(html,
   'banner-shop-now-click'
 );
 
-// 30) Add go function to each banner + wire popular searches from state
+// 30) Banner go → dedicated banner page with category-specific products
+// BANNERS[0]=Harvest Season→dry fruits, BANNERS[1]=Gifting→Gift Box, BANNERS[2]=Limited Drop→Saffron
 html = replaceOnce(html,
   "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':''})),",
-  "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.go('shop')})),",
+  `const BANNER_CATS=[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix'],['Gift Box'],['Saffron']];
+    const banners=this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:BANNER_CATS[i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))}));`,
   'banner-go-function'
 );
 
@@ -378,11 +402,158 @@ html = replaceOnce(html,
   'account-screens-js'
 );
 
-// 33) Extend showNav to include account sub-sections and exclude reviews screen
+// 33) Extend showNav to include all new cust states
 html = replaceOnce(html,
   "showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),",
-  "showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),\n      isAddresses:this.state.cust==='addresses', isPayments:this.state.cust==='payments', isHelp:this.state.cust==='help', isSettings:this.state.cust==='settings', isReviews:this.state.cust==='reviews',",
+  "showNav: ['home','shop','orders','notif','account','wish'].includes(this.state.cust),\n      isAddresses:this.state.cust==='addresses', isPayments:this.state.cust==='payments', isHelp:this.state.cust==='help', isSettings:this.state.cust==='settings', isReviews:this.state.cust==='reviews', isBanner:this.state.cust==='banner', isFlashSale:this.state.cust==='flashsale',",
   'extend-shownav'
+);
+
+// ── ROUND 2 CHANGES ───────────────────────────────────────────────────────────
+
+// 34) Notifications: add delete button (×) to each notification row
+html = replaceOnce(html,
+  '<sc-if value="{{ n.unread }}" hint-placeholder-val="x"><span class="ndot"></span></sc-if></div></sc-for></sc-for>',
+  '<sc-if value="{{ n.unread }}" hint-placeholder-val="x"><span class="ndot" style="right:38px"></span></sc-if><button onClick="{{ n.del }}" style="position:absolute;top:50%;right:12px;transform:translateY(-50%);background:none;border:0;cursor:pointer;color:#cbbfb0;font-size:22px;line-height:1;padding:2px 5px">×</button></div></sc-for></sc-for>',
+  'notif-delete-button'
+);
+
+// 35) Bottom nav: rename "Shop" label to "Categories"
+html = replaceOnce(html,
+  '>Shop</button>',
+  '>Categories</button>',
+  'nav-shop-to-categories'
+);
+
+// 36) Shop screen: rename title "Shop" → "Categories" and restructure
+// Change topbar title
+html = replaceOnce(html,
+  '<div class="topbar"><div class="topttl">Shop</div></div><div class="shopsearch">',
+  '<div class="topbar"><div class="topttl">Categories</div></div><div class="shopsearch" style="position:relative">',
+  'shop-to-categories-title'
+);
+
+// 37) Shop screen: make search input interactive (real-time filtering + open suggestions on click)
+html = replaceOnce(html,
+  '<input placeholder="Search almonds, saffron, gifts…"/>',
+  '<input placeholder="Search products…" value="{{ searchQuery }}" onInput="{{ setSearchQ }}" onClick="{{ openSearch }}" style="flex:1;background:none;border:0;outline:none;font:500 15px Manrope;color:var(--ink)"/><sc-if value="{{ isSearching }}" hint-placeholder-val="x"><button onClick="{{ clearSearch }}" style="background:none;border:0;cursor:pointer;color:#a89c8a;font-size:22px;line-height:1;padding:0 4px">×</button></sc-if>',
+  'search-input-interactive'
+);
+
+// 38) Shop screen: wrap recent searches + popular in sc-if so they only show when search is open
+html = replaceOnce(html,
+  '<div class="sectlabel">Recent searches</div><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><div class="recrow">',
+  '<sc-if value="{{ searchOpen }}" hint-placeholder-val="x"><div class="sectlabel">Recent searches</div><sc-for list="{{ recents }}" as="r" hint-placeholder-count="4"><div class="recrow">',
+  'recent-searches-collapsed'
+);
+
+// Close the sc-if after the Popular section chips row + before category chips
+html = replaceOnce(html,
+  '</sc-for></div><div class="chiprow" style="margin-top:16px">',
+  '</sc-for></div></sc-if><div class="chiprow" style="margin-top:16px">',
+  'search-suggestions-close'
+);
+
+// 39) Shop screen: show categories grid INSTEAD of product grid when no search/filter active
+// Inject a categories grid before the filterbar that only shows when showCatGrid is true
+// Also show the filter bar + products only when isSearching or activeCat !== 'All'
+html = replaceOnce(html,
+  '<div class="chiprow" style="margin-top:16px"><sc-for list="{{ shopCats }}" as="c" hint-placeholder-count="6"><button class="chip {{ c.cls }}" onClick="{{ c.sel }}">{{ c.name }}</button></sc-for></div><div class="filterbar">',
+  `<sc-if value="{{ showCatGrid }}" hint-placeholder-val="x"><div class="catgrid" style="padding:16px 18px 0"><sc-for list="{{ allCatTiles }}" as="c" hint-placeholder-count="8"><button class="cat" onClick="{{ c.open }}"><div class="catimg" style="background:{{ c.grad }}"></div><span class="catname">{{ c.name }}</span></button></sc-for></div></sc-if><sc-if value="{{ showProducts }}" hint-placeholder-val="x"><div class="chiprow" style="margin-top:16px"><sc-for list="{{ shopCats }}" as="c" hint-placeholder-count="6"><button class="chip {{ c.cls }}" onClick="{{ c.sel }}">{{ c.name }}</button></sc-for></div></sc-if><sc-if value="{{ showProducts }}" hint-placeholder-val="x"><div class="filterbar">`,
+  'categories-grid-in-shop'
+);
+
+// Close the showProducts sc-if before the shop screen bottom spacer
+html = replaceOnce(html,
+  '<div style="height:20px"></div></div></sc-if><sc-if value="{{ isProduct }}"',
+  '</sc-if><div style="height:20px"></div></div></sc-if><sc-if value="{{ isProduct }}"',
+  'close-show-products-scif'
+);
+
+// 40) Navigation: patch openProduct to push to navHistory (back goes to correct previous screen)
+html = replaceOnce(html,
+  "openProduct=(id)=>this.setState({cust:'product',pid:id,pack:1,gal:0,spec:0});",
+  "openProduct=(id)=>this.setState(st=>({cust:'product',pid:id,pack:1,gal:0,spec:0,navHistory:[...(st.navHistory||[]),st.cust]}));",
+  'open-product-history'
+);
+
+// 41) Add goBack() method after go() so back button navigates to real previous screen
+html = replaceOnce(html,
+  "go(s){ const tabMap={home:0,shop:1,cart:2,account:3}; this.setState({cust:s, tab:(tabMap[s]!==undefined?tabMap[s]:this.state.tab)}); const v=document.querySelector('.phView'); if(v) v.scrollTop=0; }",
+  `go(s){ const tabMap={home:0,shop:1,cart:2,account:3}; this.setState({cust:s, tab:(tabMap[s]!==undefined?tabMap[s]:this.state.tab)}); const v=document.querySelector('.phView'); if(v) v.scrollTop=0; }
+  goBack(){ const h=this.state.navHistory||[]; if(!h.length){ this.go('home'); return; } const prev=h[h.length-1]; const tabMap={home:0,shop:1,cart:2,account:3}; this.setState({cust:prev,tab:(tabMap[prev]!==undefined?tabMap[prev]:this.state.tab),navHistory:h.slice(0,-1)}); const v=document.querySelector('.phView'); if(v) v.scrollTop=0; }`,
+  'go-back-method'
+);
+
+// 42) Product page: back button goes to real previous screen (not always goShop)
+html = replaceOnce(html,
+  '<div class="topbar" style="position:absolute;left:0;right:0;top:0;z-index:12;background:none"><button class="backbtn" onClick="{{ goShop }}">',
+  '<div class="topbar" style="position:absolute;left:0;right:0;top:0;z-index:12;background:none"><button class="backbtn" onClick="{{ goBack }}">',
+  'product-back-uses-history'
+);
+
+// 43) Inject banner + flash sale screens before isCart
+const BANNER_SCREEN = `<sc-if value="{{ isBanner }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="background:{{ bannerGrad }}"><button class="backbtn" onClick="{{ goBack }}" style="color:#fff;background:rgba(255,255,255,.15)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center;color:#fff">{{ bannerTitle }}</div></div><div class="phView" style="padding-top:56px"><div style="padding:14px 18px 4px"><div style="font:700 13px Manrope;color:#8a7f70">{{ bannerProdCount }} products</div></div><div class="g2"><sc-for list="{{ bannerProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div><div style="height:40px"></div></div></div></sc-if>`;
+
+const FLASHSALE_SCREEN = `<sc-if value="{{ isFlashSale }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="background:linear-gradient(125deg,#2c2722,#3c352b)"><button class="backbtn" onClick="{{ goBack }}" style="color:#e9c987;background:rgba(255,255,255,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center;color:#e9c987"><svg width="14" height="14" viewBox="0 0 24 24" fill="#e9c987" style="margin-right:5px"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>Flash Sale</div></div><div class="phView" style="padding-top:56px"><div style="padding:14px 18px 4px"><div style="font:700 13px Manrope;color:#8a7f70">{{ flashProdCount }} products on sale</div></div><div class="g2"><sc-for list="{{ flashProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div><div style="height:40px"></div></div></div></sc-if>`;
+
+html = replaceOnce(html,
+  `</div></sc-if>${REVIEWS_SCREEN}<sc-if value="{{ isCart }}" hint-placeholder-val="x">`,
+  `</div></sc-if>${REVIEWS_SCREEN}${BANNER_SCREEN}${FLASHSALE_SCREEN}<sc-if value="{{ isCart }}" hint-placeholder-val="x">`,
+  'inject-banner-flash-screens'
+);
+
+// 44) JS: add all new computed vars (goBack, goFlashSale, banner vars, flash vars, search vars, allCatTiles)
+html = replaceOnce(html,
+  `const wishProds=P.filter(x=>S.wish[x.id]).map(x=>({...this.vp(x),mv:()=>this.moveToCart(x.id)}));
+    // Account sub-sections`,
+  `const wishProds=P.filter(x=>S.wish[x.id]).map(x=>({...this.vp(x),mv:()=>this.moveToCart(x.id)}));
+    // Navigation
+    const goBack=()=>this.goBack();
+    // Flash sale page
+    const isFlashSale=S.cust==='flashsale';
+    const goFlashSale=()=>this.setState(st=>({cust:'flashsale',navHistory:[...(st.navHistory||[]),st.cust]}));
+    const flashPidMap=S.flashPids||{p1:true,p4:true,p5:true,p8:true,p12:true};
+    const flashProds=P.filter(p=>flashPidMap[p.id]).map(x=>this.vp(x));
+    const flashProdCount=flashProds.length;
+    // Banner page
+    const isBanner=S.cust==='banner';
+    const bannerIdx=S.bannerIdx||0;
+    const _b=this.BANNERS[bannerIdx]||this.BANNERS[0];
+    const bannerGrad=_b.g||'';
+    const bannerTitle=_b.tag||'';
+    const bannerProds=P.filter(p=>(S.bannerCats||[]).includes(p.cat)).map(x=>this.vp(x));
+    const bannerProdCount=bannerProds.length;
+    // Search
+    const searchQuery=S.searchQuery||'';
+    const isSearching=!!(searchQuery);
+    const searchOpen=!!(S.searchOpen||isSearching);
+    const setSearchQ=(e)=>this.setState({searchQuery:e.target.value,searchOpen:true});
+    const openSearch=()=>this.setState({searchOpen:true});
+    const clearSearch=()=>this.setState({searchQuery:'',searchOpen:false,activeCat:'All'});
+    const showCatGrid=!isSearching&&S.activeCat==='All';
+    const showProducts=isSearching||S.activeCat!=='All';
+    // All categories grid for shop screen
+    const allCatTiles=(this.HOMECATS||[]).concat(this.CATS||[]).filter((c,i,a)=>a.indexOf(c)===i).map(c=>({name:c,grad:this.grad((this.CATTONE||{})[c]||'#c9b59a'),open:()=>setS({activeCat:c,searchQuery:'',searchOpen:false})}));
+    // Account sub-sections`,
+  'new-vars-js'
+);
+
+// 45) Add searchQuery to shopProds filter
+html = replaceOnce(html,
+  `const pMin=S.priceMin||199; const pMax=S.priceMax||1599;
+    let list=P.filter(p=>(S.activeCat==='All'||p.cat===S.activeCat) && p.r>=S.ratingMin && p.p>=pMin && p.p<=pMax);`,
+  `const pMin=S.priceMin||199; const pMax=S.priceMax||1599;
+    const _sq=(S.searchQuery||'').toLowerCase();
+    let list=P.filter(p=>(S.activeCat==='All'||p.cat===S.activeCat) && p.r>=S.ratingMin && p.p>=pMin && p.p<=pMax && (!_sq||p.name.toLowerCase().includes(_sq)||p.cat.toLowerCase().includes(_sq)));`,
+  'search-filter-shopprods'
+);
+
+// 46) homeProds: show ALL products not just first 12
+html = replaceOnce(html,
+  'const homeProds=P.slice(0,12).map(x=>this.vp(x));',
+  'const homeProds=[...P].map(x=>this.vp(x));',
+  'homeprods-all'
 );
 
 writeFileSync(OUT, html, 'utf8');
