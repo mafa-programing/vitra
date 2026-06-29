@@ -273,5 +273,22 @@ html = replaceOnce(html,
   'admin-flash-popular-panels'
 );
 
+// CRITICAL: expose admin-specific vars in screenData()'s return object.
+// Same constraint as the app build — consts declared in screenData but missing
+// from its explicit return are `undefined` in templates, so the Banner Products,
+// Flash Sale Products and Popular Searches panels render empty without this.
+html = replaceOnce(html,
+  '      notifGroups, wishProds, wishEmpty:wishProds.length===0,',
+  `      notifGroups, wishProds, wishEmpty:wishProds.length===0, markAllRead,
+      priceMin, priceMax, setPriceMin, setPriceMax,
+      isAddresses, isPayments, isHelp, isSettings, goAddresses, goPayments, goHelp, goSettings, userAddresses,
+      selOrderCanCancel, selOrderCanReturn, selOrderShowHelp, cancelOrder, returnOrder,
+      showReviewSheet, openReviewSheet, closeReviewSheet, submitReview, reviewStars,
+      adFlashProds, toggleFlashLive, flashLiveCls, flashLiveLbl,
+      adPopulars, removePopular, addPopularSearch,
+      selBannerIdx, adBannerProds, bannerTabs,`,
+  'admin-expose-vars-in-return'
+);
+
 writeFileSync(OUT, html, 'utf8');
 console.log('build-admin: wrote', OUT, '(' + html.length + ' bytes)');

@@ -457,7 +457,7 @@ html = replaceOnce(html,
 
 // 31) "See all reviews" screen — inject before isCart
 const STAR_SVG = '<svg viewBox="0 0 24 24" width="12" height="12" fill="currentColor"><path d="M12 3l2.5 5.5 6 .6-4.5 4 1.3 5.9L12 21.5 6.7 19l1.3-5.9-4.5-4 6-.6z"/></svg>';
-const REVIEWS_SCREEN = `<sc-if value="{{ isReviews }}" hint-placeholder-val="x"><div class="scr"><div class="topbar"><button class="backbtn" onClick="{{ closeAllReviews }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center">All Reviews</div></div><div class="phView"><div class="pad" style="padding-top:12px"><div class="fx ac gap16" style="margin-bottom:18px"><div style="font-family:Marcellus;font-size:48px;line-height:1">{{ prod.r }}</div><div><div class="rstars">${STAR_SVG}${STAR_SVG}${STAR_SVG}${STAR_SVG}${STAR_SVG}</div><div class="tiny muted" style="margin-top:3px">{{ prod.rev }} verified ratings</div></div></div><sc-for list="{{ reviews }}" as="rv" hint-placeholder-count="6"><div class="review"><div class="fx ac gap10"><div class="ravatar">{{ rv.av }}</div><div style="flex:1"><div style="font:700 13px Manrope">{{ rv.n }}</div><div class="tiny muted">{{ rv.d }}</div></div><span class="pdrating" style="padding:2px 7px">${STAR_SVG}{{ rv.r }}</span></div><div class="fs13" style="color:#6b6256;line-height:1.5;margin-top:8px">{{ rv.t }}</div></div></sc-for><div style="height:24px"></div></div></div></div></sc-if>`;
+const REVIEWS_SCREEN = `<sc-if value="{{ isReviews }}" hint-placeholder-val="x"><div class="scr"><div class="topbar"><button class="backbtn" onClick="{{ closeAllReviews }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center">All Reviews</div></div><div class="pad" style="padding-top:12px"><div class="fx ac gap16" style="margin-bottom:18px"><div style="font-family:Marcellus;font-size:48px;line-height:1">{{ prod.r }}</div><div><div class="rstars">${STAR_SVG}${STAR_SVG}${STAR_SVG}${STAR_SVG}${STAR_SVG}</div><div class="tiny muted" style="margin-top:3px">{{ prod.rev }} verified ratings</div></div></div><sc-for list="{{ reviews }}" as="rv" hint-placeholder-count="6"><div class="review"><div class="fx ac gap10"><div class="ravatar">{{ rv.av }}</div><div style="flex:1"><div style="font:700 13px Manrope">{{ rv.n }}</div><div class="tiny muted">{{ rv.d }}</div></div><span class="pdrating" style="padding:2px 7px">${STAR_SVG}{{ rv.r }}</span></div><div class="fs13" style="color:#6b6256;line-height:1.5;margin-top:8px">{{ rv.t }}</div></div></sc-for><div style="height:24px"></div></div></div></sc-if>`;
 
 html = replaceOnce(html,
   '</div></sc-if><sc-if value="{{ isCart }}" hint-placeholder-val="x">',
@@ -584,9 +584,9 @@ html = replaceOnce(html,
 );
 
 // 43) Inject banner + flash sale screens before isCart
-const BANNER_SCREEN = `<sc-if value="{{ isBanner }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="background:{{ bannerGrad }}"><button class="backbtn" onClick="{{ goBack }}" style="color:#fff;background:rgba(255,255,255,.15)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center;color:#fff">{{ bannerTitle }}</div></div><div class="phView" style="padding-top:56px"><div style="padding:14px 18px 4px"><div style="font:700 13px Manrope;color:#8a7f70">{{ bannerProdCount }} products</div></div><div class="g2"><sc-for list="{{ bannerProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div><div style="height:40px"></div></div></div></sc-if>`;
+const BANNER_SCREEN = `<sc-if value="{{ isBanner }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="background:{{ bannerGrad }};padding:12px 18px;margin:-4px -0 8px"><button class="backbtn" onClick="{{ goBack }}" style="color:#fff;background:rgba(255,255,255,.18)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center;color:#fff">{{ bannerTitle }}</div></div><div style="padding:6px 18px 4px"><div style="font:700 13px Manrope;color:#8a7f70">{{ bannerProdCount }} products</div></div><div class="g2"><sc-for list="{{ bannerProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div><div style="height:40px"></div></div></sc-if>`;
 
-const FLASHSALE_SCREEN = `<sc-if value="{{ isFlashSale }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="background:linear-gradient(125deg,#2c2722,#3c352b)"><button class="backbtn" onClick="{{ goBack }}" style="color:#e9c987;background:rgba(255,255,255,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center;color:#e9c987"><svg width="14" height="14" viewBox="0 0 24 24" fill="#e9c987" style="margin-right:5px"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>Flash Sale</div></div><div class="phView" style="padding-top:56px"><div style="padding:14px 18px 4px"><div style="font:700 13px Manrope;color:#8a7f70">{{ flashProdCount }} products on sale</div></div><div class="g2"><sc-for list="{{ flashProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div><div style="height:40px"></div></div></div></sc-if>`;
+const FLASHSALE_SCREEN = `<sc-if value="{{ isFlashSale }}" hint-placeholder-val="x"><div class="scr"><div class="topbar" style="background:linear-gradient(125deg,#2c2722,#3c352b);padding:12px 18px;margin:-4px 0 8px"><button class="backbtn" onClick="{{ goBack }}" style="color:#e9c987;background:rgba(255,255,255,.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1;text-align:center;color:#e9c987"><svg width="14" height="14" viewBox="0 0 24 24" fill="#e9c987" style="margin-right:5px"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg>Flash Sale</div></div><div style="padding:6px 18px 4px"><div style="font:700 13px Manrope;color:#8a7f70">{{ flashProdCount }} products on sale</div></div><div class="g2"><sc-for list="{{ flashProds }}" as="item" hint-placeholder-count="6"><dc-import name="ProductCard" item="{{ item }}" cls="grid" hint-size="100%,252px"></dc-import></sc-for></div><div style="height:40px"></div></div></sc-if>`;
 
 html = replaceOnce(html,
   `</div></sc-if>${REVIEWS_SCREEN}<sc-if value="{{ isCart }}" hint-placeholder-val="x">`,
@@ -645,6 +645,30 @@ html = replaceOnce(html,
   'const homeProds=P.slice(0,12).map(x=>this.vp(x));',
   'const homeProds=[...P].map(x=>this.vp(x));',
   'homeprods-all'
+);
+
+// 47) CRITICAL: expose every new variable in screenData()'s return object.
+// screenData() returns an explicit object literal — any const declared in its
+// body but missing from the return is `undefined` in templates. Without this,
+// every new screen renders empty and every new button calls undefined (no-op).
+html = replaceOnce(html,
+  '      notifGroups, wishProds, wishEmpty:wishProds.length===0,',
+  `      notifGroups, wishProds, wishEmpty:wishProds.length===0,
+      // ── newly added bindings (home, search, banner, flash, account, reviews) ──
+      homeProds, pdWishCls, toggleWishPD, sharePD,
+      markAllRead,
+      priceMin, priceMax, setPriceMin, setPriceMax,
+      isAddresses, isPayments, isHelp, isSettings,
+      goAddresses, goPayments, goHelp, goSettings, userAddresses,
+      selOrderCanCancel, selOrderCanReturn, selOrderShowHelp, cancelOrder, returnOrder,
+      isReviews, openAllReviews, closeAllReviews,
+      showReviewSheet, openReviewSheet, closeReviewSheet, submitReview, reviewStars,
+      goBack,
+      isFlashSale, goFlashSale, flashProds, flashProdCount,
+      isBanner, bannerGrad, bannerTitle, bannerProds, bannerProdCount,
+      searchQuery, isSearching, searchOpen, setSearchQ, openSearch, clearSearch,
+      showCatGrid, showProducts, allCatTiles,`,
+  'expose-new-vars-in-return'
 );
 
 writeFileSync(OUT, html, 'utf8');
