@@ -351,10 +351,10 @@ html = replaceOnce(html,
 
 // 30) Banner go → dedicated banner page with category-specific products
 // BANNERS[0]=Harvest Season→dry fruits, BANNERS[1]=Gifting→Gift Box, BANNERS[2]=Limited Drop→Saffron
+// NOTE: Must stay as a property (banners:...) not const declarations — this is inside a return {} object literal
 html = replaceOnce(html,
   "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':''})),",
-  `const BANNER_CATS=[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix'],['Gift Box'],['Saffron']];
-    const banners=this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:BANNER_CATS[i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))}));`,
+  "banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix'],['Gift Box'],['Saffron']][i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))})),",
   'banner-go-function'
 );
 

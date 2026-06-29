@@ -673,8 +673,7 @@ class Component extends DCLogic {
       deals:[...P].sort((a,b)=>(1-a.p/a.mrp)<(1-b.p/b.mrp)?1:-1).slice(0,6).map(p=>this.vp(p)),
       recently:[P[3],P[7],P[1],P[10]].map(p=>this.vp(p)),
       cats:this.HOMECATS.map(c=>({name:c, grad:this.grad(this.CATTONE[c]), open:()=>this.setState({cust:'shop',activeCat:c}) })),
-      const BANNER_CATS=[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix'],['Gift Box'],['Saffron']];
-    const banners=this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:BANNER_CATS[i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))}));
+      banners:this.BANNERS.map((b,i)=>({...b, on:i===0?'on':'', go:()=>this.setState(st=>({cust:'banner',bannerIdx:i,bannerCats:[['Almonds','Cashews','Pistachios','Walnuts','Dates','Raisins','Figs','Seeds','Apricots','Trail Mix'],['Gift Box'],['Saffron']][i]||[],navHistory:[...(st.navHistory||[]),st.cust]}))})),
       cartItems, cartSub:this.rupee(sub), cartShip:ship?this.rupee(ship):'Free', cartSave:this.rupee(savings), cartTotal:this.rupee(total), cartProg:prog, cartProgStr:prog+'%', cartEmpty:cartItems.length===0,
       freeLeft: sub<999?this.rupee(999-sub):'',
       goShopCta:()=>this.go('shop'), goCartCta:()=>this.go('cart'),
