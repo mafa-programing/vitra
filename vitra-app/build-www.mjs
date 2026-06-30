@@ -413,8 +413,8 @@ const CHEV = '<svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill=
 const ACCOUNT_SCREENS = `
 <sc-if value="{{ isAddresses }}" hint-placeholder-val="x"><div class="scr"><div class="topbar">${BACK_BTN}<div class="topttl">Addresses</div></div><div style="height:8px"></div><sc-for list="{{ userAddresses }}" as="a" hint-placeholder-count="2"><div class="addrcard on" style="cursor:default"><div class="addrad"></div><div style="flex:1"><div class="atag">{{ a.tag }}</div><div style="font:600 14px Manrope;margin-top:5px">{{ a.name }}</div><div style="font-size:12px;color:#8a7f70;margin-top:3px;line-height:1.4">{{ a.line }}</div><div style="font-size:12px;color:#8a7f70;margin-top:1px">{{ a.phone }}</div></div></div></sc-for><button class="addaddr" onClick="{{ noop }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add new address</button><div style="height:40px"></div></div></sc-if>
 <sc-if value="{{ isPayments }}" hint-placeholder-val="x"><div class="scr"><div class="topbar">${BACK_BTN}<div class="topttl">Payment Methods</div></div><div style="height:12px"></div><div class="sectlabel">Saved methods</div><sc-for list="{{ payMethods }}" as="m" hint-placeholder-count="3"><div class="{{ m.cls }}" onClick="{{ m.sel }}" style="margin:0 18px 10px"><div class="payic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18" stroke-linecap="round"/></svg></div><div><div style="font:600 14px Manrope">{{ m.label }}</div><div class="msub">{{ m.sub }}</div></div><div class="payrad" style="margin-left:auto"></div></div></sc-for><button class="addaddr" style="margin:8px 18px 0" onClick="{{ noop }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add payment method</button><div style="height:40px"></div></div></sc-if>
-<sc-if value="{{ isHelp }}" hint-placeholder-val="x"><div class="scr"><div class="topbar">${BACK_BTN}<div class="topttl">Help &amp; Support</div></div><div style="height:8px"></div><div class="mlist"><div class="mrow" onClick="{{ noop }}"><div class="micon" style="background:#eef3e8;color:#3f8a52"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke-linejoin="round"/></svg></div><div><div class="mlabel">Live Chat</div><div class="msub">Avg. response &lt; 2 min</div></div>${CHEV}</div><div class="mrow" onClick="{{ noop }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 014.62 12 19.79 19.79 0 011.58 3.44 2 2 0 013.55 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L7.91 9.91A16 16 0 0012 16.09l.88-.88a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" stroke-linejoin="round"/></svg></div><div><div class="mlabel">Call Support</div><div class="msub">1800-XXX-XXXX · Mon–Sat 9–6</div></div>${CHEV}</div><div class="mrow" onClick="{{ noop }}" style="border-bottom:0"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01" stroke-linecap="round"/></svg></div><div><div class="mlabel">FAQs</div><div class="msub">Order, shipping &amp; returns</div></div>${CHEV}</div></div><div class="sectlabel" style="margin-top:16px">Common topics</div><div class="mlist"><div class="mrow" onClick="{{ noop }}"><div><div class="mlabel">How do I track my order?</div></div>${CHEV}</div><div class="mrow" onClick="{{ noop }}"><div><div class="mlabel">Return &amp; refund policy</div></div>${CHEV}</div><div class="mrow" onClick="{{ noop }}" style="border-bottom:0"><div><div class="mlabel">Change or cancel an order</div></div>${CHEV}</div></div><div style="height:40px"></div></div></sc-if>
-<sc-if value="{{ isSettings }}" hint-placeholder-val="x"><div class="scr"><div class="topbar">${BACK_BTN}<div class="topttl">Settings</div></div><div style="height:8px"></div><div class="sectlabel">Notifications</div><div class="mlist"><div class="mrow" style="cursor:default"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9a6 6 0 0112 0c0 5 2 6 2 6H4s2-1 2-6z" stroke-linejoin="round"/><path d="M10 20a2 2 0 004 0" stroke-linecap="round"/></svg></div><div style="flex:1"><div class="mlabel">Order Updates</div><div class="msub">Shipping &amp; delivery alerts</div></div><div class="{{ swOrders }}" onClick="{{ swOrd }}"><div class="knob"></div></div></div><div class="mrow" style="cursor:default"><div class="micon" style="background:#eef3e8;color:#3f8a52"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div style="flex:1"><div class="mlabel">Promotions</div><div class="msub">Offers, deals &amp; flash sales</div></div><div class="{{ swPromos }}" onClick="{{ swPromo }}"><div class="knob"></div></div></div><div class="mrow" style="cursor:default;border-bottom:0"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div style="flex:1"><div class="mlabel">Price Drop Alerts</div><div class="msub">Wishlisted item price changes</div></div><div class="{{ swPrice }}" onClick="{{ tgPrice }}"><div class="knob"></div></div></div></div><div class="sectlabel" style="margin-top:16px">Account</div><div class="mlist"><div class="mrow" onClick="{{ noop }}" style="border-bottom:0"><div class="micon" style="background:#fef0ee;color:#c0432f"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/><path d="M3 21V3" stroke-linecap="round"/></svg></div><div style="flex:1"><div class="mlabel">Delete Account</div><div class="msub">This action is irreversible</div></div>${CHEV}</div></div><div style="height:40px"></div></div></sc-if>
+<sc-if value="{{ isHelp }}" hint-placeholder-val="x"><div class="scr"><div class="topbar">${BACK_BTN}<div class="topttl">Help &amp; Support</div></div><div style="padding:4px 18px 0"><div style="display:flex;align-items:center;gap:11px;padding:12px 14px;background:#faf7f1;border-radius:14px;margin-bottom:14px"><div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#b97a2e,#e3b23c);display:flex;align-items:center;justify-content:center;color:#fff;font:700 16px Marcellus">V</div><div style="flex:1"><div style="font:700 14px Manrope">Vitra Support</div><div style="font-size:11px;font-weight:600;color:{{ supportColor }}"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:{{ supportColor }};margin-right:5px"></span>{{ supportStatus }}</div></div></div></div><div style="padding:0 18px;display:flex;flex-direction:column;gap:9px;min-height:230px"><sc-for list="{{ chatMsgs }}" as="m" hint-placeholder-count="2"><div style="align-self:{{ m.align }};max-width:80%;background:{{ m.bg }};color:{{ m.fg }};padding:9px 13px;border-radius:15px;font:500 13px Manrope;line-height:1.45">{{ m.text }}</div></sc-for></div><div style="height:14px"></div><div style="display:flex;gap:8px;padding:0 18px"><input id="chatInput" class="input" style="flex:1;height:44px;font-size:14px" placeholder="Type your message…"/><button class="applybtn" style="width:auto;padding:0 20px;height:44px;margin:0" onClick="{{ sendChat }}">Send</button></div><div style="font-size:11px;color:#a89c8a;text-align:center;margin-top:14px">Customer support is available 9:00 AM – 10:00 PM, all days</div><div style="height:40px"></div></div></sc-if>
+<sc-if value="{{ isSettings }}" hint-placeholder-val="x"><div class="scr"><div class="topbar">${BACK_BTN}<div class="topttl">Settings</div></div><div style="height:8px"></div><div class="sectlabel">Notifications</div><div class="mlist"><div class="mrow" style="cursor:default"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 9a6 6 0 0112 0c0 5 2 6 2 6H4s2-1 2-6z" stroke-linejoin="round"/><path d="M10 20a2 2 0 004 0" stroke-linecap="round"/></svg></div><div style="flex:1"><div class="mlabel">Order Updates</div><div class="msub">Shipping &amp; delivery alerts</div></div><div class="{{ swOrders }}" onClick="{{ swOrd }}"><div class="knob"></div></div></div></div><div class="sectlabel" style="margin-top:16px">Account</div><div class="mlist"><div class="mrow" onClick="{{ noop }}" style="border-bottom:0"><div class="micon" style="background:#fef0ee;color:#c0432f"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 16l4-4m0 0l-4-4m4 4H7"/><path d="M3 21V3" stroke-linecap="round"/></svg></div><div style="flex:1"><div class="mlabel">Delete Account</div><div class="msub">This action is irreversible</div></div>${CHEV}</div></div><div style="height:40px"></div></div></sc-if>
 `;
 
 html = replaceOnce(html,
@@ -686,7 +686,8 @@ html = replaceOnce(html,
       selOrderHasReq, selOrderReqLabel,
       toast:S._toast||'', showToast:!!(S._toast),
       flashHH, flashMM, flashSS, flashLive,
-      deliverTo, changeAddress, hasUnreadNotif, startVoiceSearch,`,
+      deliverTo, changeAddress, hasUnreadNotif, startVoiceSearch,
+      supportStatus, supportColor, chatMsgs, sendChat,`,
   'expose-new-vars-in-return'
 );
 
@@ -811,7 +812,15 @@ html = replaceOnce(html,
       r.onresult=(ev)=>{ const t=(ev.results[0][0].transcript||'').trim(); this.setState({cust:'shop',tab:1,activeCat:'All',searchQuery:t,searchOpen:true,_toast:''}); };
       r.onerror=()=>{ this.setState({_toast:'Didn\\u2019t catch that — try again'}); setTimeout(()=>this.setState({_toast:''}),1800); };
       try{ r.start(); this.setState({_toast:'Listening\\u2026'}); }catch(_){ }
-    };`,
+    };
+    // Help & Support chat (9 AM – 10 PM)
+    const _hr=new Date().getHours();
+    const supportOnline=_hr>=9 && _hr<22;
+    const supportStatus=supportOnline?'Online · 9 AM – 10 PM':'Offline · open 9 AM – 10 PM';
+    const supportColor=supportOnline?'#3f8a52':'#c0432f';
+    const _defChat=[{from:'support',text:'Hi! 👋 Welcome to Vitra support. How can we help you today?'}];
+    const chatMsgs=(S.chatMsgs||_defChat).map(m=>({text:m.text,align:m.from==='me'?'flex-end':'flex-start',bg:m.from==='me'?'var(--ink)':'#f0ebe1',fg:m.from==='me'?'#fff':'var(--ink)'}));
+    const sendChat=()=>{ const el=document.getElementById('chatInput'); const v=(el?el.value:'').trim(); if(!v) return; const cur=this.state.chatMsgs||_defChat; const reply=supportOnline?'Thanks for reaching out! An agent will be with you shortly.':'We are offline right now. Our team is available 9 AM – 10 PM and will reply as soon as we are back.'; this.setState({chatMsgs:[...cur,{from:'me',text:v},{from:'support',text:reply}]}); if(el)el.value=''; };`,
   'home-header-voice-js'
 );
 
@@ -823,6 +832,69 @@ html = replaceOnce(html,
   '<sc-if value="{{ showToast }}" hint-placeholder-val="x"><div style="position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:rgba(35,32,27,.96);color:#fff;padding:11px 20px;border-radius:24px;font:600 13px Manrope;z-index:9999;box-shadow:0 8px 28px rgba(0,0,0,.3);max-width:80%;text-align:center">{{ toast }}</div></sc-if><sc-if value="{{ showNav }}" hint-placeholder-val="{{ true }}"><nav class="botnav" style="--i:{{ tab }}">',
   'toast-overlay'
 );
+
+// ── ROUND 5: coupons, payments, returns text, cart-clear, orders back ────────
+
+// 62) Remove the Vitra Wallet payment method
+html = replaceOnce(html, "{k:'wallet',label:'Vitra Wallet',sub:'Balance · ₹240'},", '', 'remove-vitra-wallet');
+
+// 63) Remove "easy 7-day returns" copy everywhere
+html = replaceOnce(html,
+  'Free delivery on orders above ₹999. Easy 7-day returns if the seal is intact and the product is unused. Refunds are processed to your original payment method within 3–5 business days.',
+  'Free delivery on orders above ₹999. Refunds, where applicable, are processed to your original payment method within 3–5 business days.',
+  'remove-7day-returns-1');
+html = replaceOnce(html, '100% secure payment · easy 7-day returns', '100% secure payment', 'remove-7day-returns-2');
+
+// 64) Coupon system — real apply/validate/discount + correct totals
+html = replaceOnce(html,
+  '<input placeholder="ENTER PROMO CODE"/><button class="promoapply">Apply</button>',
+  '<input id="promoInput" placeholder="ENTER PROMO CODE"/><button class="promoapply" onClick="{{ applyCoupon }}">Apply</button>',
+  'coupon-input-wire');
+// Replace the hardcoded "FRESH100 applied" card with one that only shows when a real coupon is applied
+html = replaceOnce(html,
+  '<div class="couponcard" style="margin-top:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><path d="M4 8l8-4 8 4v8l-8 4-8-4z" stroke-linejoin="round"/></svg><div><div style="font:700 12px Manrope">FRESH100 applied</div><div class="tiny muted">You saved ₹100 on this order</div></div><span class="atag" style="margin-left:auto">−₹100</span></div>',
+  '<sc-if value="{{ couponApplied }}" hint-placeholder-val="x"><div class="couponcard" style="margin-top:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--ac)" stroke-width="1.7"><path d="M4 8l8-4 8 4v8l-8 4-8-4z" stroke-linejoin="round"/></svg><div><div style="font:700 12px Manrope">{{ couponCode }} applied</div><div class="tiny muted">You saved {{ couponDiscount }} on this order</div></div><button onClick="{{ removeCoupon }}" style="margin-left:auto;background:none;border:0;cursor:pointer;color:#a89c8a;font-size:18px;line-height:1;padding:0 2px">×</button></div></sc-if>',
+  'coupon-card-dynamic');
+// Coupon line in the bill (only when applied)
+html = replaceOnce(html,
+  '<div class="bkrow"><span>Delivery</span><span>{{ cartShip }}</span></div>',
+  '<div class="bkrow"><span>Delivery</span><span>{{ cartShip }}</span></div><sc-if value="{{ couponApplied }}" hint-placeholder-val="x"><div class="bkrow"><span>Coupon ({{ couponCode }})</span><span class="savepill">− {{ couponDiscount }}</span></div></sc-if>',
+  'coupon-bill-row');
+// Compute coupon discount into the cart total (renderVals)
+html = replaceOnce(html, 'const total=sub+ship;',
+  `const COUPONS={VITRA25:{type:'pct',amt:25,min:0},FRESH100:{type:'flat',amt:100,min:999},WELCOME15:{type:'pct',amt:15,min:0},DIWALI50:{type:'flat',amt:50,min:0}};
+    const couponCode=this.state.coupon||'';
+    const _cp=COUPONS[couponCode];
+    const couponApplied=!!_cp && sub>=_cp.min;
+    const couponDiscount=couponApplied?Math.min(sub,(_cp.type==='pct'?Math.round(sub*_cp.amt/100):_cp.amt)):0;
+    const total=sub+ship-couponDiscount;`,
+  'coupon-compute');
+// Expose coupon vars + handlers
+html = replaceOnce(html, "freeLeft: sub<999?this.rupee(999-sub):'',",
+  `freeLeft: sub<999?this.rupee(999-sub):'',
+      couponApplied, couponCode, couponDiscount:this.rupee(couponDiscount),
+      applyCoupon:()=>{ const el=document.getElementById('promoInput'); const v=(el?el.value:'').trim().toUpperCase(); if(!v){ return; } if(COUPONS[v]){ if(sub>=COUPONS[v].min){ this.setState({coupon:v,_toast:v+' applied'}); if(el)el.value=''; } else { this.setState({_toast:'Add more to use '+v}); } } else { this.setState({_toast:'Invalid coupon code'}); } setTimeout(()=>this.setState({_toast:''}),1900); },
+      removeCoupon:()=>this.setState({coupon:'',_toast:'Coupon removed'}),`,
+  'coupon-vars-return');
+
+// 65) Place order → clear the cart. The checkout CTA calls coNext; when it
+// advances from Review (co===2) to Done, clear the cart + applied coupon.
+html = replaceOnce(html,
+  'coNext:()=>this.setCo(Math.min(3,S.co+1)),',
+  "coNext:()=>{ if(S.co===2){ this.setState({cart:{},coupon:''}); } this.setCo(Math.min(3,S.co+1)); },",
+  'place-order-clear-cart');
+
+// 66) My Orders: add a back-to-Home button at the top
+html = replaceOnce(html,
+  '<div class="scrhead"><div class="scrtitle">My Orders</div></div>',
+  '<div class="topbar"><button class="backbtn" onClick="{{ goHome }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1">My Orders</div></div>',
+  'orders-back-button');
+
+// 67) Profile: remove the "Payment Methods" menu row (patched to goPayments in step 23)
+html = replaceOnce(html,
+  '<div class="mrow" onClick="{{ goPayments }}"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18" stroke-linecap="round"/></svg></div><div><div class="mlabel">Payment Methods</div><div class="msub">Cards, UPI &amp; wallets</div></div>',
+  '<div class="mrow" onClick="{{ goPayments }}" style="display:none"><div class="micon"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18" stroke-linecap="round"/></svg></div><div><div class="mlabel">Payment Methods</div><div class="msub">Cards, UPI &amp; wallets</div></div>',
+  'remove-profile-payment-row');
 
 writeFileSync(OUT, html, 'utf8');
 console.log('build-www: wrote', OUT, '(' + html.length + ' bytes)');
