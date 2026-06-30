@@ -213,7 +213,13 @@ html = replaceOnce(html,
     const _bannerProdsMap=S.bannerProdsMap||{};
     const _getBannerPids=(idx)=>_bannerProdsMap[idx]||_defBannerPids[idx]||{};
     const adBannerProds=P.map(pr=>({...pr,grad:this.grad(pr.tone),inBanner:!!(_getBannerPids(selBannerIdx)[pr.id]),toggle:()=>this.setState(st=>{const bpm=st.bannerProdsMap||{};const cur=bpm[selBannerIdx]||_defBannerPids[selBannerIdx]||{};return{bannerProdsMap:{...bpm,[selBannerIdx]:{...cur,[pr.id]:!cur[pr.id]}}};}) }));
-    const bannerTabs=[{name:'Harvest Season',idx:0},{name:'Gifting',idx:1},{name:'Saffron Drop',idx:2}].map(t=>({...t,cls:selBannerIdx===t.idx?'adtab on':'adtab',sel:()=>this.setState({selBannerIdx:t.idx})}));
+    const _defBanners=[{name:'Harvest Season'},{name:'Gifting'},{name:'Saffron Drop'}];
+    const _allBanners=[..._defBanners,...(S.customBanners||[])];
+    const bannerTabs=_allBanners.map((b,idx)=>({name:b.name,idx,cls:selBannerIdx===idx?'adtab on':'adtab',sel:()=>this.setState({selBannerIdx:idx})}));
+    const addBanner=()=>{const t=(document.getElementById('newBannerTitle')||{}).value;const s=(document.getElementById('newBannerSub')||{}).value;if(t&&t.trim())this.setState(st=>({customBanners:[...(st.customBanners||[]),{name:t.trim(),sub:(s||'').trim()}]}));const e1=document.getElementById('newBannerTitle');if(e1)e1.value='';const e2=document.getElementById('newBannerSub');if(e2)e2.value='';};
+    // Flash sale duration (customisable countdown)
+    const flashWindowHours=S.flashWindowHours||3;
+    const setFlashHours=(e)=>{const v=Math.max(1,parseInt(e.target.value)||3);this.setState({flashWindowHours:v});};
     const adBanners=[{title:'Harvest Festival'`,
   'admin-flash-and-popular-data'
 );
@@ -238,10 +244,16 @@ html = replaceOnce(html,
       </div>
     </sc-for>
   </div>
+  <div style="display:flex;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(140,120,90,.12)">
+    <input id="newBannerTitle" class="input" style="flex:1;height:36px;font-size:13px" placeholder="New banner name (e.g. Diwali Hampers)"/>
+    <input id="newBannerSub" class="input" style="flex:1;height:36px;font-size:13px" placeholder="Subtitle (optional)"/>
+    <button class="adbtn" style="height:36px;padding:0 16px;font-size:12px" onClick="{{ addBanner }}">+ Add Banner</button>
+  </div>
 </div>
 <div class="adcols" style="grid-template-columns:1fr 1fr;margin-top:0">
   <div class="panel">
     <div class="panelhd"><div class="panelt">Flash Sale Products</div><span class="st {{ flashLiveCls }}" style="cursor:pointer" onClick="{{ toggleFlashLive }}"><span class="stipdot"></span>{{ flashLiveLbl }}</span></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;font:600 12px Manrope;color:#6b6256">Countdown duration<input type="number" min="1" max="72" value="{{ flashWindowHours }}" onInput="{{ setFlashHours }}" style="width:58px;height:32px;border:1.5px solid rgba(140,120,90,.25);border-radius:9px;padding:0 8px;font:600 13px Manrope;text-align:center"/>hours</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;max-height:320px;overflow-y:auto">
       <sc-for list="{{ adFlashProds }}" as="fp" hint-placeholder-count="6">
         <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:12px;background:#faf7f1;border:1.5px solid {{ fp.inFlash ? 'rgba(185,122,46,.4)' : 'rgba(140,120,90,.1)' }};cursor:pointer" onClick="{{ fp.toggle }}">
@@ -286,7 +298,8 @@ html = replaceOnce(html,
       showReviewSheet, openReviewSheet, closeReviewSheet, submitReview, reviewStars,
       adFlashProds, toggleFlashLive, flashLiveCls, flashLiveLbl,
       adPopulars, removePopular, addPopularSearch,
-      selBannerIdx, adBannerProds, bannerTabs,`,
+      selBannerIdx, adBannerProds, bannerTabs, addBanner,
+      flashWindowHours, setFlashHours,`,
   'admin-expose-vars-in-return'
 );
 
