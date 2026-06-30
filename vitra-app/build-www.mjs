@@ -685,7 +685,8 @@ html = replaceOnce(html,
       showCatGrid, showProducts, allCatTiles,
       selOrderHasReq, selOrderReqLabel,
       toast:S._toast||'', showToast:!!(S._toast),
-      flashHH, flashMM, flashSS, flashLive,`,
+      flashHH, flashMM, flashSS, flashLive,
+      deliverTo, changeAddress, hasUnreadNotif, startVoiceSearch,`,
   'expose-new-vars-in-return'
 );
 
@@ -742,6 +743,76 @@ html = replaceOnce(html,
   '<span class="tbox">{{ flashSS }}</span></div></div>',
   '<span class="tbox">{{ flashSS }}</span></div></div></sc-if>',
   'flash-live-wrap-close'
+);
+
+// ── ROUND 4: home header, notif dot, voice search, product back, filters ─────
+
+// 55) Home: make the "Deliver to" address an editable button + bind to state
+html = replaceOnce(html,
+  '<span class="loclbl">Deliver to</span><span class="locval">Bandra, Mumbai 400050<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></span>',
+  '<span class="loclbl">Deliver to</span><span class="locval">{{ deliverTo }}<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><path d="M6 9l6 6 6-6" stroke-linecap="round"/></svg></span>',
+  'deliver-to-binding'
+);
+html = replaceOnce(html,
+  '<button class="loc" style="border:0;background:none;text-align:left;cursor:pointer;padding:0">',
+  '<button class="loc" style="border:0;background:none;text-align:left;cursor:pointer;padding:0" onClick="{{ changeAddress }}">',
+  'deliver-to-button'
+);
+
+// 56) Notification bell: show the red dot ONLY when there is an unread notification
+html = replaceOnce(html,
+  '</svg><span class="dot"></span></button>',
+  '</svg><sc-if value="{{ hasUnreadNotif }}" hint-placeholder-val="x"><span class="dot"></span></sc-if></button>',
+  'notif-dot-conditional'
+);
+
+// 57) Mic button → real voice search (Web Speech API); stop it bubbling to goShop
+html = replaceOnce(html,
+  '<button class="micbtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke-linecap="round"/></svg></button>',
+  '<button class="micbtn" onClick="{{ startVoiceSearch }}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke-linecap="round"/></svg></button>',
+  'mic-voice-search'
+);
+
+// 58) Filters: remove the "Availability & delivery" group (non-functional chips)
+html = replaceOnce(html,
+  '<div class="fgroup" style="border-bottom:0"><div class="fglabel">Availability &amp; delivery</div><div class="swrow"><span class="tagchip">In stock</span><span class="tagchip">Free delivery</span><span class="tagchip">Express</span><span class="tagchip">Discounted</span></div></div>',
+  '',
+  'remove-availability-filter'
+);
+
+// 59) Product page: back button always returns to Home (per request)
+html = replaceOnce(html,
+  '<div class="topbar" style="position:absolute;left:0;right:0;top:0;z-index:12;background:none"><button class="backbtn" onClick="{{ goBack }}">',
+  '<div class="topbar" style="position:absolute;left:0;right:0;top:0;z-index:12;background:none"><button class="backbtn" onClick="{{ goHome }}">',
+  'product-back-to-home'
+);
+
+// 60) Home: show ALL products newest-first (last added appears at the top)
+html = replaceOnce(html,
+  'const homeProds=[...P].map(x=>this.vp(x));',
+  'const homeProds=P.map((x,i)=>({...this.vp(x),pos:i})).sort((a,b)=>b.pos-a.pos);',
+  'homeprods-newest-first'
+);
+
+// 61) New JS: deliverTo, changeAddress, hasUnreadNotif, startVoiceSearch
+html = replaceOnce(html,
+  'const goBack=()=>this.goBack();',
+  `const goBack=()=>this.goBack();
+    // Delivery address (editable from home header)
+    const deliverTo=S.deliverTo||'Bandra, Mumbai 400050';
+    const changeAddress=()=>{ const v=window.prompt('Enter your delivery address',deliverTo); if(v&&v.trim()) this.setState({deliverTo:v.trim()}); };
+    // Unread notification indicator
+    const hasUnreadNotif=(notifGroups||[]).some(g=>(g.items||[]).some(n=>n.unread));
+    // Voice search (Web Speech API) — fills the search and jumps to the shop
+    const startVoiceSearch=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation();
+      const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+      if(!SR){ this.setState({_toast:'Voice search isn\\u2019t supported on this device'}); setTimeout(()=>this.setState({_toast:''}),1800); return; }
+      const r=new SR(); r.lang='en-IN'; r.interimResults=false; r.maxAlternatives=1;
+      r.onresult=(ev)=>{ const t=(ev.results[0][0].transcript||'').trim(); this.setState({cust:'shop',tab:1,activeCat:'All',searchQuery:t,searchOpen:true,_toast:''}); };
+      r.onerror=()=>{ this.setState({_toast:'Didn\\u2019t catch that — try again'}); setTimeout(()=>this.setState({_toast:''}),1800); };
+      try{ r.start(); this.setState({_toast:'Listening\\u2026'}); }catch(_){ }
+    };`,
+  'home-header-voice-js'
 );
 
 // 54) Toast overlay (share confirmation, order-request confirmation).
