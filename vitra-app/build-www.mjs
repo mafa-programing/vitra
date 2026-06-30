@@ -686,7 +686,8 @@ html = replaceOnce(html,
       selOrderHasReq, selOrderReqLabel,
       toast:S._toast||'', showToast:!!(S._toast),
       flashHH, flashMM, flashSS, flashLive,
-      deliverTo, changeAddress, hasUnreadNotif, startVoiceSearch,
+      deliverTo, changeAddress, hasUnreadNotif, startVoiceSearch, goSearch,
+      addrPickerOpen, closeAddrPicker, addNewAddress,
       supportStatus, supportColor, chatMsgs, sendChat,`,
   'expose-new-vars-in-return'
 );
@@ -799,18 +800,37 @@ html = replaceOnce(html,
 html = replaceOnce(html,
   'const goBack=()=>this.goBack();',
   `const goBack=()=>this.goBack();
-    // Delivery address (editable from home header)
+    // Delivery address — tapping the header opens a picker of saved addresses
     const deliverTo=S.deliverTo||'Bandra, Mumbai 400050';
-    const changeAddress=()=>{ const v=window.prompt('Enter your delivery address',deliverTo); if(v&&v.trim()) this.setState({deliverTo:v.trim()}); };
+    const addrPickerOpen=!!S.addrPickerOpen;
+    const changeAddress=()=>this.setState({addrPickerOpen:true});
+    const closeAddrPicker=()=>this.setState({addrPickerOpen:false});
+    const addNewAddress=()=>{ const line=window.prompt('Enter your full delivery address'); if(line&&line.trim()){ const tag=(window.prompt('Save as (e.g. Home, Office)','Home')||'Address').trim(); this.setState(st=>({customAddresses:[...(st.customAddresses||[]),{tag:tag,name:(st.userName||'You'),line:line.trim(),phone:''}],addrPickerOpen:true})); } };
     // Unread notification indicator
     const hasUnreadNotif=(notifGroups||[]).some(g=>(g.items||[]).some(n=>n.unread));
-    // Voice search (Web Speech API) — fills the search and jumps to the shop
-    const startVoiceSearch=(e)=>{ if(e&&e.stopPropagation)e.stopPropagation();
+    // Open the shop/categories screen with the search active (home search bar)
+    const goSearch=()=>this.setState({cust:'shop',tab:1,searchOpen:true});
+    const _setVoiceQuery=(t)=>this.setState({cust:'shop',tab:1,activeCat:'All',searchQuery:t,searchOpen:true,_toast:''});
+    // Voice search — native speech on the APK (asks for mic permission), Web Speech in a browser
+    const startVoiceSearch=async(e)=>{ if(e&&e.stopPropagation)e.stopPropagation();
+      const C=window.Capacitor;
+      if(C&&C.Plugins&&C.Plugins.SpeechRecognition){
+        const SP=C.Plugins.SpeechRecognition;
+        try{
+          let perm; try{ perm=await SP.checkPermissions(); }catch(_){ perm=null; }
+          if(!perm || perm.speechRecognition!=='granted'){ const req=await SP.requestPermissions(); if(req && req.speechRecognition && req.speechRecognition!=='granted'){ this.setState({_toast:'Microphone permission is needed for voice search'}); setTimeout(()=>this.setState({_toast:''}),2200); return; } }
+          this.setState({_toast:'Listening\\u2026'});
+          const res=await SP.start({language:'en-IN',maxResults:1,popup:false,partialResults:false});
+          const t=(res && res.matches && res.matches[0]||'').trim();
+          if(t) _setVoiceQuery(t); else { this.setState({_toast:'Did not catch that, try again'}); setTimeout(()=>this.setState({_toast:''}),1700); }
+        }catch(err){ this.setState({_toast:'Microphone permission is needed for voice search'}); setTimeout(()=>this.setState({_toast:''}),2200); }
+        return;
+      }
       const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-      if(!SR){ this.setState({_toast:'Voice search isn\\u2019t supported on this device'}); setTimeout(()=>this.setState({_toast:''}),1800); return; }
+      if(!SR){ this.setState({_toast:'Voice search needs the app \\u2014 please type instead'}); setTimeout(()=>this.setState({_toast:''}),2000); _setVoiceQuery(''); return; }
       const r=new SR(); r.lang='en-IN'; r.interimResults=false; r.maxAlternatives=1;
-      r.onresult=(ev)=>{ const t=(ev.results[0][0].transcript||'').trim(); this.setState({cust:'shop',tab:1,activeCat:'All',searchQuery:t,searchOpen:true,_toast:''}); };
-      r.onerror=()=>{ this.setState({_toast:'Didn\\u2019t catch that — try again'}); setTimeout(()=>this.setState({_toast:''}),1800); };
+      r.onresult=(ev)=>{ const t=(ev.results[0][0].transcript||'').trim(); _setVoiceQuery(t); };
+      r.onerror=(ev)=>{ const msg=(ev&&ev.error==='not-allowed')?'Microphone permission is needed':'Did not catch that, try again'; this.setState({_toast:msg}); setTimeout(()=>this.setState({_toast:''}),2000); };
       try{ r.start(); this.setState({_toast:'Listening\\u2026'}); }catch(_){ }
     };
     // Help & Support chat (9 AM – 10 PM)
@@ -889,6 +909,39 @@ html = replaceOnce(html,
   '<div class="scrhead"><div class="scrtitle">My Orders</div></div>',
   '<div class="topbar"><button class="backbtn" onClick="{{ goHome }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7" stroke-linecap="round" stroke-linejoin="round"/></svg></button><div class="topttl" style="flex:1">My Orders</div></div>',
   'orders-back-button');
+
+// ── ROUND 6: address picker, home->categories search, mic on categories ──────
+
+// 68) Saved addresses include any the customer added; each can be picked as the
+// delivery address (sets the home header) and stays selectable in checkout.
+html = replaceOnce(html,
+  "const addresses=[{tag:'Home',name:'Aarav Sharma',line:'402, Palm Springs, Linking Rd, Bandra West, Mumbai 400050',phone:'+91 98200 41122'},{tag:'Office',name:'Aarav Sharma',line:'9th Floor, Lotus Towers, BKC, Mumbai 400051',phone:'+91 98200 41122'}].map((a,i)=>({...a,cls:S.coAddr===i?'addrcard on':'addrcard',sel:()=>setS({coAddr:i})}));",
+  "const _baseAddr=[{tag:'Home',name:'Aarav Sharma',line:'402, Palm Springs, Linking Rd, Bandra West, Mumbai 400050',phone:'+91 98200 41122'},{tag:'Office',name:'Aarav Sharma',line:'9th Floor, Lotus Towers, BKC, Mumbai 400051',phone:'+91 98200 41122'},...(S.customAddresses||[])];\n    const _shortAddr=(l)=>l.split(',').slice(-2).join(',').trim();\n    const addresses=_baseAddr.map((a,i)=>({...a,short:_shortAddr(a.line),cls:S.coAddr===i?'addrcard on':'addrcard',sel:()=>setS({coAddr:i}),pick:()=>this.setState({coAddr:i,deliverTo:a.tag+' \\u00b7 '+_shortAddr(a.line),addrPickerOpen:false})}));",
+  'addresses-with-custom');
+
+// 69) Home search bar → opens the Categories screen with search active
+html = replaceOnce(html,
+  'class="searchbar" onClick="{{ goShop }}">',
+  'class="searchbar" onClick="{{ goSearch }}">',
+  'home-search-to-categories');
+
+// 70) Categories search bar: add a mic button (voice search works here too)
+html = replaceOnce(html,
+  '<sc-if value="{{ isSearching }}" hint-placeholder-val="x"><button onClick="{{ clearSearch }}" style="background:none;border:0;cursor:pointer;color:#a89c8a;font-size:22px;line-height:1;padding:0 4px">×</button></sc-if>',
+  '<sc-if value="{{ isSearching }}" hint-placeholder-val="x"><button onClick="{{ clearSearch }}" style="background:none;border:0;cursor:pointer;color:#a89c8a;font-size:22px;line-height:1;padding:0 4px">×</button></sc-if><button onClick="{{ startVoiceSearch }}" style="background:none;border:0;cursor:pointer;color:var(--ac);padding:0 2px;display:flex;align-items:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3" stroke-linecap="round"/></svg></button>',
+  'categories-search-mic');
+
+// 71) Address picker sheet (opened from the "Deliver to" header)
+html = replaceOnce(html,
+  '<sc-if value="{{ showToast }}" hint-placeholder-val="x">',
+  '<sc-if value="{{ addrPickerOpen }}" hint-placeholder-val="x"><div class="sheetwrap" onClick="{{ closeAddrPicker }}"><div class="sheet" onClick="{{ stop }}"><div class="ghandle"></div><div class="sheethd"><div class="sheett">Deliver to</div></div><sc-for list="{{ addresses }}" as="a" hint-placeholder-count="2"><div class="{{ a.cls }}" onClick="{{ a.pick }}" style="margin-bottom:10px;cursor:pointer"><div class="addrad"></div><div style="flex:1"><div class="atag">{{ a.tag }}</div><div style="font:600 14px Manrope;margin-top:4px">{{ a.short }}</div><div style="font-size:12px;color:#8a7f70;margin-top:2px;line-height:1.4">{{ a.line }}</div></div></div></sc-for><button class="addaddr" onClick="{{ addNewAddress }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add new address</button><div style="height:8px"></div></div></div></sc-if><sc-if value="{{ showToast }}" hint-placeholder-val="x">',
+  'address-picker-sheet');
+
+// 72) "Add new address" buttons (account Addresses screen) actually add one
+html = replaceOnce(html,
+  '<button class="addaddr" onClick="{{ noop }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add new address</button>',
+  '<button class="addaddr" onClick="{{ addNewAddress }}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14" stroke-linecap="round"/></svg>Add new address</button>',
+  'account-add-address-works');
 
 // 67) Profile: remove the "Payment Methods" menu row (patched to goPayments in step 23)
 html = replaceOnce(html,
